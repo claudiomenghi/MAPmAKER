@@ -1,35 +1,61 @@
-%create a transition system
-%RUZOVY
-function T = TB2(environmentMap)
+%creates a transition system
+%the grid is 18*8 = 144
+%agent's state is just its position in the grid
 
-T.Q=[1:144];   %states
-T.Pi=[21:27]; %all subsets of atomic propositions
-T.curr = 56;    %initial state
+%the green guy from the paper
+
+function T = PTA3(environmentMap, penvironmentMap)
+
+T.Q=1:144;   %states
+T.Pi=31:36; %all subsets of atomic propositions
+%T.curr = 102;
+T.curr = 91;    %initial state
+
+
+%adjacency matrix
 T.adj=environmentMap;
+T.padj=penvironmentMap;
+
+T.lastaction=0; % the last action executed by the robot
+
+
 
 %observation == labeling function
 for i=1:144
     T.ser{i}=[];
 end
 
-T.ser{27} = [22];
-T.ser{28} = [22];
-T.ser{45} = [22];
-T.ser{46} = [22];
+T.ser{27} = [31,33,35];
+T.ser{28} = [31,33,35];
+T.ser{45} = [31,33,35];
+T.ser{46} = [31,33,35];
 
-T.ser{111} = [21];
-T.ser{112} = [21];
-T.ser{129} = [21];
-T.ser{130} = [21];
+T.ser{111} = [31];
+T.ser{112} = [31];
+T.ser{129} = [31];
+T.ser{130} = [31];
 
-T.ser{20} = [23];
-T.ser{40}= [24];
-T.ser{56}= [25];
-T.ser{24}=[27];
-T.ser{60} = [28];
-T.ser{76}=[26];
+T.ser{51} = [36];
+T.ser{52} = [36];
+T.ser{33} = [36];
+T.ser{34} = [36];
 
-T.index = 2;
+T.ser{98} = [32,34];
+T.ser{99} =[32,34];
+T.ser{116} = [32,34];
+T.ser{117} =[32,34];
+
+T.ser{100} = [35];
+T.ser{101} = [35];
+T.ser{118} = [35];
+T.ser{119} = [35];
+
+T.ser{105} = [33,36];
+T.ser{106} = [33,36];
+T.ser{123} = [33,36];
+T.ser{124} = [33,36];
+
+T.index = 3;
 
 % %LOADED
 % %left-right

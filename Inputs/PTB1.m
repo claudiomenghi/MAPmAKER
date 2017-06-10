@@ -1,35 +1,43 @@
-%create a transition system
-%RUZOVY
-function T = TB2(environmentMap)
+%creates a transition system
+%the grid is 18*8 = 144
+%agent's state is just its position in the grid
+
+%the pink guy, the one with tasks
+function T = PTB1(environmentMap, penvironmentMap)
 
 T.Q=[1:144];   %states
-T.Pi=[21:27]; %all subsets of atomic propositions
-T.curr = 56;    %initial state
+T.Pi=[11:18]; %all subsets of atomic propositions
+%T.curr= 76;
+T.curr = 73;    %initial state
 T.adj=environmentMap;
+T.padj=penvironmentMap;
+T.lastaction=0; % the last action executed by the robot
 
 %observation == labeling function
 for i=1:144
     T.ser{i}=[];
 end
 
-T.ser{27} = [22];
-T.ser{28} = [22];
-T.ser{45} = [22];
-T.ser{46} = [22];
+%helping loading -- rename to [11]? changed from 12!!
+T.ser{27} = [11];
+T.ser{28} = [11];
+T.ser{45} = [11];
+T.ser{46} = [11];
 
-T.ser{111} = [21];
-T.ser{112} = [21];
-T.ser{129} = [21];
-T.ser{130} = [21];
+%helping loading
+T.ser{111} = [11];
+T.ser{112} = [11];
+T.ser{129} = [11];
+T.ser{130} = [11];
 
-T.ser{20} = [23];
-T.ser{40}= [24];
-T.ser{56}= [25];
-T.ser{24}=[27];
-T.ser{60} = [28];
-T.ser{76}=[26];
+T.ser{20} = [13]; %t1
+T.ser{40}= [14]; %t2
+T.ser{56}= [15]; %t3
+T.ser{25}=[17]; %t5
+%T.ser{42} = [18]; 
+T.ser{76}=[16]; %t4
 
-T.index = 2;
+T.index = 1;
 
 % %LOADED
 % %left-right

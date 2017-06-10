@@ -4,7 +4,7 @@
 
 %the blue guy
 
-function T = TC2(environmentMap)
+function T = PTC2(environmentMap, penvironmentMap)
 
 T.Q=[1:144];   %states
 T.Pi=[21:24]; %all subsets of atomic propositions
@@ -13,7 +13,8 @@ T.curr = 18;    %initial state
 
 %adjacency matrix
 T.adj=environmentMap;
-
+T.padj=penvironmentMap;
+T.lastaction=0; % the last action executed by the robot
 
 %observation == labeling function
 for i=1:144

@@ -1,5 +1,7 @@
 function [P, sys, spec] = product(sys,spec,dep,M,B,Buchi,H)
 
+global possibleengineenabled;
+
 clear P;
 clear weight;
 clear succ;
@@ -159,25 +161,49 @@ end
 % maxV1
 % maxV2
 
-
+res=0;
 if isempty(P.max)
-    fprintf('H %d too small \n', H);
-   if H<20 
-         H=H+1;
-       [P, sys, spec] = product(sys,spec,dep,M,B,Buchi,H);
+   fprintf('H %d too small for a definitive solution \n', H);
+   
+   if(possibleengineenabled==1)
+       [P, sys,spec, res] = possibleproduct(sys,spec,dep,M,B,H);
+       if(res==1)
+            fprintf('H %d possible solution found \n', H);
+            possibleSolutionSearchTriggered=1;
+       else
+           if ((H<20) && (res==0))
+                 H=H+1;
+               [P, sys, spec] = product(sys,spec,dep,M,B,Buchi,H);
+               return;
+           end
+               
+       end
    end
-    return;
 end
-if ismember(1,P.max)
-    fprintf('H %d too small \n', H);
-   if H < 20
-       H=H+1;
-       [P, sys, spec] = product(sys,spec,dep,M,B,Buchi,H);
+if (ismember(1,P.max))
+   fprintf('H %d too small for a definitive solution \n', H);
+   
+   if(possibleengineenabled==1)
+       [P1, sys,spec, res] = possibleproduct(sys,spec,dep,M,B,H);
+       
+       if(res==1)
+            fprintf('H %d possible solution found \n', H);
+            possibleSolutionSearchTriggered=1;
+       else
+           if ((H < 20)  && (res==0))
+               H=H+1;
+               [P, sys, spec] = product(sys,spec,dep,M,B,Buchi,H);
+               return;
+           end
+       end
    end
-    return;
 end
 %%%%%%%%%%%%%%%%%%
 
+if(possibleengineenabled==1 && res==1)
+    P=P1;
+end
+  
 for i= 1:size(P.Q,1)
     P.d{i}= 1000000;
 end
@@ -185,46 +211,7 @@ end
 
 %%%%%%%%%%%%%%
 %dijkstra
-processed = [];
-to_search = 1;
-found = 0;
-P.d{1}=0;
-while ~isempty(to_search) && ~found
-    
-    %the one with maximum P.d
-    i=to_search(1);
-    for j = 1:length(to_search)
-        if P.d{to_search(j)} < P.d{i}
-            i=to_search(j);
-        end
-    end
-    
-
-    if ismember(i,P.max)
-            P.final = i;
-            found = 1;
-            break;
-    end
-        
-    to_search=setdiff(to_search,i);
-    processed = unique([processed i]);
-    for j=P.succ{i}
-        
-        if isempty(P.pred{j})
-            P.pred{j} = i;
-            P.pred_action{j} = P.action{i,j};
-        end
-        
-        to_search = [to_search j];
-   
-        if P.d{j} > P.d{i} + P.weight{i,j}
-            P.d{j} = P.d{i} + P.weight{i,j};
-        
-        end
-    end
-    to_search = setdiff(to_search, processed, 'stable');
-    
-end
+P=dijkstra(P);
 
 
 %generating the path
@@ -237,7 +224,9 @@ while i~=1
     path = [i path];
 end
 
-actions;
+actions
+
+
 %%%%%%%%%%%%%%%%%%%%
 % path
 % actions
@@ -247,14 +236,13 @@ actions;
 %instead
 
 %printing
+fprintf('Printing  M %d \n', M);
 
 for m=1:M
     fprintf('\n TS %d \n \n %d', sys(dep(m)).index, P.Q(1,m));
     for i=1:length(actions)
         
-            action =  intersect(sys(dep(m)).Pi,B.lab{actions(i)});
-   
-        
+        action =  intersect(sys(dep(m)).Pi,B.lab{actions(i)});
         if isempty(action)
             action= 0;
         end

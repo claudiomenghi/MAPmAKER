@@ -11,30 +11,67 @@ robotcolors=[3 %green
 
 global whitevalue;
 global blackvalue;
+global redvalue;
+global possibleengineenabled;
+global robotFigEnabled;
+
+
+global possibleSolutionSearchTriggered;
+possibleSolutionSearchTriggered=0;
+robotFigEnabled=0;
 
 whitevalue=64;
 blackvalue=57;
+redvalue=44;
+possibleengineenabled=1;
 
 addpath('Inputs');
+addpath('Visualization');
 
 %no of agents
 N=3; 
 
+
 %inputs
+%environment=EnvironmentMapa();
+environment=EnvironmentMapb();
+
 offset(1)=-10;
 offset(2)= 9;
 offset(3)=-13;
 
-sys(1)=TB1();
-sys(2)=TC2();
-sys(3)=TA3();
+sys(1)=PTB1(environment.map, environment.pmap);
+sys(2)=PTC2(environment.map, environment.pmap);
+sys(3)=PTA3(environment.map, environment.pmap);
 
 spec(1)=B12();
-spec(2)=C22();
+spec(2)=C23();
 spec(3)=A32();
 
+
+
+% contains the robot number
+N=3;
 scale = 30;
-grid = visualizeInit(robotcolors, sys, offset, scale);
+
+figure;
+personalGrid = ones(N, environment.x*scale+1,environment.y*scale+1)*whitevalue;
+
+for i=1:N
+    if(robotFigEnabled==1)
+     visualizePersonalInit(robotcolors, sys, offset, scale, personalGrid(i,:,:), environment, i);
+    end
+end
+
+
+
+figure;
+grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
+grid = visualizeInit(robotcolors, sys, offset, scale, grid, environment);
+
+
+
+
 
 
 % horizon for the intersection automaton
@@ -48,10 +85,10 @@ iter=0;
 
 perm = [3,1,2]; %permutation (i.e. ordering), meaning that agent 3 < agent 1 < agent 2
 %perm=[1,2,3];
-
         
 while isempty(reply)
     
+    possibleSolutionSearchTriggered=0;
     skip=0;
     iter=iter+1;
     
@@ -105,7 +142,7 @@ while isempty(reply)
     if ~skip
      
         for i=1:N
-             if sys(i).lastaction~=0 && ismember(spec(i).curr,spec(i).F)
+             if (sys(i).lastaction~=0) && (ismember(spec(i).curr,spec(i).F))
                  perm = [setdiff(perm,[i],'stable'),i];
                  fprintf('Reordering triggered by agent %d. \n', i);                 
              end
@@ -114,7 +151,7 @@ while isempty(reply)
         fprintf('New permutation:'); 
         disp(perm);
        
-        grid=visualize(grid, robotcolors, sys, offset, scale, spec);
+        [grid, offset]=visualize(grid, robotcolors, sys, offset, scale, spec);
        
         if sys(1).lastaction == 0
             reply = ''; 
