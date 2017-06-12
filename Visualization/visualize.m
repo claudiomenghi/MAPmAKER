@@ -1,4 +1,4 @@
-function [grid, offset] = visualize(grid, robotcolors, sys, offset, scale, spec)
+function [grid, offset] = visualize(grid, robotcolors, sys, offset, scale, spec, environment)
 global blackvalue;
 
 c=colorcube(64);
@@ -20,6 +20,7 @@ color = robotcolors(i);
             end
 end
 
+grid=visualizeGrid(scale, grid, environment);
 imshow(grid, c)
 %pause(3)
         

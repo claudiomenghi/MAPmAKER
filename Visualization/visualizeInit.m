@@ -1,6 +1,6 @@
 function grid = visualizeInit(robotcolors, sys, offset, scale, grid, environment)
 global blackvalue;
-global redvalue
+
 
 
 colors = zeros(environment.x*scale+1,environment.y*scale+1);
@@ -48,62 +48,7 @@ for j=0:environment.x
     end
 end
 
-environmentsize=environment.x*environment.y;
-for j=1:environmentsize
-   for k=j+1:environmentsize
-       if(environment.map(j,k)==0)
-          ydistance=abs(fix((k/environment.y))-fix((j/environment.y)));
-          xdistance=abs(mod(k, environment.y)-mod(j, environment.y));
-         
-          if((xdistance+ydistance==1))
-          [x,y] =  transform_coordinates([j, k]);
-         
-              if((ydistance==0) && x(1)==x(2))
-                   grid((x-1)*(scale)+1:(x)*scale,(y)*scale-1:(y)*scale+1) = blackvalue;
-              end
-              if(xdistance==0 && y(1)==y(2))
-                 grid((x-1)*(scale)-1:(x-1)*scale+1,(y-1)*scale+1:y*scale) = blackvalue;
-              end
-          end
-       end
-   end
-end
-
-if(isfield(environment, 'pmap'))
-    environmentsize=environment.x*environment.y;
-    for j=1:environmentsize
-       for k=j+1:environmentsize
-           if(abs(environment.pmap(j,k)-environment.map(j,k))==1)
-              ydistance=abs(fix((k/environment.y))-fix((j/environment.y)));
-              xdistance=abs(mod(k, environment.y)-mod(j, environment.y));
-
-              if((xdistance+ydistance==1))
-              [x,y] =  transform_coordinates([j, k]);
-
-                  if((ydistance==0) && x(1)==x(2))
-                       grid((x-1)*(scale)+1:(x)*scale,(y)*scale-1:(y)*scale+1) = redvalue;
-                  end
-                  if(xdistance==0 && y(1)==y(2))
-                     grid((x-1)*(scale)-1:(x-1)*scale+1,(y-1)*scale+1:y*scale) = redvalue;
-                  end
-              end
-           end
-       end
-    end
-end
-
-%walls  left right
-%for a = [6,12,60,78,132,12+3*18]
-%    [x,y] = transform_coordinates(a);
-%    grid((x-1)*(scale)+1:(x)*scale,y*scale-1:y*scale+1) = blackvalue;
-%end
-
-%walls  up down
-%for a = [91,91+1,91+4,91+5,79,80,83,84,85,86,89,90]
-%    [x,y] = transform_coordinates(a);
-%    grid((x)*(scale)-1:(x)*scale+1,(y-1)*scale+1:y*scale) = blackvalue;
-%end
-
+grid=visualizeGrid(scale, grid, environment);
 
 for i=1:N
             color = robotcolors(i);

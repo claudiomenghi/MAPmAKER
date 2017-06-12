@@ -12,10 +12,15 @@ robotcolors=[3 %green
 global whitevalue;
 global blackvalue;
 global redvalue;
+
+% set this flaf to 1 to enable the search of possible paths
 global possibleengineenabled;
+possibleengineenabled=1;
+
 global robotFigEnabled;
 
-
+% it is set by the algorithm whenever the search of the possible solution
+% is triggered
 global possibleSolutionSearchTriggered;
 possibleSolutionSearchTriggered=0;
 robotFigEnabled=0;
@@ -23,10 +28,10 @@ robotFigEnabled=0;
 whitevalue=64;
 blackvalue=57;
 redvalue=44;
-possibleengineenabled=1;
 
 addpath('Inputs');
 addpath('Visualization');
+addpath('Utils');
 
 %no of agents
 N=3; 
@@ -151,7 +156,7 @@ while isempty(reply)
         fprintf('New permutation:'); 
         disp(perm);
        
-        [grid, offset]=visualize(grid, robotcolors, sys, offset, scale, spec);
+        [grid, offset]=visualize(grid, robotcolors, sys, offset, scale, spec, environment);
        
         if sys(1).lastaction == 0
             reply = ''; 
@@ -162,4 +167,8 @@ while isempty(reply)
         %reply = 'n';
         fprintf('\n');
     end
+    
+    [sys, grid]=infDiscover(scale, grid, sys, environment);
+    
+    grid=visualizeGrid(scale, grid, environment);
 end

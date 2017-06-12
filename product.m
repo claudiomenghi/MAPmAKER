@@ -178,6 +178,14 @@ if isempty(P.max)
            end
                
        end
+   else
+       if (H<20)
+             H=H+1;
+           [P, sys, spec] = product(sys,spec,dep,M,B,Buchi,H);
+           return;
+       end
+               
+           
    end
 end
 if (ismember(1,P.max))
@@ -195,6 +203,12 @@ if (ismember(1,P.max))
                [P, sys, spec] = product(sys,spec,dep,M,B,Buchi,H);
                return;
            end
+       end
+   else
+        if (H < 20)
+           H=H+1;
+           [P, sys, spec] = product(sys,spec,dep,M,B,Buchi,H);
+           return;
        end
    end
 end
