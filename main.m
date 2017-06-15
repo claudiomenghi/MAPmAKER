@@ -59,7 +59,7 @@ spec(3)=A32();
 N=3;
 scale = 30;
 
-figure;
+%figure;
 personalGrid = ones(N, environment.x*scale+1,environment.y*scale+1)*whitevalue;
 
 for i=1:N
@@ -70,12 +70,16 @@ end
 
 
 
-figure;
+hh=figure;
 grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
 grid = visualizeInit(robotcolors, sys, offset, scale, grid, environment);
 
 
-
+F=getframe();
+movie(F);
+v=VideoWriter('movie.avi');
+v.FrameRate = 1;
+open(v);
 
 
 
@@ -171,9 +175,8 @@ while isempty(reply)
     [sys, grid, environment]=infDiscover(scale, grid, sys, environment);
     
     grid=visualizeGrid(scale, grid, environment);
+    
+    currFrame = getframe(hh);
+    writeVideo(v,currFrame);
 end
-
-%f = im2frame(X)
-%save movie.dat F
-%VideoWriter(movie,'movie.avi','fps',2,'compression','Cinepak','quality',100)
-
+close(v);
