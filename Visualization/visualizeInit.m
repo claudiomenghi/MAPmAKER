@@ -10,7 +10,7 @@ N=length(sys);
 for i=1:N
     ts=sys(i);
     servicelocation=find(~cellfun(@isempty, ts.ser));
-    [x,y] =  transform_coordinates(servicelocation);
+    [x,y] =  transform_coordinates(servicelocation, environment.x, environment.y);
     sizex=size(x);
     for j=1:sizex(2)
         colors(x(j), y(j))=colors(x(j), y(j))+1;
@@ -20,7 +20,7 @@ end
 for i=1:N
     ts=sys(i);
     servicelocation=find(~cellfun(@isempty, ts.ser));
-    [x,y] =  transform_coordinates(servicelocation);
+    [x,y] =  transform_coordinates(servicelocation, environment.x, environment.y);
     sizex=size(x);
     for j=1:sizex(2)
         if(colors(x(j), y(j))==1)
@@ -52,7 +52,7 @@ grid=visualizeGrid(scale, grid, environment);
 
 for i=1:N
             color = robotcolors(i);
-            [x,y]= transform_coordinates(sys(i).curr);
+            [x,y]= transform_coordinates(sys(i).curr, environment.x, environment.y);
             grid((x-1)*scale+scale/2+offset(i):(x-1)*scale+scale/2+8+offset(i),(y-1)*scale+scale/2+offset(i):(y-1)*scale+scale/2+8+offset(i)) = color;
 end
 

@@ -5,8 +5,8 @@ c=colorcube(64);
 N=length(sys);
 for i=1:N
     fprintf('System %d, new current state %d, automaton state %d \n',sys(i).index, sys(i).curr, spec(i).curr);
-    [xprevious,yprevious] = transform_coordinates(sys(i).previouscurr);
-[x,y]= transform_coordinates(sys(i).curr);
+    [xprevious,yprevious] = transform_coordinates(sys(i).previouscurr, environment.x, environment.y);
+[x,y]= transform_coordinates(sys(i).curr, environment.x, environment.y);
 color = robotcolors(i);
  grid((xprevious-1)*scale+scale/2+4+ offset(i):(x-1)*scale+scale/2+4+offset(i), (yprevious-1)*scale+scale/2+4+offset(i):(y-1)*scale+scale/2+4+offset(i)) = blackvalue;
             grid((x-1)*scale+scale/2+4+offset(i):(xprevious-1)*scale+scale/2+4+offset(i), (y-1)*scale+scale/2+4+offset(i):(yprevious-1)*scale+scale/2+4+offset(i)) = blackvalue;

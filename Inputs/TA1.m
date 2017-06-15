@@ -1,3 +1,4 @@
+
 %create a transition system
 
 function T = TA1(environmentMap)

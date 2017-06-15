@@ -12,7 +12,7 @@ for j=1:environmentsize
           xdistance=abs(mod(k, environment.y)-mod(j, environment.y));
          
           if((xdistance+ydistance==1))
-          [x,y] =  transform_coordinates([j, k]);
+          [x,y] =  transform_coordinates([j, k], environment.x, environment.y);
          
               if((ydistance==0) && x(1)==x(2))
                  grid((x-1)*(scale)+1:(x)*scale,(y)*scale-1:(y)*scale+1) = blackvalue;
@@ -34,7 +34,7 @@ if(isfield(environment, 'pmap'))
               xdistance=abs(mod(k, environment.y)-mod(j, environment.y));
 
               if((xdistance+ydistance==1))
-              [x,y] =  transform_coordinates([j, k]);
+              [x,y] =  transform_coordinates([j, k], environment.x, environment.y);
 
                   if((ydistance==0) && x(1)==x(2))
                        grid((x-1)*(scale)+1:(x)*scale,(y)*scale-1:(y)*scale+1) = redvalue;

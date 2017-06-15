@@ -3,8 +3,9 @@ function E = EnvironmentMap1()
 y=18;
 x=8;
 size=x*y;
-E.x=x;
-E.y=y;
+E.x=8;
+E.y=18;
+cl
 %adjacE.mapncy matrix
 E.map=sparse(size,size);
 for i=144

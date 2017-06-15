@@ -1,7 +1,7 @@
-function [x,y] = transform_coordinates(a)
+function [x,y] = transform_coordinates(a, maxX, maxY)
 
-x = 8-(floor((a-1)/18));
-y = mod(a,18);
+x = maxX-(floor((a-1)/maxY));
+y = mod(a,maxY);
 
 for i=1:length(x)
 if x(i) == 0 
@@ -10,6 +10,6 @@ end
 end
 for i=1:length(y)
 if y(i) == 0 
-    y(i) = 18;
+    y(i) = maxY;
 end
 end

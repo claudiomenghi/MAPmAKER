@@ -1,4 +1,4 @@
-
+close all;
 clear all;
 %delete(findall(0,'Type','figure'));
 %bdclose('all');
@@ -168,7 +168,12 @@ while isempty(reply)
         fprintf('\n');
     end
     
-    [sys, grid]=infDiscover(scale, grid, sys, environment);
+    [sys, grid, environment]=infDiscover(scale, grid, sys, environment);
     
     grid=visualizeGrid(scale, grid, environment);
 end
+
+%f = im2frame(X)
+%save movie.dat F
+%VideoWriter(movie,'movie.avi','fps',2,'compression','Cinepak','quality',100)
+
