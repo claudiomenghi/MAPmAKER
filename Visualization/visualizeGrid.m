@@ -1,9 +1,28 @@
-function grid = visualizeGrid( scale, grid, environment)
+function grid = visualizeGrid(grid, environment)
 
 global blackvalue;
 global redvalue;
-global whitevalue;
+global c;
+global scale;
+global linewidth;
 
+%% grid visualization
+for i = 0:environment.y
+    for j = 1:environment.x*scale+1
+        grid(j, i*scale+1:i*scale+1+linewidth) = blackvalue;
+    end
+end
+
+for j=0:environment.x
+    for i = 1:environment.y*scale+1
+        grid(j*scale+1:j*scale+1+linewidth,i) = blackvalue;
+    end
+end
+
+imshow(grid, c);
+
+
+%% obstacle visualization
 environmentsize=environment.x*environment.y;
 for j=1:environmentsize
    for k=j+1:environmentsize
@@ -48,6 +67,7 @@ if(isfield(environment, 'pmap'))
     end
 end
 
+imshow(grid, c);
 end
 
 

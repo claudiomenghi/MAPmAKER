@@ -1,92 +1,38 @@
 close all;
 clear all;
-%delete(findall(0,'Type','figure'));
-%bdclose('all');
-
-% sets the colors for the robots
-robotcolors=[3 %green 
-    30 % blue
-    37 % purple
-    ];
-
-global whitevalue;
-global blackvalue;
-global redvalue;
-
-% set this flaf to 1 to enable the search of possible paths
-global possibleengineenabled;
-possibleengineenabled=1;
-
-global robotFigEnabled;
-
-% it is set by the algorithm whenever the search of the possible solution
-% is triggered
-global possibleSolutionSearchTriggered;
-possibleSolutionSearchTriggered=0;
-robotFigEnabled=0;
-
-whitevalue=64;
-blackvalue=57;
-redvalue=44;
 
 addpath('Inputs');
 addpath('Visualization');
 addpath('Utils');
+addpath('Algorithms');
 
-%no of agents
-N=3; 
+configParams;
 
+% creates the current scenario
+createScenario;
 
-%inputs
-%environment=EnvironmentMapa();
-environment=EnvironmentMapb();
-
-offset(1)=-10;
-offset(2)= 9;
-offset(3)=-13;
-
-sys(1)=PTB1(environment.map, environment.pmap);
-sys(2)=PTC2(environment.map, environment.pmap);
-sys(3)=PTA3(environment.map, environment.pmap);
-
-spec(1)=B12();
-spec(2)=C23();
-spec(3)=A32();
+% sets visualization constants, colors, cell dimensions etc
+setVisualizationConstants;
 
 
-
-% contains the robot number
-N=3;
-scale = 30;
+%get the number of agents
+tmp=size(sys);
+N=tmp(2); 
 
 %figure;
-personalGrid = ones(N, environment.x*scale+1,environment.y*scale+1)*whitevalue;
-
-for i=1:N
-    if(robotFigEnabled==1)
-     visualizePersonalInit(robotcolors, sys, offset, scale, personalGrid(i,:,:), environment, i);
-    end
-end
-
-
-
-hh=figure;
 grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
-grid = visualizeInit(robotcolors, sys, offset, scale, grid, environment);
+hh=figure;
+grid=visualizeGrid(grid, environment);
+imshow(grid, c);
+grid = visualizeInit(sys, offset, scale, grid, environment);
+visualizeServices;
 
-
-F=getframe();
-movie(F);
+%F=getframe();
+%movie(F);
 v=VideoWriter('movie.avi');
 v.FrameRate = 1;
 open(v);
 
-
-
-% horizon for the intersection automaton
-h=3;
-% horizon for the product
-H=5;
 
 reply = '';
 i=1;
@@ -95,6 +41,7 @@ iter=0;
 perm = [3,1,2]; %permutation (i.e. ordering), meaning that agent 3 < agent 1 < agent 2
 %perm=[1,2,3];
         
+
 while isempty(reply)
     
     possibleSolutionSearchTriggered=0;
@@ -111,9 +58,11 @@ while isempty(reply)
     clear Buchi;
     clear B;
     clear P;
-
+    
+    
+%% computing the dependencies classes
     %dependency partition
-    [Dep,ell] = dependency(spec,perm,N,h);
+    [Dep,ell] = computeDependencies(spec,perm,N,h);
     for i=1:N
         cut(spec(i),h);
     end
@@ -122,6 +71,7 @@ while isempty(reply)
         sys(i).previouscurr = sys(i).curr;
     end
         
+%% analysing the dependincies classes
     for i=1:ell
         clear Buchi;
         clear B;
@@ -130,20 +80,15 @@ while isempty(reply)
         dep = Dep{i};
         M = length(dep);
         
-        [Buchi, B] = intersection(spec,dep,M,h);
-        fprintf('Buchi %d done \n',i);
+        [Buchi, B] = intersection(spec,dep, h);
+        fprintf('Buchi %d done \n', i);
         
        % if isequal([1],B.Q)
        %     fprintf('h too small! \n');
        %     skip = 1;
        %     break;
        % end
-       
-       % H = input('Input H :');
-       % if isempty(H)
-            H=5;
-       % end
-        
+
        [P, sys, spec] = product(sys,spec,dep,M,B,Buchi,H);
     end
     
@@ -160,7 +105,7 @@ while isempty(reply)
         fprintf('New permutation:'); 
         disp(perm);
        
-        [grid, offset]=visualize(grid, robotcolors, sys, offset, scale, spec, environment);
+        [grid, offset]=visualize(grid, sys, offset, spec, environment);
        
         if sys(1).lastaction == 0
             reply = ''; 
@@ -172,9 +117,8 @@ while isempty(reply)
         fprintf('\n');
     end
     
-    [sys, grid, environment]=infDiscover(scale, grid, sys, environment);
+    [sys, grid, environment]=infDiscover(grid, sys, environment);
     
-    grid=visualizeGrid(scale, grid, environment);
     
     currFrame = getframe(hh);
     writeVideo(v,currFrame);

@@ -1,5 +1,5 @@
 % updates the system with new information about the environment
-function [sys, grid, environment] = infDiscover(scale, grid, sys, environment)
+function [sys, grid, environment] = infDiscover(grid, sys, environment)
     xmax=environment.x;
     ymax=environment.y;
     discovered=ones(environment.x*environment.y,environment.x*environment.y)*3;
@@ -97,7 +97,8 @@ value=randsrc(1,1,[0 1; 0.5 0.5]);
         tmp.curr= sys(3).curr;
         tmp.previouscurr=sys(3).curr;
         sys(3)=tmp;
-        grid=visualizeDiscoveredGrid(scale, grid, environment, discovered);
+        
+        grid=visualizeDiscoveredGrid(grid, environment, sys, discovered);
 
     end
     

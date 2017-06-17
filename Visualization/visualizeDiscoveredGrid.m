@@ -1,7 +1,11 @@
-function grid = visualizeDiscoveredGrid( scale, grid, environment, discovered)
+function grid = visualizeDiscoveredGrid( grid, environment, sys, discovered)
 
 global blackvalue;
 global whitevalue;
+global c;
+global scale;
+global legendText;
+
 
 environmentsize=environment.x*environment.y;
 for j=1:environmentsize
@@ -39,11 +43,10 @@ for j=1:environmentsize
    end
 end
 
-c=colorcube(64);
+
 imshow(grid, c);
+visualizeServices;
+xlabel(legendText);
 pause(3)
-
-
-
 
 end
