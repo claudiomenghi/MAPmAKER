@@ -54,7 +54,7 @@ for i=1:nrooms
     %     room(i,1)=round(1+(x-1).*rand);
     %     room(i,2)=round(1+(y-1).*rand);
     %Centers generated so the rooms fit in the given space following the
-    %next formula: r = a + (b-a).*rand(100,1);
+    %next formula: r = a + (b-a).*rand;
     distance=0;
     if i > 1
         while distance < sqrt(13)
@@ -85,101 +85,128 @@ room
 % Set to 0 the walls of the rooms
 doorpos=zeros(ndoors,1);
 for i=1:nrooms
-    door=0;
-    for j=1:lroom
-        %right wall
-        E.map(room(i,2)+(room(i,1)-1)*y+2,room(i,2)+(room(i,1)-1)*y+1)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y+1,room(i,2)+(room(i,1)-1)*y+2)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y+2+y,room(i,2)+(room(i,1)-1)*y+1+y)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y+1+y,room(i,2)+(room(i,1)-1)*y+2+y)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y+2-y,room(i,2)+(room(i,1)-1)*y+1-y)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y+1-y,room(i,2)+(room(i,1)-1)*y+2-y)=0;
-        %upper wall
-        E.map(room(i,2)+(room(i,1)-1)*y+2*y,room(i,2)+(room(i,1)-1)*y+y)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y+y,room(i,2)+(room(i,1)-1)*y+2*y)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y+2*y-1,room(i,2)+(room(i,1)-1)*y+y-1)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y+y-1,room(i,2)+(room(i,1)-1)*y+2*y-1)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y+2*y+1,room(i,2)+(room(i,1)-1)*y+y+1)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y+y+1,room(i,2)+(room(i,1)-1)*y+2*y+1)=0;
-        %lower wall
-        E.map(room(i,2)+(room(i,1)-1)*y-2*y,room(i,2)+(room(i,1)-1)*y-y)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y-y,room(i,2)+(room(i,1)-1)*y-2*y)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y-2*y-1,room(i,2)+(room(i,1)-1)*y-y-1)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y-y-1,room(i,2)+(room(i,1)-1)*y-2*y-1)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y-2*y+1,room(i,2)+(room(i,1)-1)*y-y+1)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y-y+1,room(i,2)+(room(i,1)-1)*y-2*y+1)=0;
-        %left wall
-        E.map(room(i,2)+(room(i,1)-1)*y-2,room(i,2)+(room(i,1)-1)*y-1)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y-1,room(i,2)+(room(i,1)-1)*y-2)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y-2+y,room(i,2)+(room(i,1)-1)*y-1+y)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y-1+y,room(i,2)+(room(i,1)-1)*y-2+y)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y-2-y,room(i,2)+(room(i,1)-1)*y-1-y)=0;
-        E.map(room(i,2)+(room(i,1)-1)*y-1-y,room(i,2)+(room(i,1)-1)*y-2-y)=0;
-        
-        %Randomly allocates the door
-        for n=1:ndoors
-            %makes sure the position of the door is not overlapped
-            dif=0;
-            while  dif==0
-                doorpos_aux=round(1 + (lroom*4-1).*rand);
-                for s=1:n
-                    next=0;
-                    if isequal(doorpos_aux, doorpos(s,1)) == 1
-                        break
-                    else
-                        next=1;
-                    end
-                end
-                if next==1
-                    dif=1;
+    %right wall
+    E.map(room(i,2)+(room(i,1)-1)*y+2,room(i,2)+(room(i,1)-1)*y+1)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y+1,room(i,2)+(room(i,1)-1)*y+2)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y+2+y,room(i,2)+(room(i,1)-1)*y+1+y)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y+1+y,room(i,2)+(room(i,1)-1)*y+2+y)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y+2-y,room(i,2)+(room(i,1)-1)*y+1-y)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y+1-y,room(i,2)+(room(i,1)-1)*y+2-y)=0;
+    %upper wall
+    E.map(room(i,2)+(room(i,1)-1)*y+2*y,room(i,2)+(room(i,1)-1)*y+y)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y+y,room(i,2)+(room(i,1)-1)*y+2*y)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y+2*y-1,room(i,2)+(room(i,1)-1)*y+y-1)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y+y-1,room(i,2)+(room(i,1)-1)*y+2*y-1)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y+2*y+1,room(i,2)+(room(i,1)-1)*y+y+1)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y+y+1,room(i,2)+(room(i,1)-1)*y+2*y+1)=0;
+    %lower wall
+    E.map(room(i,2)+(room(i,1)-1)*y-2*y,room(i,2)+(room(i,1)-1)*y-y)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y-y,room(i,2)+(room(i,1)-1)*y-2*y)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y-2*y-1,room(i,2)+(room(i,1)-1)*y-y-1)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y-y-1,room(i,2)+(room(i,1)-1)*y-2*y-1)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y-2*y+1,room(i,2)+(room(i,1)-1)*y-y+1)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y-y+1,room(i,2)+(room(i,1)-1)*y-2*y+1)=0;
+    %left wall
+    E.map(room(i,2)+(room(i,1)-1)*y-2,room(i,2)+(room(i,1)-1)*y-1)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y-1,room(i,2)+(room(i,1)-1)*y-2)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y-2+y,room(i,2)+(room(i,1)-1)*y-1+y)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y-1+y,room(i,2)+(room(i,1)-1)*y-2+y)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y-2-y,room(i,2)+(room(i,1)-1)*y-1-y)=0;
+    E.map(room(i,2)+(room(i,1)-1)*y-1-y,room(i,2)+(room(i,1)-1)*y-2-y)=0;
+end
+E.pmap=E.map; %possible map updated
+
+%Randomly allocates the door
+for i=1:nrooms
+    for n=1:ndoors
+        %makes sure the position of the door is not overlapped
+        dif=0;
+        while  dif==0
+            doorpos_aux=round(1 + (lroom*4-1).*rand);
+            for s=1:n
+                next=0;
+                if isequal(doorpos_aux, doorpos(s,1)) == 1
+                    break
+                else
+                    next=1;
                 end
             end
-            doorpos(n,1) = doorpos_aux;
-            
-            switch doorpos(n,1)
-                case 1
-                    E.map(room(i,2)+(room(i,1)-1)*y+2,room(i,2)+(room(i,1)-1)*y+1)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y+1,room(i,2)+(room(i,1)-1)*y+2)=1;
-                case 2
-                    E.map(room(i,2)+(room(i,1)-1)*y+2+y,room(i,2)+(room(i,1)-1)*y+1+y)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y+1+y,room(i,2)+(room(i,1)-1)*y+2+y)=1;
-                case 3
-                    E.map(room(i,2)+(room(i,1)-1)*y+2-y,room(i,2)+(room(i,1)-1)*y+1-y)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y+1-y,room(i,2)+(room(i,1)-1)*y+2-y)=1;
-                case 4
-                    E.map(room(i,2)+(room(i,1)-1)*y+2*y,room(i,2)+(room(i,1)-1)*y+y)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y+y,room(i,2)+(room(i,1)-1)*y+2*y)=1;
-                case 5
-                    E.map(room(i,2)+(room(i,1)-1)*y+2*y-1,room(i,2)+(room(i,1)-1)*y+y-1)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y+y-1,room(i,2)+(room(i,1)-1)*y+2*y-1)=1;
-                case 6
-                    E.map(room(i,2)+(room(i,1)-1)*y+2*y+1,room(i,2)+(room(i,1)-1)*y+y+1)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y+y+1,room(i,2)+(room(i,1)-1)*y+2*y+1)=1;
-                case 7
-                    E.map(room(i,2)+(room(i,1)-1)*y-2*y,room(i,2)+(room(i,1)-1)*y-y)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y-y,room(i,2)+(room(i,1)-1)*y-2*y)=1;
-                case 8
-                    E.map(room(i,2)+(room(i,1)-1)*y-2*y-1,room(i,2)+(room(i,1)-1)*y-y-1)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y-y-1,room(i,2)+(room(i,1)-1)*y-2*y-1)=1;
-                case 9
-                    E.map(room(i,2)+(room(i,1)-1)*y-2*y+1,room(i,2)+(room(i,1)-1)*y-y+1)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y-y+1,room(i,2)+(room(i,1)-1)*y-2*y+1)=1;
-                case 10
-                    E.map(room(i,2)+(room(i,1)-1)*y-2,room(i,2)+(room(i,1)-1)*y-1)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y-1,room(i,2)+(room(i,1)-1)*y-2)=1;
-                case 11
-                    E.map(room(i,2)+(room(i,1)-1)*y-2+y,room(i,2)+(room(i,1)-1)*y-1+y)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y-1+y,room(i,2)+(room(i,1)-1)*y-2+y)=1;
-                case 12
-                    E.map(room(i,2)+(room(i,1)-1)*y-2-y,room(i,2)+(room(i,1)-1)*y-1-y)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y-1-y,room(i,2)+(room(i,1)-1)*y-2-y)=1;
-                otherwise
-                    E.map(room(i,2)+(room(i,1)-1)*y+2,room(i,2)+(room(i,1)-1)*y+1)=1;
-                    E.map(room(i,2)+(room(i,1)-1)*y+1,room(i,2)+(room(i,1)-1)*y+2)=1;
+            if next==1
+                dif=1;
             end
+        end
+        doorpos(n,1) = doorpos_aux;
+        openclosed = round(rand);
+        switch doorpos(n,1)
+            case 1
+                E.map(room(i,2)+(room(i,1)-1)*y+2,room(i,2)+(room(i,1)-1)*y+1)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y+1,room(i,2)+(room(i,1)-1)*y+2)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+2,room(i,2)+(room(i,1)-1)*y+1)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+1,room(i,2)+(room(i,1)-1)*y+2)=openclosed;
+            case 2
+                E.map(room(i,2)+(room(i,1)-1)*y+2+y,room(i,2)+(room(i,1)-1)*y+1+y)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y+1+y,room(i,2)+(room(i,1)-1)*y+2+y)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+2+y,room(i,2)+(room(i,1)-1)*y+1+y)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+1+y,room(i,2)+(room(i,1)-1)*y+2+y)=openclosed;
+            case 3
+                E.map(room(i,2)+(room(i,1)-1)*y+2-y,room(i,2)+(room(i,1)-1)*y+1-y)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y+1-y,room(i,2)+(room(i,1)-1)*y+2-y)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+2-y,room(i,2)+(room(i,1)-1)*y+1-y)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+1-y,room(i,2)+(room(i,1)-1)*y+2-y)=openclosed;
+            case 4
+                E.map(room(i,2)+(room(i,1)-1)*y+2*y,room(i,2)+(room(i,1)-1)*y+y)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y+y,room(i,2)+(room(i,1)-1)*y+2*y)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+2*y,room(i,2)+(room(i,1)-1)*y+y)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+y,room(i,2)+(room(i,1)-1)*y+2*y)=openclosed;
+            case 5
+                E.map(room(i,2)+(room(i,1)-1)*y+2*y-1,room(i,2)+(room(i,1)-1)*y+y-1)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y+y-1,room(i,2)+(room(i,1)-1)*y+2*y-1)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+2*y-1,room(i,2)+(room(i,1)-1)*y+y-1)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+y-1,room(i,2)+(room(i,1)-1)*y+2*y-1)=openclosed;
+            case 6
+                E.map(room(i,2)+(room(i,1)-1)*y+2*y+1,room(i,2)+(room(i,1)-1)*y+y+1)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y+y+1,room(i,2)+(room(i,1)-1)*y+2*y+1)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+2*y+1,room(i,2)+(room(i,1)-1)*y+y+1)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+y+1,room(i,2)+(room(i,1)-1)*y+2*y+1)=openclosed;
+            case 7
+                E.map(room(i,2)+(room(i,1)-1)*y-2*y,room(i,2)+(room(i,1)-1)*y-y)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y-y,room(i,2)+(room(i,1)-1)*y-2*y)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y-2*y,room(i,2)+(room(i,1)-1)*y-y)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y-y,room(i,2)+(room(i,1)-1)*y-2*y)=openclosed;
+            case 8
+                E.map(room(i,2)+(room(i,1)-1)*y-2*y-1,room(i,2)+(room(i,1)-1)*y-y-1)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y-y-1,room(i,2)+(room(i,1)-1)*y-2*y-1)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y-2*y-1,room(i,2)+(room(i,1)-1)*y-y-1)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y-y-1,room(i,2)+(room(i,1)-1)*y-2*y-1)=openclosed;
+            case 9
+                E.map(room(i,2)+(room(i,1)-1)*y-2*y+1,room(i,2)+(room(i,1)-1)*y-y+1)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y-y+1,room(i,2)+(room(i,1)-1)*y-2*y+1)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y-2*y+1,room(i,2)+(room(i,1)-1)*y-y+1)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y-y+1,room(i,2)+(room(i,1)-1)*y-2*y+1)=openclosed;
+            case 10
+                E.map(room(i,2)+(room(i,1)-1)*y-2,room(i,2)+(room(i,1)-1)*y-1)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y-1,room(i,2)+(room(i,1)-1)*y-2)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y-2,room(i,2)+(room(i,1)-1)*y-1)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y-1,room(i,2)+(room(i,1)-1)*y-2)=openclosed;
+            case 11
+                E.map(room(i,2)+(room(i,1)-1)*y-2+y,room(i,2)+(room(i,1)-1)*y-1+y)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y-1+y,room(i,2)+(room(i,1)-1)*y-2+y)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y-2+y,room(i,2)+(room(i,1)-1)*y-1+y)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y-1+y,room(i,2)+(room(i,1)-1)*y-2+y)=openclosed;
+            case 12
+                E.map(room(i,2)+(room(i,1)-1)*y-2-y,room(i,2)+(room(i,1)-1)*y-1-y)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y-1-y,room(i,2)+(room(i,1)-1)*y-2-y)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y-2-y,room(i,2)+(room(i,1)-1)*y-1-y)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y-1-y,room(i,2)+(room(i,1)-1)*y-2-y)=openclosed;
+            otherwise
+                E.map(room(i,2)+(room(i,1)-1)*y+2,room(i,2)+(room(i,1)-1)*y+1)=1;
+                E.map(room(i,2)+(room(i,1)-1)*y+1,room(i,2)+(room(i,1)-1)*y+2)=1;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+2,room(i,2)+(room(i,1)-1)*y+1)=openclosed;
+                E.pmap(room(i,2)+(room(i,1)-1)*y+1,room(i,2)+(room(i,1)-1)*y+2)=openclosed;
         end
     end
 end
+
 
 end
 
