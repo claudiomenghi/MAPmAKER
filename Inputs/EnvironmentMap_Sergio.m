@@ -58,16 +58,26 @@ for i=1:nrooms
     distance=0;
     if i > 1
         while distance < sqrt(13)
-            room(i,1)=round(3+(x-2-3).*rand);
-            room(i,2)=round(3+(y-2-3).*rand);
+            jump=0;
+            room(i,1)=round(2+(x-2-2).*rand);
+            room(i,2)=round(2+(y-2-2).*rand);
             for j=1:(i-1)
                 distance_loop(j)=sqrt((room(i,1)-room(j,1))^2 + (room(i,2)-room(j,2))^2);
             end
             distance=min(distance_loop(1:j));
+            for j=1:(i-1)
+                if (distance < sqrt(13)) && (distance >= 3) && (room(i,1)==room(j,1) || room(i,2)==room(j,2))
+                    jump=1;
+                    break
+                end
+            end
+            if jump==1
+                break
+            end
         end
     else
-        room(i,1)=round(3+(x-2-3).*rand);
-        room(i,2)=round(3+(y-2-3).*rand);
+        room(i,1)=round(2+(x-2-2).*rand);
+        room(i,2)=round(2+(y-2-2).*rand);
     end
     
 end
@@ -209,5 +219,4 @@ end
 
 
 end
-
 
