@@ -4,10 +4,10 @@
 %% Output
 % return an automaton corresponding to the formula
 % GLOBALLY(FINALLY(action1)) AND GLOBALLY(FINALLY(action2))
-function A = Goal1(action1, action2, robotsNecessaryForAction1, robotsNecessaryForAction2)
+function A = ExistenceGoal(action1, action2, robotsNecessaryForAction1, robotsNecessaryForAction2)
 
+A.name='existencePattern';
 A.Q =1:3; %states
-A
 A.Sigma = 1:4; %actions -- over 2^Pi
 % [{}, {action1}, {action2}, {action1, action2}]
 A.F = 3; %final states
@@ -41,8 +41,8 @@ A.lab{4} = [action1 action2];
 % specifies for each action the other involved actors. It represents
 % synchronization primitives
 A.parti{1} = []; 
-A.parti{2} = [robotsNecessaryForAction1 robotsNecessaryForAction2]; 
-A.parti{3} = [robotsNecessaryForAction1 robotsNecessaryForAction2]; 
+A.parti{2} = robotsNecessaryForAction1; 
+A.parti{3} = robotsNecessaryForAction2; 
 A.parti{4} = [robotsNecessaryForAction1 robotsNecessaryForAction2]; 
 
 A.step = 1;

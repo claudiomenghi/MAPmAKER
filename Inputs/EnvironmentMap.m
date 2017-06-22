@@ -70,12 +70,21 @@ E.map(84,85) = 1;
 E.map(85,85) = 1;
 E.map(138,139)=1;
 E.map(139,138)=1;
+E.map(6, 7)=1;
+E.map(7, 6)=1;
+
+E.map(75,93)=1;
+E.map(93, 75)=1;
+E.map(6, 7)=1;
+E.map(7, 6)=1;
+
 
 % possible map
 E.pmap=E.map;
 E.pmap(75,93)=1;
 E.pmap(93, 75)=1;
-
+E.pmap(6, 7)=1;
+E.pmap(7, 6)=1;
 
 
 

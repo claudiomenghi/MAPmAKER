@@ -34,10 +34,7 @@ while ~isempty(unsorted)
         Dep{ell} = unique([Dep{ell} newDep]);
         Dep{ell} = intersect(perm,Dep{ell},'stable');
     end
-    unsorted = setdiff(unsorted,Dep{ell},'stable');
-    %for j = 1:length(Dep{ell})
-    %    Dep{ell}(j) = permrev(Dep{ell}(j));
-    %end     
+    unsorted = setdiff(unsorted,Dep{ell},'stable');  
 end
 
 fprintf('The dependency classes are:\n');

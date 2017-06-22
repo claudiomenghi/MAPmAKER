@@ -40,4 +40,3 @@ for i = nargin:-1:1 %go backward through inputs (add columns starting with the l
 end
 
 
-% set=mat2cell(set,ones(1,prod(N)),nargin); %if we want to obtain a cell, each cell element being a element of Cartesian product

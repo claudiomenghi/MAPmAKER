@@ -6,7 +6,7 @@
 function T = Robot2(environmentMap, penvironmentMap)
 
 T.Q=1:144;   %states
-T.Pi=11:18; %all subsets of atomic propositions
+T.Pi=3:4; %all subsets of atomic propositions
 %T.curr= 76;
 
 T.curr = 73;    %initial state

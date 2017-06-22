@@ -13,4 +13,4 @@ robotFigEnabled=0;
 % horizon for the intersection automaton
 h=3;
 % horizon for the product
-H=5;
+H=10;

@@ -5,8 +5,8 @@
 % the model of the robot
 function T = Robot3(environmentMap, penvironmentMap)
 
-T.Q=[1:144];   %states
-T.Pi=[21:24]; %all subsets of atomic propositions
+T.Q=1:144;   %states
+T.Pi=5:6; %all subsets of atomic propositions
 %T.curr=48;
 T.curr = 18;    %initial state
 T.init=T.curr;

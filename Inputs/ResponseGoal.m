@@ -4,8 +4,9 @@
 %% Output
 % return an automaton corresponding to the formula
 % GLOBALLY(action1-> FINALLY(action2))
-function A = Goal2(action1, action2, robotsNecessaryForAction1, robotsNecessaryForAction2)
+function A = ResponseGoal(action1, action2, robotsNecessaryForAction1, robotsNecessaryForAction2)
 
+A.name='responsePattern';
 %% states
 A.Q = 1:2; 
 
@@ -40,8 +41,8 @@ A.lab{4} = [action1 action2];
 % specifies for each action the other involved actors. It represents
 % synchronization primitives
 A.lab{1}= [];
-A.parti{2} = [robotsNecessaryForAction1 robotsNecessaryForAction2]; 
-A.parti{3} = [robotsNecessaryForAction1 robotsNecessaryForAction2]; 
+A.parti{2} = robotsNecessaryForAction1; 
+A.parti{3} = robotsNecessaryForAction2; 
 A.parti{4} = [robotsNecessaryForAction1 robotsNecessaryForAction2];
 
 A.step = 1;

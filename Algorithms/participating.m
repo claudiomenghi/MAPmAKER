@@ -2,7 +2,7 @@
 % A: the specification of one of the automata
 % h: the index upon which the specification must be explored
 %% Output
-%
+% the automata participating in the spec satisfaction
 function Parti = participating(A,h)
 
 Parti = [];

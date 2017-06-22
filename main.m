@@ -29,19 +29,18 @@ visualizeServices;
 
 %F=getframe();
 %movie(F);
-v=VideoWriter('movie.avi');
-v.FrameRate = 1;
-open(v);
+%v=VideoWriter('movie.avi');
+%v.FrameRate = 1;
+%open(v);
 
 
 reply = '';
 i=1;
 iter=0;
 
-perm = [3,1,2]; %permutation (i.e. ordering), meaning that agent 3 < agent 1 < agent 2
+perm = randperm(size(sys,2)); %permutation (i.e. ordering), meaning that agent 3 < agent 1 < agent 2
 %perm=[1,2,3];
         
-
 while isempty(reply)
     
     possibleSolutionSearchTriggered=0;
@@ -49,9 +48,9 @@ while isempty(reply)
     iter=iter+1;
     
     fprintf('-----------------\n Iteration: %d. \n-----------------\n',iter);
-   % h = input('Input h :');
-   % if isempty(h)
-        h=3;
+   
+     h=3;
+     fprintf('value of h %d ',h);
    % end
     clear Dep;
     clear ell;
@@ -62,6 +61,7 @@ while isempty(reply)
     
 %% computing the dependencies classes
     %dependency partition
+    disp('STEP 1: computing the depencencies');
     [Dep,ell] = computeDependencies(spec,perm,N,h);
     for i=1:N
         cut(spec(i),h);
@@ -70,28 +70,48 @@ while isempty(reply)
     for i=1:N
         sys(i).previouscurr = sys(i).curr;
     end
-        
-%% analysing the dependincies classes
-    for i=1:ell
-        clear Buchi;
-        clear B;
-        clear P;
-        
-        dep = Dep{i};
-        M = length(dep);
-        
-        [Buchi, B] = intersection(spec,dep, h);
-        fprintf('Buchi %d done \n', i);
-        
-       % if isequal([1],B.Q)
-       %     fprintf('h too small! \n');
-       %     skip = 1;
-       %     break;
-       % end
-
-       [P, sys, spec] = product(sys,spec,dep,M,B,Buchi,H);
-    end
     
+    while 1
+    %% analysing the dependincies classes
+        for i=1:ell
+            clear Buchi;
+            clear B;
+            clear P;
+
+            dep = Dep{i};
+            M = length(dep);
+            currentmachine=dep(i);
+            disp('STEP 2: analyzing machine');
+            disp(currentmachine);
+
+            %% compute the intersection automaton
+            disp('STEP 3: computing the intersection');
+            [Buchi, kmap, EXPLICIT_STATES] = intersection(spec,dep, h);
+
+            disp('STEP 4: computing the progressiveFunction');
+            [ Buchi, progressiveFunction ] = computeProgressiveFunction( Buchi , size(dep,2), kmap);
+
+           % if isequal([1],B.Q)
+           %     fprintf('h too small! \n');
+           %     skip = 1;
+           %     break;
+           % end
+
+           disp('STEP 5: computing the product');
+           [P, sys, spec] = product(sys,spec,dep, Buchi,H, environment.x, environment.y);
+
+           disp('STEP 6: searcing for a path to be performed');
+           [Path ] = searchActions(P, progressiveFunction);
+           disp('STEP 7: updating the state of the machine');
+           Path
+           sys(currentmachine).curr=Path(2,1);
+           spec(currentmachine).curr=EXPLICIT_STATES(Path(2,2),currentmachine);
+           spec(currentmachine).curr
+           [grid, offset]=visualize(grid, sys, offset, spec, environment);
+           pause(2);
+        end
+    
+    end
     
     if ~skip
      
@@ -117,10 +137,10 @@ while isempty(reply)
         fprintf('\n');
     end
     
-    [sys, grid, environment]=infDiscover(grid, sys, environment);
+   % [sys, grid, environment]=infDiscover(grid, sys, environment);
     
     
-    currFrame = getframe(hh);
-    writeVideo(v,currFrame);
+%    currFrame = getframe(hh);
+%    writeVideo(v,currFrame);
 end
 close(v);
