@@ -2,14 +2,18 @@ close all;
 clear all;
 
 addpath('Inputs');
+addpath('Inputs/Scenario1');
+addpath('Inputs/Scenario2');
 addpath('Visualization');
 addpath('Utils');
 addpath('Algorithms');
 
+
 configParams;
 
 % creates the current scenario
-createScenario;
+%createScenario1;
+createScenario2;
 
 % sets visualization constants, colors, cell dimensions etc
 setVisualizationConstants;
@@ -103,11 +107,13 @@ while isempty(reply)
            disp('STEP 6: searcing for a path to be performed');
            [Path ] = searchActions(P, progressiveFunction);
            disp('STEP 7: updating the state of the machine');
-           Path
+           
+           grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale);
            sys(currentmachine).curr=Path(2,1);
            spec(currentmachine).curr=EXPLICIT_STATES(Path(2,2),currentmachine);
-           spec(currentmachine).curr
-           [grid, offset]=visualize(grid, sys, offset, spec, environment);
+           disp([sys(currentmachine).curr spec(currentmachine).curr]);
+           grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
+%           [grid, offset]=visualize(grid, sys, offset, spec, environment);
            pause(2);
         end
     

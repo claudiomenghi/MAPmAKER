@@ -46,6 +46,7 @@ act_no=size(P.Sigma,1);
 %% it computes the services associated with each combination of actions (in sigma)
 P.lab{act_no}=[];
 
+
 % it loops over all the possible ways in which the actions can be combined
 for t = 1:act_no 
     % tries to perform a combination of actions
@@ -80,89 +81,97 @@ iter=1;
 visitedstates=[];
 acceptingMachineArray=1;
 
-while (topstackhindex-bottomstackhindex>=0) && (iter<=h) %explore -- using the cut already
-   
-    fprintf('Level %d \n', iter);
+acceptingFound=0;
+
+h=h-1;
+while ~acceptingFound
+    h=h+1;
     
-    iter = iter+1;
-    addedelements=0;
-    analizedElements=0;
-    
-    for j=bottomstackhindex:topstackhindex %do it from possible current states
-        addedstates=0;
-        currenststateindex=j;
-        CURRENT_STATE=STATES(currenststateindex,:);
-        acceptingMachine=acceptingMachineArray(currenststateindex,:);
-        analizedElements=analizedElements+1;
-        
-        for t=1:act_no
-            % computes the successors of the now state
-            % succ{i} contains for each machine the successor for the
-            % given label
-            succ=CURRENT_STATE;
-            found=0;
-            for m = 1:M
-                currentSpec=dep(m);
-                if(~P.Sigma(t,currentSpec)==0)
-                    localEvents=P.Sigma(t,currentSpec);
-                   
-                     if ~isempty(spec(currentSpec).trans{CURRENT_STATE(1,currentSpec),localEvents})
-                          succ(currentSpec) = spec(currentSpec).trans{CURRENT_STATE(1,currentSpec),localEvents};
-                        found=1;
+    while (topstackhindex-bottomstackhindex>=0) && (iter<=h) %explore -- using the cut already
+
+        fprintf('Level %d \n', iter);
+
+        iter = iter+1;
+        addedelements=0;
+        analizedElements=0;
+
+        for j=bottomstackhindex:topstackhindex %do it from possible current states
+            addedstates=0;
+            currenststateindex=j;
+            CURRENT_STATE=STATES(currenststateindex,:);
+            acceptingMachine=acceptingMachineArray(currenststateindex,:);
+            analizedElements=analizedElements+1;
+
+            for t=1:act_no
+                % computes the successors of the now state
+                % succ{i} contains for each machine the successor for the
+                % given label
+                succ=CURRENT_STATE;
+                found=0;
+                for m = 1:M
+                    currentSpec=dep(m);
+                    if(~P.Sigma(t,currentSpec)==0)
+                        localEvents=P.Sigma(t,currentSpec);
+
+                         if ~isempty(spec(currentSpec).trans{CURRENT_STATE(1,currentSpec),localEvents})
+                              succ(currentSpec) = spec(currentSpec).trans{CURRENT_STATE(1,currentSpec),localEvents};
+                            found=1;
+                        end
                     end
                 end
-            end
-            if(found==1)
+                if(found==1)
 
-                acceptingValue=CURRENT_STATE(1,M+1);
+                    acceptingValue=CURRENT_STATE(1,M+1);
 
-                % computing the value of the next k
-                % check whether the next state is of the machine M is an
-                % accepting state
-                 acceptingcheckSpec=dep(acceptingMachine);
-                 addedAccepting=0;
-                 if(acceptingValue==M)
-                     acceptingValue=0;
-                 end
-                if(~isempty(intersect(spec(acceptingcheckSpec).F,succ(acceptingcheckSpec))))
-                    
-                    if(acceptingMachine==M)
-                        addedAccepting=1;
-                        acceptingMachine=1;
-                    else
-                        acceptingMachine=acceptingMachine+1;
-                       
-                    end
-                     acceptingValue=acceptingValue+1;
-                end
-                succ(M+1)= acceptingValue;      
-                state=succ;
-                
-                if(~ismember(state, STATES, 'rows'))
-                    STATES=[STATES; state];
-                    acceptingMachineArray=[acceptingMachineArray; acceptingMachine];
-                    addedelements=addedelements+1;
-                    P.Q=[P.Q topstackhindex+addedelements];
-                    indexOfConfiguration=find(ismember(STATES,state,'rows'));
-                    kmap=[kmap; indexOfConfiguration  acceptingValue];
-                    if(addedAccepting)
-                        P.F=[P.F indexOfConfiguration];
+                    % computing the value of the next k
+                    % check whether the next state is of the machine M is an
+                    % accepting state
+                     acceptingcheckSpec=dep(acceptingMachine);
+                     addedAccepting=0;
+                     if(acceptingValue==M)
+                         acceptingValue=0;
                      end
+                    if(~isempty(intersect(spec(acceptingcheckSpec).F,succ(acceptingcheckSpec))))
+
+                        if(acceptingMachine==M)
+                            addedAccepting=1;
+                            acceptingMachine=1;
+                        else
+                            acceptingMachine=acceptingMachine+1;
+
+                        end
+                         acceptingValue=acceptingValue+1;
+                    end
+                    succ(M+1)= acceptingValue;      
+                    state=succ;
+
+                    if(~ismember(state, STATES, 'rows'))
+                        STATES=[STATES; state];
+                        acceptingMachineArray=[acceptingMachineArray; acceptingMachine];
+                        addedelements=addedelements+1;
+                        P.Q=[P.Q topstackhindex+addedelements];
+                        indexOfConfiguration=find(ismember(STATES,state,'rows'));
+                        kmap=[kmap; indexOfConfiguration  acceptingValue];
+                        if(addedAccepting)
+                            acceptingFound=1;
+                            P.F=[P.F indexOfConfiguration];
+                         end
+                    end
+
+                    indexOfConfiguration=find(ismember(STATES,state,'rows'));
+
+                    % add a transition to the automaton
+                    P.trans{j,t}=indexOfConfiguration;
+
                 end
-                
-                indexOfConfiguration=find(ismember(STATES,state,'rows'));
-                
-                % add a transition to the automaton
-                P.trans{j,t}=indexOfConfiguration;
-                
+
+
             end
-            
-            
+
         end
-        
+        bottomstackhindex=bottomstackhindex+analizedElements;
+        topstackhindex=topstackhindex+addedelements;
     end
-    bottomstackhindex=bottomstackhindex+analizedElements;
-    topstackhindex=topstackhindex+addedelements;
 end
 
 %B=removeRedundantStates(P, processed, init);

@@ -1,4 +1,4 @@
-function [grid, offset] = visualize(grid, sys, offset, spec, environment)
+mfunction [grid, offset] = visualize(grid, sys, offset, spec, environment)
 global blackvalue;
 global scale;
 global c;
