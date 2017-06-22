@@ -47,6 +47,5 @@ end
 imshow(grid, c);
 visualizeServices;
 xlabel(legendText);
-pause(3)
 
 end

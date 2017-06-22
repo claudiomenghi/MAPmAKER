@@ -10,6 +10,7 @@ global possibleSolutionSearchTriggered;
 possibleSolutionSearchTriggered=0;
 robotFigEnabled=0;
 
+possibleengineenabled=1;
 % horizon for the intersection automaton
 h=3;
 % horizon for the product

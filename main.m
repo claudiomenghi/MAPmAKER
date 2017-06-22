@@ -102,17 +102,37 @@ while isempty(reply)
            % end
 
            disp('STEP 5: computing the product');
-           [P, sys, spec] = product(sys,spec,dep, Buchi,H, environment.x, environment.y);
+           [P, sys, spec] = product(sys,spec,dep, Buchi,H, environment.x, environment.y, 0);
 
            disp('STEP 6: searcing for a path to be performed');
-           [Path ] = searchActions(P, progressiveFunction);
+           [DefinitivePath ] = searchActions(P, progressiveFunction);
+           
+           disp('STEP 5: computing the product');
+           [P, sys, spec] = product(sys,spec,dep, Buchi,H, environment.x, environment.y, 1);
+
+           disp('STEP 6: searcing for a path to be performed');
+           [PossiblePath ] = searchActions(P, progressiveFunction);
+
+           if(size(DefinitivePath,1)<size(PossiblePath,1))
+               Path=DefinitivePath;
+           else
+               Path=PossiblePath;
+           end
+           
            disp('STEP 7: updating the state of the machine');
+           
            
            grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale);
            sys(currentmachine).curr=Path(2,1);
            spec(currentmachine).curr=EXPLICIT_STATES(Path(2,2),currentmachine);
            disp([sys(currentmachine).curr spec(currentmachine).curr]);
+           
+           % simulates the discovering of new information
+           [sys, grid, environment]=infDiscover(grid, sys, environment);
+
            grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
+           
+           
 %           [grid, offset]=visualize(grid, sys, offset, spec, environment);
            pause(2);
         end

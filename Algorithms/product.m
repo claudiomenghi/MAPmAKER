@@ -3,7 +3,7 @@
 % H: the value of H to be used
 % M: the number of robots in the dependency class
 % B:
-function [P, sys, spec] = product(sys,spec,dep,Buchi,H, maxX, maxY)
+function [P, sys, spec] = product(sys,spec,dep,Buchi,H, maxX, maxY, possible)
 
 global possibleengineenabled;
 
@@ -24,8 +24,6 @@ Qnew = true;
 P.Q = [1];
 %%%%%%%%%
 
-%%%%%%%%%
-st_no_new=0;
 
 i=0;
 P.max = [];
@@ -37,13 +35,13 @@ P.trans{1,1}=[];
 % function
 %NEW_STATES_PROGRESSIVE_FUNCTION=progressiveFunction(1);
 % giving the value -1 there are no states with index -1
-visitedstates=[];
 
 bottomstackhindex=1;
 topstackhindex=1;
-intstatecount=1;
 
 P.STATES(1,:)=[sys(dep).curr Buchi.curr];
+
+
 
 acceptingFound=0;
 H=H-1;
@@ -71,8 +69,12 @@ while ~acceptingFound
             for m=1:numberOfprocess
                 currentProcessIndex=dep(m);
 
-                nextstatesM=getNextStates(sys(currentProcessIndex).adj, maxX, maxY,CURRENT_STATE(currentProcessIndex));
-
+                if(possible)
+                    nextstatesM=getNextStates(sys(currentProcessIndex).padj, maxX, maxY,CURRENT_STATE(currentProcessIndex));
+                else
+                    nextstatesM=getNextStates(sys(currentProcessIndex).adj, maxX, maxY,CURRENT_STATE(currentProcessIndex));
+                end
+                
                 clear succ;
                 for nextstateAutMpos = 1:numel(nextstatesM)
 
