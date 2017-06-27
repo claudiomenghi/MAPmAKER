@@ -48,6 +48,7 @@ for i=1:dim2(2)
 end
 
 imshow(grid, c);
+visualizeServices;
 xlabel(legendText)
 
 pause(3)

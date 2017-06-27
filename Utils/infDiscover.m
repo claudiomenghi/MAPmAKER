@@ -1,8 +1,10 @@
 % updates the system with new information about the environment
-function [sys, grid, environment] = infDiscover(grid, sys, environment)
+function [sys, grid, environment, infdiscovered] = infDiscover(grid, sys, environment)
     xmax=environment.x;
     ymax=environment.y;
     discovered=ones(environment.x*environment.y,environment.x*environment.y)*3;
+    infdiscovered=0;
+
     [; N]=size(sys);
     for r=1:N
         % getting the location of the robot r
@@ -27,6 +29,7 @@ function [sys, grid, environment] = infDiscover(grid, sys, environment)
                   discovered(indexyp1, indexy)=value;
                   fprintf('Robot %d acquired new knowledge ', r);
                   fprintf('knowledge %d about the transition between [x,y]=[%d, %d] and [x+1,y+1]=[%d, %d] added', value, x, y, x, y+1);
+                  infdiscovered=1;
             end
         end
 
@@ -44,7 +47,7 @@ function [sys, grid, environment] = infDiscover(grid, sys, environment)
                    discovered(indexyp1, indexy)=value;
                   fprintf('Robot %d acquired new knowledge ', r);
                   fprintf('knowledge %d about the transition between [x,y]=[%d, %d] and [x+1,y+1]=[%d, %d] added', value, x, y, x, y-1);
-                  
+                  infdiscovered=1;
              end
         end
 
@@ -61,6 +64,7 @@ function [sys, grid, environment] = infDiscover(grid, sys, environment)
                    discovered(indexyp1, indexy)=value;
                   fprintf('Robot %d acquired new knowledge ', r);
                   fprintf('knowledge %d about the transition between [x,y]=[%d, %d] and [x+1,y+1]=[%d, %d] added', value, x, y, x+1, y);
+                      infdiscovered=1;
              end
         end
 
@@ -78,6 +82,7 @@ function [sys, grid, environment] = infDiscover(grid, sys, environment)
                   fprintf('Robot %d acquired new knowledge ', r);
                   fprintf('Robot %d acquired new knowledge ', r);
                   fprintf('knowledge %d about the transition between [x,y]=[%d, %d] and [x+1,y+1]=[%d, %d] added', value, x, y, x-1, y);
+                    infdiscovered=1;
              end
         end
         % notifies the other robots with the new information
@@ -90,5 +95,22 @@ function [sys, grid, environment] = infDiscover(grid, sys, environment)
         grid=visualizeDiscoveredGrid(grid, environment, sys, discovered);
 
     end
-    
+    %% service discovering
+    for r=1:N
+        nextstatesM=getNextStates(sys(r).padj, environment.x, environment.y,sys(r).curr);
+        for nextstateAutMpos = 1:numel(nextstatesM)
+            nextState=nextstatesM(nextstateAutMpos);
+            
+            if(~isempty(sys(r).pser{nextState})&&isempty(sys(r).ser{nextState}))
+                 value=randsrc(1,1,[0 1; 0.5 0.5]);
+                 if value
+                     sys(r).ser{nextState}=sys(r).pser{nextState};
+                 else
+                     sys(r).pser{nextState}=[];
+                 end
+                 infdiscovered=1;
+            end
+        end
+    end
+    visualizeServices;
 end

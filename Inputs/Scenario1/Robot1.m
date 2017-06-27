@@ -56,6 +56,9 @@ T.ser{124} = 2;
 
 T.ser{127} = 2;
 
+% possible services
+T.pser=T.ser;
+
 T.index = 3;
 
 

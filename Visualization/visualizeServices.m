@@ -1,11 +1,18 @@
+global blackvalue;
+global whitevalue;
+global c;
+global scale;
+global legendText;
+global robotcolors;
+global customfontsize;
 
 tmp=size(sys);
 N=tmp(2); 
 
-global robotcolors;
-global customfontsize;
+
 
 for i=1:N
+%% printing services
     servicelocation=find(~cellfun(@isempty, sys(i).ser));
          
     sizex=size(servicelocation);
@@ -17,6 +24,26 @@ for i=1:N
             t.Color=robotcolors(i,:);
             t.FontSize =customfontsize;
             
+    end
+    
+%% printing possible services    
+    possibleservicelocation=find(~cellfun(@isempty, sys(i).pser));
+         
+    sizex=size(possibleservicelocation);
+    for j=1:sizex(2)
+            
+            if(~ismember(possibleservicelocation(j),servicelocation))
+                [x,y] =  transform_coordinates(possibleservicelocation(j), environment.x, environment.y);
+
+                services=sys(i).pser(possibleservicelocation(j));
+                textToBePrinted='';
+                for k=1:size(services{1},2)
+                    textToBePrinted=strcat(textToBePrinted,'?',int2str(services{1}(1,k)),char(9));
+                end
+                t =text((y-1)*scale+scale/7,(x-1)*scale+(scale/(N+1)*i),textToBePrinted);
+                t.Color=robotcolors(i,:);
+                t.FontSize =customfontsize;
+            end
     end
 end 
 

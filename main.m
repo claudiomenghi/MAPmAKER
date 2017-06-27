@@ -2,8 +2,22 @@ close all;
 clear all;
 
 addpath('Inputs');
-addpath('Inputs/Scenario1');
-addpath('Inputs/Scenario2');
+% creates the current scenario
+
+%addpath('Inputs/Scenario1');
+%createScenario1;
+
+%addpath('Inputs/Scenario2');
+%createScenario2;
+
+%addpath('Inputs/Scenario3');
+%createScenario3;
+
+addpath('Inputs/Scenario5');
+createScenario5;
+
+
+
 addpath('Visualization');
 addpath('Utils');
 addpath('Algorithms');
@@ -11,9 +25,7 @@ addpath('Algorithms');
 
 configParams;
 
-% creates the current scenario
-%createScenario1;
-createScenario2;
+
 
 % sets visualization constants, colors, cell dimensions etc
 setVisualizationConstants;
@@ -24,20 +36,32 @@ tmp=size(sys);
 N=tmp(2); 
 
 %figure;
-grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
-hh=figure;
-grid=visualizeGrid(grid, environment);
-imshow(grid, c);
-grid = visualizeInit(sys, offset, scale, grid, environment);
-visualizeServices;
-
+% Create a new figure
+f = figure;
 %F=getframe();
 %movie(F);
 %v=VideoWriter('movie.avi');
 %v.FrameRate = 1;
 %open(v);
 
+% Set a size if desired
+width = 800;
+height = 600;
+set(f,'Position',[15 15 width height])
+% Change the renderer to avoid bugs due to OpenGL
+set(f,'Renderer','ZBuffer')
 
+grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
+grid=visualizeGrid(grid, environment);
+imshow(grid, c);
+grid = visualizeInit(sys, offset, scale, grid, environment);
+visualizeServices;
+
+
+
+
+maxIteration=50;
+currentiteration=0;
 reply = '';
 i=1;
 iter=0;
@@ -45,7 +69,7 @@ iter=0;
 perm = randperm(size(sys,2)); %permutation (i.e. ordering), meaning that agent 3 < agent 1 < agent 2
 %perm=[1,2,3];
         
-while isempty(reply)
+while currentiteration<maxIteration
     
     possibleSolutionSearchTriggered=0;
     skip=0;
@@ -63,7 +87,7 @@ while isempty(reply)
     clear P;
     
     
-%% computing the dependencies classes
+    %% computing the dependencies classes
     %dependency partition
     disp('STEP 1: computing the depencencies');
     [Dep,ell] = computeDependencies(spec,perm,N,h);
@@ -75,7 +99,9 @@ while isempty(reply)
         sys(i).previouscurr = sys(i).curr;
     end
     
-    while 1
+    while currentiteration<maxIteration
+   currentiteration=currentiteration+1;
+    
     %% analysing the dependincies classes
         for i=1:ell
             clear Buchi;
@@ -84,13 +110,10 @@ while isempty(reply)
 
             dep = Dep{i};
             M = length(dep);
-            currentmachine=dep(i);
-            disp('STEP 2: analyzing machine');
-            disp(currentmachine);
-
+            
             %% compute the intersection automaton
             disp('STEP 3: computing the intersection');
-            [Buchi, kmap, EXPLICIT_STATES] = intersection(spec,dep, h);
+            [Buchi, kmap, EXPLICIT_STATES] = intersection(spec,h);
 
             disp('STEP 4: computing the progressiveFunction');
             [ Buchi, progressiveFunction ] = computeProgressiveFunction( Buchi , size(dep,2), kmap);
@@ -101,72 +124,52 @@ while isempty(reply)
            %     break;
            % end
 
-           disp('STEP 5: computing the product');
-           [P, sys, spec] = product(sys,spec,dep, Buchi,H, environment.x, environment.y, 0);
+           %disp('STEP 5: computing the product');
+           %[P, sys, spec] = product(sys,spec, Buchi,H, environment.x, environment.y, 0);
 
-           disp('STEP 6: searcing for a path to be performed');
-           [DefinitivePath ] = searchActions(P, progressiveFunction);
+           %disp('STEP 6: searcing for a path to be performed');
+           %[DefinitivePath ] = searchActions(P, progressiveFunction);
            
            disp('STEP 5: computing the product');
-           [P, sys, spec] = product(sys,spec,dep, Buchi,H, environment.x, environment.y, 1);
+           [P, sys, spec] = product(sys,spec, Buchi,H, environment.x, environment.y, 1);
 
            disp('STEP 6: searcing for a path to be performed');
            [PossiblePath ] = searchActions(P, progressiveFunction);
 
-           if(size(DefinitivePath,1)<size(PossiblePath,1))
-               Path=DefinitivePath;
-           else
+%           if(size(DefinitivePath,1)<size(PossiblePath,1))
+ %              Path=DefinitivePath;
+ %          else
                Path=PossiblePath;
-           end
+  %         end
            
            disp('STEP 7: updating the state of the machine');
            
            
-           grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale);
-           sys(currentmachine).curr=Path(2,1);
-           spec(currentmachine).curr=EXPLICIT_STATES(Path(2,2),currentmachine);
-           disp([sys(currentmachine).curr spec(currentmachine).curr]);
            
-           % simulates the discovering of new information
-           [sys, grid, environment]=infDiscover(grid, sys, environment);
+           i=2; 
+           infdiscovered=0;
+           while ~infdiscovered && i<=size(Path,1)
+               grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale);
+               for machineindex=1:N
+                    sys(machineindex).curr=Path(i,machineindex);
+                    spec(machineindex).curr=EXPLICIT_STATES(Path(i,M+1),machineindex);
+               end           
 
-           grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
+               % simulates the discovering of new information
+               [sys, grid, environment, infdiscovered]=infDiscover(grid, sys, environment);
+               i=i+1;
            
-           
+               grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
+               pause(2);
+           end
 %           [grid, offset]=visualize(grid, sys, offset, spec, environment);
-           pause(2);
-        end
-    
-    end
-    
-    if ~skip
-     
-        for i=1:N
-             if (sys(i).lastaction~=0) && (ismember(spec(i).curr,spec(i).F))
-                 perm = [setdiff(perm,[i],'stable'),i];
-                 fprintf('Reordering triggered by agent %d. \n', i);                 
-             end
-        end
-
-        fprintf('New permutation:'); 
-        disp(perm);
-       
-        [grid, offset]=visualize(grid, sys, offset, spec, environment);
-       
-        if sys(1).lastaction == 0
-            reply = ''; 
-        else
            
-            reply = input('Do you want more? ', 's');
+           currFrame = getframe(gcf);
+         %  writeVideo(v,currFrame);
+
         end
-        %reply = 'n';
-        fprintf('\n');
+    
     end
-    
-   % [sys, grid, environment]=infDiscover(grid, sys, environment);
-    
-    
-%    currFrame = getframe(hh);
-%    writeVideo(v,currFrame);
+     
 end
-close(v);
+%close(v);

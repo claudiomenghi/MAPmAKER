@@ -7,7 +7,8 @@ function T = Robot1(environmentMap, penvironmentMap)
 
 T.Q=1:144;   %states
 T.Pi=1:2; %all subsets of atomic propositions
-T.curr = 91;    %initial state
+%T.curr = 91;    %initial state
+T.curr = 111;
 T.init=T.curr;
 
 %adjacency matrix
@@ -38,26 +39,21 @@ T.ser{52} = 2;
 T.ser{33} = 2;
 T.ser{34} = 2;
 
-% T.ser{98} = [1 2];
-% T.ser{99} = [1 2];
-% T.ser{116} = [1 2];
-% T.ser{117} = [1 2];
-% 
-% T.ser{100} = [1 2];
-% T.ser{101} = [1 2];
-% T.ser{118} = [1 2];
-% T.ser{119} = [1 2];
 
 T.ser{105} = 2;
 T.ser{106} = 2;
 T.ser{123} = 2;
 T.ser{124} = 2;
-T.ser{118} = 1;
+T.ser{1} = 2;
+T.ser{55} = 2;
 
-T.ser{98} = 2;
+%T.ser{98} = 2;
 
-% possible services
+% adding the possible transition relation
 T.pser=T.ser;
+T.pser{98} = 2;
+T.pser{118} = 1;
+
 
 T.index = 3;
 

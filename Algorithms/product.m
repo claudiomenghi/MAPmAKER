@@ -3,7 +3,7 @@
 % H: the value of H to be used
 % M: the number of robots in the dependency class
 % B:
-function [P, sys, spec] = product(sys,spec,dep,Buchi,H, maxX, maxY, possible)
+function [P, sys, spec] = product(sys,spec,Buchi,H, maxX, maxY, possible)
 
 global possibleengineenabled;
 
@@ -39,7 +39,7 @@ P.trans{1,1}=[];
 bottomstackhindex=1;
 topstackhindex=1;
 
-P.STATES(1,:)=[sys(dep).curr Buchi.curr];
+P.STATES(1,:)=[sys.curr Buchi.curr];
 
 
 
@@ -50,7 +50,7 @@ while ~acceptingFound
     
     %% inspecting the state space of the automata
     % until i is less than h and there are new states that are not visited
-    while i<H && (topstackhindex-bottomstackhindex>=0)
+    while  i<H && (topstackhindex-bottomstackhindex>=0)
 
         fprintf('Level %d of the product \n', i);
         i=i+1;
@@ -67,12 +67,12 @@ while ~acceptingFound
             end                    
             %explore all components of sys(1)...sys(M)
             for m=1:numberOfprocess
-                currentProcessIndex=dep(m);
+                currentProcessIndex=m;
 
                 if(possible)
-                    nextstatesM=getNextStates(sys(currentProcessIndex).padj, maxX, maxY,CURRENT_STATE(currentProcessIndex));
+                    nextstatesM=[CURRENT_STATE(currentProcessIndex) getNextStates(sys(currentProcessIndex).padj, maxX, maxY,CURRENT_STATE(currentProcessIndex))];
                 else
-                    nextstatesM=getNextStates(sys(currentProcessIndex).adj, maxX, maxY,CURRENT_STATE(currentProcessIndex));
+                    nextstatesM=[CURRENT_STATE(currentProcessIndex) getNextStates(sys(currentProcessIndex).adj, maxX, maxY,CURRENT_STATE(currentProcessIndex))];
                 end
                 
                 clear succ;
@@ -90,11 +90,18 @@ while ~acceptingFound
                             nextstateproperty=Buchi.trans{CURRENT_STATE(baindex),t};
                             propertyservices=Buchi.lab{t};
                             %%
-                            nextstateOfMServices=sys(currentProcessIndex).ser{nextstateM};
-
+                            if(possible)
+                                nextstateOfMServices=sys(currentProcessIndex).pser{nextstateM};
+                            else
+                                nextstateOfMServices=sys(currentProcessIndex).ser{nextstateM};
+                            end
                             %% adds the state that is the successor of the "Buchi automaton"
-                            if isequal(intersect(propertyservices,sys(currentProcessIndex).Pi),nextstateOfMServices)
-                                  %% specifies how the creation of the product works when also the BA is moving
+                            if isequal(propertyservices,nextstateOfMServices)
+                                
+                                %isequal(propertyservices,nextstateOfMServices)
+                                 
+                                found=1; 
+                                %% specifies how the creation of the product works when also the BA is moving
                                 if(ismember(nextstateproperty,Buchi.F))
                                     acceptingFound=1;
                                 end
