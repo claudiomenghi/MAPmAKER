@@ -1,4 +1,4 @@
-function E = EnvironmentMap_Sergio(x, y, nrooms, ndoors, lroom)
+function E = RandomEnvironmentMap_Sergio(x, y, nrooms, ndoors, lroom)
 % It generates a random scenario based on:
 % x -> length of the map
 % y -> width of the map
