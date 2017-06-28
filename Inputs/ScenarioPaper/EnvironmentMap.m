@@ -169,7 +169,7 @@ for i=[13,14]
     E.map(i+y*1,i+y*(1+1))=0;
 end
 
-%Objects room gig
+%Objects room big
 E.map(3+5*y,4+5*y)=0;
 E.map(4+5*y,3+5*y)=0;
 E.map(4+5*y,5+5*y)=0;
@@ -211,14 +211,8 @@ E.map(6+12*y,6+11*y)=0;
 
 %% possible map
 E.pmap=E.map;
-E.pmap(75,93)=1;
-E.pmap(93, 75)=1;
-E.pmap(6, 7)=1;
-E.pmap(7, 6)=1;
-E.pmap(96,97) = 1;
-E.pmap(64, 82)=1;
-
-E.pmap(82, 64)=1;
+E.pmap(2+4*y,2+5*y)=0;
+E.pmap(2+5*y,2+4*y)=0;
 
 
 end
