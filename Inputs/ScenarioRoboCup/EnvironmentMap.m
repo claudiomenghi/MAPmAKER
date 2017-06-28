@@ -184,14 +184,8 @@ E.map(2+10*y,3+10*y)=0;
 
 %% possible map
 E.pmap=E.map;
-E.pmap(75,93)=1;
-E.pmap(93, 75)=1;
-E.pmap(6, 7)=1;
-E.pmap(7, 6)=1;
-E.pmap(96,97) = 1;
-E.pmap(64, 82)=1;
-
-E.pmap(82, 64)=1;
+E.pmap(5+2*y,6+2*y)=0;
+E.pmap(6+2*y,5+2*y)=0;
 
 
 end
