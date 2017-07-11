@@ -1,3 +1,5 @@
 movie.*
 *.avi
 *.dat
+data_record.txt
+*.m~
