@@ -5,7 +5,7 @@
 % B:
 function [P, sys, spec] = product(sys,spec,Buchi,H, maxX, maxY, possible)
 
-global possibleengineenabled;
+
 
 clear P;
 clear weight;

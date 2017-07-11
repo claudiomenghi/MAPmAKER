@@ -1,7 +1,11 @@
-close all;
-clear all;
 
 
+
+trueEvidenceCounter=0;
+falseEvicenceCounter=0;
+
+
+addpath('Inputs');
 % creates the current scenario
 
 %addpath('Inputs/Scenario1');
@@ -10,13 +14,14 @@ clear all;
 %addpath('Inputs/Scenario2');
 %createScenario2;
 
-%addpath('Inputs/Scenario3');
-%createScenario3;
+addpath('Inputs/Scenario3');
+createScenario3;
 
-% addpath('Inputs/Scenario5');
-% createScenario5;
-rmpath('Experiments/');
-rmpath('Inputs/Scneario3');
+%addpath('Inputs/Scenario5');
+%createScenario5;
+
+%addpath('Inputs/ScenarioRoboCup');
+%createScenarioRoboCup;
 
 addpath('Visualization');
 addpath('Utils');
@@ -30,11 +35,6 @@ configParams;
 % sets visualization constants, colors, cell dimensions etc
 setVisualizationConstants;
 
-addpath('Inputs/ScenarioRoboCup');
-createScenarioRoboCup;
-
-%addpath('Inputs/ScenarioPaper');
-%createScenarioPaper;
 
 %get the number of agents
 tmp=size(sys);
@@ -61,6 +61,8 @@ grid=visualizeGrid(grid, environment);
 imshow(grid, c);
 grid = visualizeInit(sys, offset, scale, grid, environment);
 visualizeServices;
+
+
 
 
 maxIteration=50;
@@ -150,16 +152,31 @@ while currentiteration<maxIteration
            
            
            i=2; 
-           infdiscovered=0;
-           while ~infdiscovered && i<=size(Path,1)
+           evidence=1;
+           while evidence && i<=size(Path,1)
                grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale);
-               for machineindex=1:N
-                    sys(machineindex).curr=Path(i,machineindex);
-                    spec(machineindex).curr=EXPLICIT_STATES(Path(i,M+1),machineindex);
+               machineindex=1;
+               while machineindex<=N && evidence
+                    % simulates the discovering of new information
+                    [sys, grid, environment, infdiscovered, evidence]=actionBasedInfDiscover(grid, sys, environment, machineindex, sys(machineindex).curr,Path(i,machineindex));
+                    
+                    if(infdiscovered==0)
+                        sys(machineindex).curr=Path(i,machineindex);
+                        spec(machineindex).curr=EXPLICIT_STATES(Path(i,M+1),machineindex);
+                    end
+                    if(infdiscovered==1)
+                        if(evidence)
+                            sys(machineindex).curr=Path(i,machineindex);
+                            spec(machineindex).curr=EXPLICIT_STATES(Path(i,M+1),machineindex);
+                            trueEvidenceCounter=trueEvidenceCounter+1
+                        else
+                            falseEvicenceCounter=falseEvicenceCounter+1
+                        end
+                    end
+                    
+                    machineindex=machineindex+1;
                end           
 
-               % simulates the discovering of new information
-               [sys, grid, environment, infdiscovered]=infDiscover(grid, sys, environment);
                i=i+1;
            
                grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
