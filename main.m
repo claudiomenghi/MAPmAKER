@@ -1,5 +1,5 @@
 close all;
-clear all;
+clear;
 
 addpath('Inputs');
 % creates the current scenario
