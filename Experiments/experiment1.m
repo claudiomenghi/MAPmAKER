@@ -32,9 +32,7 @@ configParams;
 setVisualizationConstants;
 
 
-%get the number of agents
-tmp=size(sys);
-N=tmp(2); 
+
 
 %figure;
 % Create a new figure
@@ -55,8 +53,8 @@ set(f,'Renderer','ZBuffer')
 grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
 grid=visualizeGrid(grid, environment);
 imshow(grid, c);
-grid = visualizeInit(sys, offset, scale, grid, environment);
+grid = visualizeInit(sys,  offset, scale, grid, environment);
 visualizeServices;
 
 
-step1(sys, 50, 1)
+step1(sys, spec,H, 50, 1, grid)

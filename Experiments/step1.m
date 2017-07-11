@@ -1,5 +1,8 @@
-function [P, sys, spec] = step1(sys, maxIteration, plotenabled)
+function [P, sys, spec] = step1(sys, spec, H, maxIteration, plotenabled, grid)
 
+%get the number of agents
+tmp=size(sys);
+N=tmp(2); 
     currentiteration=0;
     reply = '';
     i=1;
