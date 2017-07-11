@@ -25,14 +25,14 @@ spec(1)=ExistenceGoal(1, 2, 1, 1);
 spec(2)=ExistenceGoal(3, 4, 2, 2);
 %spec(2)=ResponseGoal(3, 4, [1, 2], [1,3]);
 %spec(3)=ResponseGoal(5, 6, [2,3], 3);
-robot1_ini=sys(1).init;
-robot2_ini=sys(2).init;
+
 fileID = fopen('data_record.txt','w');
 fprintf(fileID,'-------------------------------\n');
 fprintf(fileID,'Initial position of the robots:\n');
 fprintf(fileID,'-------------------------------\n');
 fprintf(fileID, 'Robot 1: %d \n', sys(1).init);
 fprintf(fileID, 'Robot 2: %d \n', sys(2).init);
+fprintf(fileID,'\n');
 fprintf(fileID,'-------------------------------\n');
 fprintf(fileID,'State of the doors:\n');
 fprintf(fileID,'(1 means that the door is open for sure and 0 that exists an uncertainty)\n');
