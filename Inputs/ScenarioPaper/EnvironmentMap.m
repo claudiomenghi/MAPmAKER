@@ -211,8 +211,37 @@ E.map(6+12*y,6+11*y)=0;
 
 %% possible map
 E.pmap=E.map;
-E.pmap(2+4*y,2+5*y)=0;
-E.pmap(2+5*y,2+4*y)=0;
+
+%Random value for the uncertainty of the environment's doors
+E.doors=ones(3,1);
+E.doors_pos=zeros(3,2);
+
+for i=1:length(E.doors)
+    E.doors(i,1)=round(rand);
+    switch i
+        case 1
+            if E.doors(i,1) == 0
+                E.pmap(2+5*y,2+4*y)=0;
+                E.pmap(2+4*y,2+5*y)=0;
+            end
+            E.doors_pos(i,1)=2+4*y;
+            E.doors_pos(i,2)=2+5*y;
+        case 2
+            if E.doors(i,1) == 0
+                E.pmap(6+4*y,6+5*y)=0;
+                E.pmap(6+5*y,6+4*y)=0;
+            end
+            E.doors_pos(i,1)=6+4*y;
+            E.doors_pos(i,2)=6+5*y;
+        case 3
+            if E.doors(i,1) == 0
+                E.pmap(9+5*y,9+4*y)=0;
+                E.pmap(9+4*y,9+5*y)=0;
+            end
+            E.doors_pos(i,1)=9+4*y;
+            E.doors_pos(i,2)=9+5*y;
+    end
+end
 
 
 end

@@ -30,11 +30,11 @@ configParams;
 % sets visualization constants, colors, cell dimensions etc
 setVisualizationConstants;
 
-addpath('Inputs/ScenarioRoboCup');
-createScenarioRoboCup;
+% addpath('Inputs/ScenarioRoboCup');
+% createScenarioRoboCup;
 
-%addpath('Inputs/ScenarioPaper');
-%createScenarioPaper;
+addpath('Inputs/ScenarioPaper');
+createScenarioPaper;
 
 %get the number of agents
 tmp=size(sys);
