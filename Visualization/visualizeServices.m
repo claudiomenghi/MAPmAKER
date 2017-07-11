@@ -1,3 +1,4 @@
+
 global blackvalue;
 global whitevalue;
 global c;

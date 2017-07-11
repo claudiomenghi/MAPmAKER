@@ -9,7 +9,9 @@ T.Q=1:169;   %states
 T.Pi=3:4; %all subsets of atomic propositions
 %T.curr= 76;
 
-T.curr = 142;    %initial state
+%.curr = 142;    %initial state
+%Random value for the initial position of the robot
+T.curr = round(1 + (length(T.Q) - 1).*rand);
 T.init=T.curr;
 T.adj=environmentMap;
 T.padj=penvironmentMap;
@@ -21,12 +23,15 @@ for i=1:169
 end
 
 T.ser{102} = 3;
-
-T.ser{63} = 4; 
+T.ser{103} = 3;
+T.ser{6} = 4; 
+T.ser{7} = 4; 
 
 T.pser=T.ser;
-T.pser{98} = 1;
-T.pser{118} = 2;
+T.pser{98} = 3;
+T.pser{99} = 3;
+T.pser{2} = 4;
+T.pser{3} = 4;
 
 T.index = 3;
 

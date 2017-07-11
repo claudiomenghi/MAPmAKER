@@ -13,9 +13,8 @@ addpath('Inputs');
 %addpath('Inputs/Scenario3');
 %createScenario3;
 
-addpath('Inputs/Scenario5');
-createScenario5;
-
+% addpath('Inputs/Scenario5');
+% createScenario5;
 
 
 addpath('Visualization');
@@ -30,6 +29,11 @@ configParams;
 % sets visualization constants, colors, cell dimensions etc
 setVisualizationConstants;
 
+addpath('Inputs/ScenarioRoboCup');
+createScenarioRoboCup;
+
+%addpath('Inputs/ScenarioPaper');
+%createScenarioPaper;
 
 %get the number of agents
 tmp=size(sys);
@@ -56,8 +60,6 @@ grid=visualizeGrid(grid, environment);
 imshow(grid, c);
 grid = visualizeInit(sys, offset, scale, grid, environment);
 visualizeServices;
-
-
 
 
 maxIteration=50;
