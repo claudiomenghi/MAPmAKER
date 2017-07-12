@@ -60,18 +60,6 @@ N=tmp(2);
                 disp('STEP 4: computing the progressiveFunction');
                 [ Buchi, progressiveFunction ] = computeProgressiveFunction( Buchi , size(dep,2), kmap);
 
-               % if isequal([1],B.Q)
-               %     fprintf('h too small! \n');
-               %     skip = 1;
-               %     break;
-               % end
-
-               %disp('STEP 5: computing the product');
-               %[P, sys, spec] = product(sys,spec, Buchi,H, environment.x, environment.y, 0);
-
-               %disp('STEP 6: searcing for a path to be performed');
-               %[DefinitivePath ] = searchActions(P, progressiveFunction);
-
                disp('STEP 5: computing the product');
                [P, sys, spec] = product(sys,spec, Buchi,H, environment.x, environment.y, 1);
 

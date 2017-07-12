@@ -2,7 +2,7 @@
 % spec: the specification of the automata
 % h: the index upon which the automata must be explored
 %% OUTPUT
-function [P, kmap, STATES] = intersection(spec, h)
+function [P, kmap, STATES] = intersection(spec)
 
 clear succ;
 clear P;
@@ -57,12 +57,10 @@ iter=1;
 
 acceptingFound=0;
 
-h=h-1;
 
 while ~acceptingFound
-    h=h+1;
     
-    while (topstackhindex-bottomstackhindex>=0) && (iter<=h) %explore -- using the cut already
+    while (topstackhindex-bottomstackhindex>=0) %explore -- using the cut already
 
         fprintf('Level %d \n', iter);
 

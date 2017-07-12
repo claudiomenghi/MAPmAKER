@@ -53,6 +53,8 @@ end
 E.map(73,91)=0;
 E.map(91,73)=0;
 
+
+
 for i=[1,2,3,4,5]
     E.map(73+i,91+i)=0;
     E.map(91+i,73+i)=0;
@@ -85,6 +87,9 @@ E.map(63, 81)=0;
 E.map(64, 82)=0;
 E.map(81, 63)=0;
 E.map(82, 64)=0;
+
+E.map(75,93)=0;
+E.map(93,75)=0;
 
 % possible map
 E.pmap=E.map;

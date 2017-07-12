@@ -1,21 +1,12 @@
-function [Path ] = searchActions(Product, progressiveFunction)
+function [Path ] = searchActions(Product, acceptingstate)
 % Given the product automaton and a progressing functions searches for a path to be followed by the robots
 
 numberOfRobots=size(Product.STATES,2);
 propertyIndex=numberOfRobots;
 
-disp('Computing the progressive function');
 
 dim=size(Product.Q,2);
 
-%% computing the product progressive funciton
-
-numProductStates=size(Product.STATES(:,1),1);
-PRODUCT_PROGRESSIVE_FUNCTION=1:numProductStates;
-
-for stateIndex=1:numProductStates
-    PRODUCT_PROGRESSIVE_FUNCTION(stateIndex)=progressiveFunction(Product.STATES(stateIndex,propertyIndex));
-end
     
     
 StatesReachability=zeros(dim,dim);
@@ -28,33 +19,22 @@ for rowIndex=1:size(Product.trans,1)
     end
 end
 
-
-
-maxValue=max(progressiveFunction(:,:));
-destinationStates=find(PRODUCT_PROGRESSIVE_FUNCTION==maxValue);
+destinationStates=acceptingstate;
 
 %plot(digraph(StatesReachability),'Layout','force');
 
-[dist, path, pred]=graphshortestpath(sparse(StatesReachability), 1);
+acceptingIndex=find(ismember(Product.STATES,acceptingstate,'rows'));
+[dist, path, pred]=graphshortestpath(sparse(StatesReachability), 1, acceptingIndex);
 
 
-selectedstate=destinationStates(1);
-weight=dist(selectedstate);
 
-for i=1:size(destinationStates,2)
-    if(dist(destinationStates(i))<weight)
-        selectedstate=destinationStates(i);
-        weight=dist(selectedstate);
-    end
-end
-
-selectedpath=path(selectedstate);
+selectedpath=path;
 disp(selectedpath);
 
 
-for actionIndex=1:size(selectedpath{1},2)
+for actionIndex=1:size(path,2)
     for robotIndex=1:numberOfRobots
-        Path(actionIndex,robotIndex)=Product.STATES(selectedpath{1}(actionIndex), robotIndex);
+        Path(actionIndex,robotIndex)=Product.STATES(path(actionIndex), robotIndex);
     end
 end
 

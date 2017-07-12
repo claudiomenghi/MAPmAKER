@@ -9,10 +9,11 @@ function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDisco
         % check whether there exists a possible transition close to the
         % current location
         %if 
-        fprintf('checking for new knowledge observed from one of the robots\n');
         
         evidence=1;
         if(abs(sys(robotindex).adj(source,destination)-sys(robotindex).padj(source,destination))==1)
+             fprintf('checking for new knowledge observed from one of the robots\n');
+       
               % simulates the discovering of info
               evidence=randsrc(1,1,[0 1; 0.5 0.5]);
               
