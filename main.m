@@ -63,4 +63,5 @@ visualizeServices;
 
 maxIteration=50;
 plotenabled=1;
-mapmaker(sys, spec, maxIteration, plotenabled, grid, environment, offset, scale);
+possiblesearchenabled=1;
+mapmaker(sys, spec, maxIteration, plotenabled, grid, environment, offset, scale, possiblesearchenabled);

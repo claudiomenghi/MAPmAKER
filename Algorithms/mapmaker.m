@@ -4,6 +4,8 @@ falseEvicenceCounter=0;
 trueEvidenceCounter=0;
 planlength=0;
 planningtime=0;
+oldPlan=[];
+Path=[];
 
 %get the number of agents
 N=size(sys,2);
@@ -68,18 +70,18 @@ while currentiteration<maxIteration
            [P, sys, spec, acceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 0);
            tElapsed = toc(tStart);
            planningtime=planningtime+tElapsed;
-           if(acceptingstate==1)
+           if(~(acceptingstate==-1))
                disp('STEP 5: searcing for a definitive path to be performed');
                [DefinitivePath ] = searchActions(P, acceptingstate);
            end
            
-           if(possiblepathenabled)
+           if(possiblepathenabled==1)
                disp('STEP 6: computing the possible product');
                tStart = tic;
                [P, sys, spec, pacceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 1);
                tElapsed = toc(tStart);
                planningtime=planningtime+tElapsed;
-               if(pacceptingstate==1)
+               if(~(pacceptingstate==-1))
                    disp('STEP 6: searcing for a path to be performed');
                    [PossiblePath ] = searchActions(P, pacceptingstate);
                end
@@ -89,6 +91,7 @@ while currentiteration<maxIteration
                disp('no definitive or possible plan available');
                return;
            end   
+           oldPlan=Path;
            if(acceptingstate==-1)
                disp('no definitive plan available');
                Path=PossiblePath;
@@ -102,6 +105,9 @@ while currentiteration<maxIteration
            end
            
            
+           if(isequal(oldPlan,Path))
+               return;
+           end
           disp('STEP 7: updating the state of the machine');
            
            
