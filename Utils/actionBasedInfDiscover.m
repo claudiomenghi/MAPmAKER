@@ -1,5 +1,5 @@
 % updates the system with new information about the environment
-function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDiscover(grid, sys, environment, robotindex, source, destination)
+function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDiscover(grid, sys, environment, robotindex, source, destination, plotenabled)
 %%  discovers information regarding the transition between source and destination
     xmax=environment.x;
     ymax=environment.y;
@@ -37,8 +37,9 @@ function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDisco
              sys(r2).padj=environment.pmap;
          end
 
-        grid=visualizeDiscoveredGrid(grid, environment, sys, discovered);
-
+         if(plotenabled==1)
+             grid=visualizeDiscoveredGrid(grid, environment, sys, discovered);
+         end
   
  
 end

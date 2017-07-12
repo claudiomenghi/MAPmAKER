@@ -88,8 +88,8 @@ E.map(64, 82)=0;
 E.map(81, 63)=0;
 E.map(82, 64)=0;
 
-E.map(75,93)=0;
-E.map(93,75)=0;
+%E.map(75,93)=0;
+%E.map(93,75)=0;
 
 % possible map
 E.pmap=E.map;

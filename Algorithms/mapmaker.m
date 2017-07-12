@@ -1,4 +1,4 @@
-function [P, sys, spec, falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime] = mapmaker(sys, spec,   environment, possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale)
+function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound] = mapmaker(sys, spec,   environment, possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale)
 % it computes the plans for the robots
 % sys: the model of the robot application, i.e., the robots
 % spec: the specification of each robot
@@ -9,7 +9,7 @@ function [P, sys, spec, falseEvicenceCounter, trueEvidenceCounter, planlength, p
 % grid, environment, offset, scale, possiblepathenabled
 %
 %
-
+solutionfound=0;
 falseEvicenceCounter=0;
 trueEvidenceCounter=0;
 planlength=0;
@@ -60,9 +60,9 @@ while currentiteration<maxIteration
     end
     
     while currentiteration<maxIteration
-   currentiteration=currentiteration+1;
+        currentiteration=currentiteration+1;
     
-    %% analysing the dependincies classes
+         %% analysing the dependincies classes
         for i=1:ell
             clear Buchi;
             clear B;
@@ -97,25 +97,35 @@ while currentiteration<maxIteration
                end
            end
            
-           if(pacceptingstate==-1) 
-               disp('no definitive or possible plan available');
-               return;
-           end   
-           oldPlan=Path;
-           if(acceptingstate==-1)
-               disp('no definitive plan available');
-               Path=PossiblePath;
-           else
-               disp('the shortest between definitive and possible plan is chosen');
-               if(size(DefinitivePath,1)<size(PossiblePath,1))
-                   Path=DefinitivePath;
-               else
+           if(possiblepathenabled==1)
+               if(pacceptingstate==-1) 
+                   disp('no definitive or possible plan available');
+                   return;
+               end   
+               oldPlan=Path;
+               if(acceptingstate==-1)
+                   disp('no definitive plan available');
                    Path=PossiblePath;
+               else
+                   disp('the shortest between definitive and possible plan is chosen');
+                   if(size(DefinitivePath,1)<size(PossiblePath,1))
+                       Path=DefinitivePath;
+                   else
+                       Path=PossiblePath;
+                   end
                end
+           else
+                if(acceptingstate==-1)
+                   disp('no definitive plan available');
+                   return;
+                else
+                    Path=DefinitivePath;
+                end
            end
            
            
            if(isequal(oldPlan,Path))
+               solutionfound=1;
                return;
            end
           disp('STEP 7: updating the state of the machine');
@@ -124,11 +134,13 @@ while currentiteration<maxIteration
           i=2; 
           evidence=1;
           while evidence && i<=size(Path,1)
-               grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale);
+               if(plotenabled==1)
+                grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale);
+               end
                machineindex=1;
                while machineindex<=N && evidence
                     % simulates the discovering of new information
-                    [sys, grid, environment, infdiscovered, evidence]=actionBasedInfDiscover(grid, sys, environment, machineindex, sys(machineindex).curr,Path(i,machineindex));
+                    [sys, grid, environment, infdiscovered, evidence]=actionBasedInfDiscover(grid, sys, environment, machineindex, sys(machineindex).curr,Path(i,machineindex), plotenabled);
                     
                     if(infdiscovered==0)
                         sys(machineindex).curr=Path(i,machineindex);
@@ -150,7 +162,7 @@ while currentiteration<maxIteration
                end           
 
                i=i+1;
-               if(plotenabled)
+               if(plotenabled==1)
                    grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
                    pause(2);
                end

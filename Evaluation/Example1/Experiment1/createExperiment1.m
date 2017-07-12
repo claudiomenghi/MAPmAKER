@@ -7,8 +7,7 @@ global actions;
 actions={'recharge', 'r1loadbox1', 'r2loadbox1', 'r2unloadbox1', 'detectunloadingbox1', 'takeApicture'};
 
 
-% contains the map of the environment
-environment=EnvironmentMap();
+
 % 
 % grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
 % hh=figure;
@@ -16,7 +15,7 @@ environment=EnvironmentMap();
 % figure(); imshow(grid, c);
 % xlabel('x'); ylabel('y');
 
-sys(1)=Robot1(environment.map, environment.pmap);
+sys(1)=Robot1(environment.map, environment.pmap, initRobot1);
 %sys(2)=Robot2(environment.map, environment.pmap);
 %sys(3)=Robot3(environment.map, environment.pmap);
 
