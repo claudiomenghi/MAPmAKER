@@ -164,7 +164,7 @@ while currentiteration<maxIteration
                i=i+1;
                if(plotenabled==1)
                    grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
-                   pause(2);
+                   %pause(1);
                end
            end
 
