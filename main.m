@@ -16,26 +16,23 @@ clear;
 % addpath('Inputs/Scenario5');
 % createScenario5;
 addpath('Experiments/');
-addpath('Inputs/Scenario3');
-createScenario3;
+% addpath('Inputs/Scenario3');
+% createScenario3;
 
 addpath('Visualization');
 addpath('Utils');
 addpath('Algorithms');
 
-
 configParams;
-
-
 
 % sets visualization constants, colors, cell dimensions etc
 setVisualizationConstants;
 
-% addpath('Inputs/ScenarioRoboCup');
-% createScenarioRoboCup;
+%addpath('Inputs/ScenarioRoboCup');
+%createScenarioRoboCup;
 
-%addpath('Inputs/ScenarioPaper');
-%createScenarioPaper;
+addpath('Inputs/ScenarioPaper');
+createScenarioPaper;
 
 
 
@@ -65,3 +62,5 @@ maxIteration=50;
 plotenabled=1;
 possiblesearchenabled=1;
 mapmaker(sys, spec, environment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale);
+%Save the input variables for future experiment replications
+save('data.mat', 'sys', 'spec', 'environment', 'possiblesearchenabled', 'maxIteration', 'plotenabled', 'grid',  'offset', 'scale');

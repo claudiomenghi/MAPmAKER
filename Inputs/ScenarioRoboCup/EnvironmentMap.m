@@ -194,41 +194,75 @@ for i=1:length(E.doors)
     switch i
         case 1
             if E.doors(i,1) == 0
-                E.pmap(2+3*y,2+4*y)=0;
-                E.pmap(2+4*y,2+3*y)=0;
+                E.map(2+3*y,2+4*y)=0;
+                E.map(2+4*y,2+3*y)=0;
+                E.pmap(2+3*y,2+4*y)=1;
+                E.pmap(2+4*y,2+3*y)=1;
             end
             E.doors_pos(i,1)=2+3*y;
             E.doors_pos(i,2)=2+4*y;
         case 2
             if E.doors(i,1) == 0
-                E.pmap(5+2*y,6+2*y)=0;
-                E.pmap(6+2*y,5+2*y)=0;
+                E.map(5+2*y,6+2*y)=0;
+                E.map(6+2*y,5+2*y)=0;
+                E.pmap(5+2*y,6+2*y)=1;
+                E.pmap(6+2*y,5+2*y)=1;
             end
             E.doors_pos(i,1)=5+2*y;
             E.doors_pos(i,2)=6+2*y;
         case 3
             if E.doors(i,1) == 0
-                E.pmap(7+3*y,7+4*y)=0;
-                E.pmap(7+4*y,7+3*y)=0;
+                E.map(7+3*y,7+4*y)=0;
+                E.map(7+4*y,7+3*y)=0;
+                E.pmap(7+3*y,7+4*y)=1;
+                E.pmap(7+4*y,7+3*y)=1;
             end
             E.doors_pos(i,1)=7+3*y;
             E.doors_pos(i,2)=7+4*y;
         case 4
             if E.doors(i,1) == 0
-                E.pmap(8+6*y,9+6*y)=0;
-                E.pmap(9+6*y,8+6*y)=0;
+                E.map(8+6*y,9+6*y)=0;
+                E.map(9+6*y,8+6*y)=0;
+                E.pmap(8+6*y,9+6*y)=1;
+                E.pmap(9+6*y,8+6*y)=1;
             end
             E.doors_pos(i,1)=8+6*y;
             E.doors_pos(i,2)=9+6*y;
         case 5
             if E.doors(i,1) == 0
-                E.pmap(9+5*y,9+6*y)=0;
-                E.pmap(9+6*y,9+5*y)=0;
+                E.map(9+5*y,9+6*y)=0;
+                E.map(9+6*y,9+5*y)=0;
+                E.pmap(9+5*y,9+6*y)=1;
+                E.pmap(9+6*y,9+5*y)=1;
             end
             E.doors_pos(i,1)=9+5*y;
             E.doors_pos(i,2)=9+6*y;
     end
 end
+
+% %% Test
+% %Map
+% E.map(2+3*y,2+4*y)=0;
+% E.map(2+4*y,2+3*y)=0;
+% E.map(5+2*y,6+2*y)=0;
+% E.map(6+2*y,5+2*y)=0;
+% E.map(7+3*y,7+4*y)=0;
+% E.map(7+4*y,7+3*y)=0;
+% E.map(9+5*y,9+6*y)=0;
+% E.map(9+6*y,9+5*y)=0;
+% E.map(8+6*y,9+6*y)=0;
+% E.map(9+6*y,8+6*y)=0;
+% %Prob map
+% E.pmap(2+3*y,2+4*y)=1;
+% E.pmap(2+4*y,2+3*y)=1;
+% E.pmap(5+2*y,6+2*y)=1;
+% E.pmap(6+2*y,5+2*y)=1;
+% E.pmap(7+3*y,7+4*y)=1;
+% E.pmap(7+4*y,7+3*y)=1;
+% E.pmap(9+5*y,9+6*y)=1;
+% E.pmap(9+6*y,9+5*y)=1;
+% E.pmap(8+6*y,9+6*y)=1;
+% E.pmap(9+6*y,8+6*y)=1;
 
 
 

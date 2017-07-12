@@ -19,7 +19,8 @@ while (T.curr==9 || T.curr==10 || T.curr==11 || T.curr==12 || T.curr==13 ...
     || T.curr==132 || T.curr==135 || T.curr==136 || T.curr==138 || T.curr==140 ...
     || T.curr==141 || T.curr==153 || T.curr==154 || T.curr==160 || T.curr==161 ...
     || T.curr==162 || T.curr==163 || T.curr==166 || T.curr==167)
-    disp('The initial position ', T.curr, ' is not valid.')
+    msg=['The initial position ', T.curr, ' is not valid.'];
+    disp(msg)
     T.curr = round(1 + (length(T.Q) - 1).*rand);
 end
 T.init=T.curr;
