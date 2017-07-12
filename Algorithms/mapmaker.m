@@ -1,4 +1,14 @@
-function [P, sys, spec, falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime] = mapmaker(sys, spec, maxIteration, plotenabled, grid, environment, offset, scale, possiblepathenabled)
+function [P, sys, spec, falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime] = mapmaker(sys, spec,   environment, possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale)
+% it computes the plans for the robots
+% sys: the model of the robot application, i.e., the robots
+% spec: the specification of each robot
+% environment: the model of the environment
+% possiblepathenabled: if the search of possible plans is enabled
+% maxIteration, the maximum number of iterations to be performed
+% plotenabled, is equal to 1 if the plot is enabled
+% grid, environment, offset, scale, possiblepathenabled
+%
+%
 
 falseEvicenceCounter=0;
 trueEvidenceCounter=0;
