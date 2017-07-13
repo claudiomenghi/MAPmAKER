@@ -15,7 +15,10 @@ setVisualizationConstants;
 numberOfInitialConfigurations=3;
 numberOfPartialInfoConfigurations=3;
 
-environment=EnvironmentMap();
+%environment=EnvironmentMap();
+environment=EnvironmentMapPaper();
+%environment=EnvironmentMapRoboCup();
+
 for initNumber=1:numberOfInitialConfigurations
     initRobot1Positions(initNumber)=getRandomInitPosition(environment);
     initRobot2Positions(initNumber)=getRandomInitPosition(environment);
@@ -23,9 +26,9 @@ end
 
 
 for partialInfoNumber=1:numberOfPartialInfoConfigurations
-     %testenvironments(partialInfoNumber)=EnvironmentMapPaper();     
-     testenvironments(partialInfoNumber)=EnvironmentMapRoboCup();  
-     %testenvironments(partialInfoNumber)=EnvironmentMap();  
+    testenvironments(partialInfoNumber)=EnvironmentMapPaper();
+    %testenvironments(partialInfoNumber)=EnvironmentMapRoboCup();
+    %testenvironments(partialInfoNumber)=EnvironmentMap();
 end
 
 
@@ -35,7 +38,7 @@ fid=fopen('resultsex1.txt','w');
 fprintf(fid, 'experimentNumber initConf partConf #F \t #T \t Tr \t Lr \t STEP1_solution_found \t STEP2_solution_found \n');
 experimentNumber=1;
 for initNumber=1:numberOfInitialConfigurations
-
+    
     for partialInfoNumber=1:numberOfPartialInfoConfigurations
         %% saving the input
         %Save the input variables for future experiment replications
@@ -60,5 +63,5 @@ for initNumber=1:numberOfInitialConfigurations
         experimentNumber=experimentNumber+1
     end
 end
- 
+
 fclose(fid);
