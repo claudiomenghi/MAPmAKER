@@ -1,6 +1,7 @@
 movie.*
 *.avi
 *.dat
+*.mat
 data_record.txt
 *.m~
 *.m~
