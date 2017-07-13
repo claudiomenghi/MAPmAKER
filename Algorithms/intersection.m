@@ -47,8 +47,8 @@ P.trans{1,1}=[];
 
 bottomstackhindex=1;
 topstackhindex=1;
-fprintf('Working on the intersection automaton for class');
-fprintf(' ...\n');
+%fprintf('Working on the intersection automaton for class');
+%fprintf(' ...\n');
 
 P.Q=1;
 P.F=[];
@@ -62,7 +62,7 @@ while ~acceptingFound
     
     while (topstackhindex-bottomstackhindex>=0) %explore -- using the cut already
 
-        fprintf('Level %d \n', iter);
+        %fprintf('Level %d \n', iter);
 
         iter = iter+1;
         addedelements=0;

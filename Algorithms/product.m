@@ -48,7 +48,7 @@ acceptingFound=0;
 % until i is less than h and there are new states that are not visited
 while  ~acceptingFound && (topstackhindex-bottomstackhindex>=0)
 
-    fprintf('Level %d of the product \n', i);
+    %fprintf('Level %d of the product \n', i);
     i=i+1;
     addedelements=0;
     analizedElements=0;
@@ -149,4 +149,4 @@ end
    
 
 
-fprintf('Size of the product: %d \n', length(P.Q));
+%fprintf('Size of the product: %d \n', length(P.Q));
