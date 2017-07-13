@@ -1,4 +1,4 @@
-function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound] = mapmaker(sys, spec,   environment, possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale)
+opfunction [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound] = mapmaker(sys, spec,   environment, possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale)
 % it computes the plans for the robots
 % sys: the model of the robot application, i.e., the robots
 % spec: the specification of each robot
@@ -61,8 +61,8 @@ while currentiteration<maxIteration
         sys(i).previouscurr = sys(i).curr;
     end
     
-        currentiteration=currentiteration+1;
-    
+    currentiteration=currentiteration+1;
+
      %% analysing the dependincies classes
     for i=1:ell
         clear Buchi;
@@ -96,12 +96,30 @@ while currentiteration<maxIteration
            [P, sys, spec, pacceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 1);
            tElapsed = toc(tStart);
            planningtime=planningtime+tElapsed;
+<<<<<<< HEAD
            if(~(pacceptingstate==-1))
                %disp('STEP 6: searcing for a path to be performed');
                 [ PossiblePath, found]=checkPlanPresence(oldPlans,sys.curr,acceptingstate);
                 if(~(found==1))
                     [PossiblePath ] = searchActions(P, pacceptingstate);
                 end
+=======
+           if(~(acceptingstate==-1))
+               disp('STEP 5: searching for a definitive path to be performed');
+               [DefinitivePath ] = searchActions(P, acceptingstate);
+           end
+           
+           if(possiblepathenabled==1)
+               disp('STEP 6: computing the possible product');
+               tStart = tic;
+               [P, sys, spec, pacceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 1);
+               tElapsed = toc(tStart);
+               planningtime=planningtime+tElapsed;
+               if(~(pacceptingstate==-1))
+                   disp('STEP 6: searching for a path to be performed');
+                   [PossiblePath ] = searchActions(P, pacceptingstate);
+               end
+>>>>>>> 5ce8a93be022c33a5733319c28fac8ef31e0567b
            end
        end
 
@@ -175,7 +193,7 @@ while currentiteration<maxIteration
            i=i+1;
            if(plotenabled==1)
                grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
-               pause(2);
+%               pause(2);
            end
        end
 

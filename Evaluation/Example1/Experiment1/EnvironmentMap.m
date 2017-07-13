@@ -1,257 +1,142 @@
 function E = EnvironmentMap()
-
-
-%Random value for the initial position of the robot
-E.occupied=[4 9 11 12 18 21:23 41:43 46 55:57 60 63 64 69 70 74 81:84 ...
-    95:98 108:112 114 115 122:129 134:140 141:143 146 148:154 155:157 160 ...
-    162:168 169:171 176:182 183:185 191:196 197:199 105:210 211 212 219:224];
-
-y=14;
-x=16;
+E.occupied=[];
+y=18;
+x=8;
 size=x*y;
 E.x=x;
 E.y=y;
-size=x*y;
+%adjacE.mapncy matrix
 E.map=sparse(size,size);
-
-%% Create the map as a canvas
-for i=x*y
+for i=144
     E.map(i,i)=1;
 end
+
 %lE.mapft-right
-for k=0:(x-1)
-    for i=(k*y+1):((k+1)*y-1)
+for k=0:7
+    for i=(k*18+1):((k+1)*18-1)
         E.map(i,i+1)=1;
     end
-    for i = (k*y+2):((k+1)*y)
+    for i = (k*18+2):((k+1)*18)
         E.map(i,i-1)=1;
     end
 end
 
 %up-down
-for k=0:(x-2)
-    for i=(k*y+1):((k+1)*y)
-        E.map(i,i+y)=1;
+for k=0:6
+    for i=(k*18+1):((k+1)*18)
+        E.map(i,i+18)=1;
     end
 end
 
-for k=1:(x-1)
-    for i=(k*y+1):((k+1)*y)
-        E.map(i,i-y)=1;
+for k=1:7
+    for i=(k*18+1):((k+1)*18)
+        E.map(i,i-18)=1;
     end
 end
 
-%% Set walls
+E.map(6,7)=0;
+E.map(7,6)=0;
+E.map(24,25)=0;
+E.map(25,24)=0;
+E.map(42,43)=0;
+E.map(43,42)=0;
 
-%Low right walls
-for i=[3,4]
-    E.map(1+i*y,2+i*y)=0;
-    E.map(2+i*y,1+i*y)=0;
+E.map(12,13)=0;
+E.map(13,12)=0;
+for i=[3,4,7]
+    E.map(6+i*18,7+i*18)=0;
+    E.map(12+i*18,13+i*18)=0;
+    E.map(7+i*18,6+i*18)=0;
+    E.map(13+i*18,12+i*18)=0;
 end
 
-for i=[0,1,2,3,4]
-    E.map(3+i*y,4+i*y)=0;
-    E.map(4+i*y,3+i*y)=0;
+E.map(73,91)=0;
+E.map(91,73)=0;
+
+
+
+for i=[1,2,3,4,5]
+    E.map(73+i,91+i)=0;
+    E.map(91+i,73+i)=0;
 end
 
-for i=[0,1,2,3,4]
-    E.map(4+i*y,5+i*y)=0;
-    E.map(5+i*y,4+i*y)=0;
+E.map(61,79)=0;
+E.map(79,61)=0;
+
+for i=[1,4,5,6,7,10,11]
+    E.map(61+i,79+i)=0;
+    E.map(79+i,61+i)=0;
 end
 
-for i=[0,1,2,3,4]
-    E.map(8+i*y,9+i*y)=0;
-    E.map(9+i*y,8+i*y)=0;
-end
+E.map(114,115) = 0;
+E.map(115,114) = 0;
+E.map(96,97) = 0;
+E.map(97,96) = 0;
+E.map(84,85) = 1;
+E.map(85,85) = 1;
+E.map(138,139)=1;
+E.map(139,138)=1;
+E.map(6, 7)=1;
+E.map(7, 6)=1;
 
-for i=[0,1]
-    E.map(10+i*y,9+i*y)=0;
-    E.map(9+i*y,10+i*y)=0;
-end
+E.map(75,93)=1;
+E.map(93, 75)=1;
+E.map(6, 7)=1;
+E.map(7, 6)=1;
+E.map(63, 81)=0;
+E.map(64, 82)=0;
+E.map(81, 63)=0;
+E.map(82, 64)=0;
 
-E.map(6+4*y,7+4*y)=0;
-E.map(7+4*y,6+4*y)=0;
+%E.map(75,93)=0;
+%E.map(93,75)=0;
 
-%Low upper and bottom walls
-E.map(1+y*(4+1),1+y*4)=0;
-E.map(1+y*4,1+y*(4+1))=0;
-
-E.map(1+y*(2+1),1+y*2)=0;
-E.map(1+y*2,1+y*(2+1))=0;
-
-for i=[3,4,5]
-    E.map(i+y*(4+1),i+y*4)=0;
-    E.map(i+y*4,i+y*(4+1))=0;
-end
-
-for i=[7,8]
-    E.map(i+y*(4+1),i+y*4)=0;
-    E.map(i+y*4,i+y*(4+1))=0;
-end
-
-for i=[7,8]
-    E.map(i+y*(4+1),i+y*4)=0;
-    E.map(i+y*4,i+y*(4+1))=0;
-end
-
-for i=[7,8]
-    E.map(i+y*(3+1),i+y*3)=0;
-    E.map(i+y*3,i+y*(3+1))=0;
-end
-
-E.map(9+y*(1+1),9+y*1)=0;
-E.map(9+y*1,9+y*(1+1))=0;
-
-for i=[10,11,12,13,14]
-    E.map(i+y*(4+1),i+y*4)=0;
-    E.map(i+y*4,i+y*(4+1))=0;
-end
-
-%Upper right & left walls
-for i=[5,6]
-    E.map(10+i*y,11+i*y)=0;
-    E.map(11+i*y,10+i*y)=0;
-end
-
-for i=7:x
-    E.map(8+i*y,9+i*y)=0;
-    E.map(9+i*y,8+i*y)=0;
-end
-
-for i=8:x
-    E.map(2+i*y,3+i*y)=0;
-    E.map(2+i*y,3+i*y)=0;
-end
-
-E.map(1+8*y,2+8*y)=0;
-E.map(2+8*y,1+8*y)=0;
-
-%Upper upper & bottom walls
-E.map(1+y*(8+1),1+y*8)=0;
-E.map(1+y*8,1+y*(8+1))=0;
-
-E.map(2+y*(7+1),2+y*7)=0;
-E.map(2+y*7,2+y*(7+1))=0;
-
-for i=[9,10]
-    E.map(i+y*(6+1),i+y*6)=0;
-    E.map(i+y*6,i+y*(6+1))=0;
-end
-
-%Objects room bottom-left
-
-%Objects room bottom-center
-for i=[7,8]
-    E.map(i+y*(0+1),i+y*0)=0;
-    E.map(i+y*0,i+y*(0+1))=0;
-    
-    E.map(i+y*(1+1),i+y*1)=0;
-    E.map(i+y*1,i+y*(1+1))=0;
-end
-
-E.map(6+1*y,7+1*y)=0;
-E.map(7+1*y,6+1*y)=0;
-
-%Objects room bottom-right
-
-for i=[11,12]
-    E.map(i+y*(0+1),i+y*0)=0;
-    E.map(i+y*0,i+y*(0+1))=0;
-end
-
-E.map(10+0*y,11+0*y)=0;
-E.map(11+0*y,10+0*y)=0;
-
-E.map(12+0*y,13+0*y)=0;
-E.map(13+0*y,12+0*y)=0;
-
-for i=[2,3,4]
-    E.map(12+i*y,13+i*y)=0;
-    E.map(13+i*y,12+i*y)=0;
-end
-
-for i=[13,14]
-    E.map(i+y*(1+1),i+y*1)=0;
-    E.map(i+y*1,i+y*(1+1))=0;
-end
-
-%Objects room big
-E.map(3+5*y,4+5*y)=0;
-E.map(4+5*y,3+5*y)=0;
-E.map(4+5*y,5+5*y)=0;
-E.map(5+5*y,4+5*y)=0;
-E.map(4+5*y,4+6*y)=0;
-E.map(4+6*y,4+5*y)=0;
-
-for i=[8,9,10,11,12,13]
-    E.map(3+y*i,4+y*i)=0;
-    E.map(4+y*i,3+y*i)=0;
-end
-E.map(3+7*y,3+8*y)=0;
-E.map(3+8*y,3+7*y)=0;
-E.map(3+13*y,3+14*y)=0;
-E.map(3+14*y,3+13*y)=0;
-
-for i=[9,10,11,12]
-    E.map(7+y*i,8+y*i)=0;
-    E.map(8+y*i,7+y*i)=0;
-end
-E.map(8+8*y,8+9*y)=0;
-E.map(8+9*y,8+8*y)=0;
-E.map(8+12*y,8+13*y)=0;
-E.map(8+13*y,8+12*y)=0;
-
-for i=[10,11]
-    E.map(5+y*i,6+y*i)=0;
-    E.map(6+y*i,5+y*i)=0;
-    
-    E.map(6+y*i,7+y*i)=0;
-    E.map(7+y*i,6+y*i)=0;
-end
-E.map(6+9*y,6+10*y)=0;
-E.map(6+10*y,6+9*y)=0;
-E.map(6+11*y,6+12*y)=0;
-E.map(6+12*y,6+11*y)=0;
-
-
-
-%% possible map
+% possible map
 E.pmap=E.map;
 
 %Random value for the uncertainty of the environment's doors
-E.doors=ones(3,1);
-E.doors_pos=zeros(3,2);
+E.doors=ones(4,1);
+E.doors_pos=zeros(4,2);
 
 for i=1:length(E.doors)
     E.doors(i,1)=round(rand);
     switch i
         case 1
             if E.doors(i,1) == 0
-                E.map(2+5*y,2+4*y)=0;
-                E.map(2+4*y,2+5*y)=0;
-                E.pmap(2+5*y,2+4*y)=1;
-                E.pmap(2+4*y,2+5*y)=1;
+                E.map(3+5*y,3+4*y)=0;
+                E.map(3+4*y,3+5*y)=0;
+                E.pmap(3+5*y,3+4*y)=1;
+                E.pmap(3+4*y,3+5*y)=1;
             end
-            E.doors_pos(i,1)=2+4*y;
-            E.doors_pos(i,2)=2+5*y;
+            E.doors_pos(i,1)=3+4*y;
+            E.doors_pos(i,2)=3+5*y;
         case 2
             if E.doors(i,1) == 0
-                E.map(6+4*y,6+5*y)=0;
-                E.map(6+5*y,6+4*y)=0;
-                E.pmap(6+4*y,6+5*y)=1;
-                E.pmap(6+5*y,6+4*y)=1;
+                E.map(6+4*y,7+6*y)=0;
+                E.map(7+5*y,6+6*y)=0;
+                E.pmap(6+4*y,7+6*y)=1;
+                E.pmap(7+5*y,6+6*y)=1;
             end
-            E.doors_pos(i,1)=6+4*y;
-            E.doors_pos(i,2)=6+5*y;
+            E.doors_pos(i,1)=6+6*y;
+            E.doors_pos(i,2)=7+6*y;
         case 3
             if E.doors(i,1) == 0
-                E.map(9+5*y,9+4*y)=0;
-                E.map(9+4*y,9+5*y)=0;
-                E.pmap(9+5*y,9+4*y)=1;
-                E.pmap(9+4*y,9+5*y)=1;
+                E.map(6,7)=0;
+                E.map(7,6)=0;
+                E.pmap(6,7)=1;
+                E.pmap(7,6)=1;
             end
-            E.doors_pos(i,1)=9+4*y;
-            E.doors_pos(i,2)=9+5*y;
+            E.doors_pos(i,1)=6;
+            E.doors_pos(i,2)=7;
+        case 4
+            if E.doors(i,1) == 0
+                E.map(10+3*y,10+4*y)=0;
+                E.map(10+4*y,10+3*y)=0;
+                E.pmap(10+3*y,10+4*y)=1;
+                E.pmap(10+4*y,10+3*y)=1;
+            end
+            E.doors_pos(i,1)=10+4*y;
+            E.doors_pos(i,2)=10+3*y;
     end
 end
 

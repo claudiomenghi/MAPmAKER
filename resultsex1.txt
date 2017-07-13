@@ -1,1 +1,5 @@
 experimentNumber initConf partConf #F 	 #T 	 Tr 	 Lr 	 STEP1_solution_found 	 STEP2_solution_found 
+1 1 1 0 0 0.000000 0.000000 1 0
+2 1 2 0 0 0.000000 0.000000 1 0
+3 2 1 0 0 0.000000 0.000000 1 0
+4 2 2 0 0 0.000000 0.000000 1 0

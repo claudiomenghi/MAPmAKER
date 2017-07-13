@@ -27,7 +27,7 @@ function [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, 
             grid=[];
         end
         
-        maxIteration=50;
+        maxIteration=10;
       
         %% runs the step 1 of the evaluation
         possiblesearchenabled=1;

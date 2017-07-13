@@ -1,10 +1,10 @@
 close all;
-clear all;
+clear;
 
 trueEvidenceCounter=0;
 falseEvicenceCounter=0;
 
 
 
-addpath('Experiments/');
+addpath('Evaluation/Example1/Experiment1/');
 experiment1;
