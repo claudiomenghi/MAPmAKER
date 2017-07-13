@@ -26,11 +26,7 @@ destinationStates=acceptingstate;
 acceptingIndex=find(ismember(Product.STATES,acceptingstate,'rows'));
 [dist, path, pred]=graphshortestpath(sparse(StatesReachability), 1, acceptingIndex);
 
-
-
 selectedpath=path;
-disp(selectedpath);
-
 
 for actionIndex=1:size(path,2)
     for robotIndex=1:numberOfRobots
