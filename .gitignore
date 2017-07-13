@@ -4,3 +4,4 @@ movie.*
 data_record.txt
 *.m~
 *.m~
+ReplicationPackage/*
