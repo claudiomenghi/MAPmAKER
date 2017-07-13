@@ -1,4 +1,4 @@
-opfunction [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound] = mapmaker(sys, spec,   environment, possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale)
+function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound] = mapmaker(sys, spec,   environment, possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale)
 % it computes the plans for the robots
 % sys: the model of the robot application, i.e., the robots
 % spec: the specification of each robot
@@ -38,10 +38,10 @@ while currentiteration<maxIteration
     iter=iter+1;
     
     fprintf('-----------------\n Iteration: %d. \n-----------------\n',iter);
-   
-     h=3;
+    
+    h=3;
     % fprintf('value of h %d ',h);
-   % end
+    % end
     clear Dep;
     clear ell;
     clear Buchi;
@@ -56,147 +56,144 @@ while currentiteration<maxIteration
     for i=1:N
         cut(spec(i),h);
     end
-
+    
     for i=1:N
         sys(i).previouscurr = sys(i).curr;
     end
     
     currentiteration=currentiteration+1;
-
-     %% analysing the dependincies classes
+    
+    %% analysing the dependincies classes
     for i=1:ell
         clear Buchi;
         clear B;
         clear P;
-
+        
         dep = Dep{i};
         M = length(dep);
-
+        
         %% compute the intersection automaton
         %disp('STEP 3: computing the intersection');
         [Buchi, kmap, EXPLICIT_STATES] = intersection(spec);
-
-       %disp('STEP 4: computing the product');
-       tStart = tic;
-       [P, sys, spec, acceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 0);
-       tElapsed = toc(tStart);
-       planningtime=planningtime+tElapsed;
-       found=0;
-       if(~(acceptingstate==-1))
-           %disp('STEP 5: searcing for a definitive path to be performed');
-           [ DefinitivePath, found]=checkPlanPresence(oldPlans,sys.curr,acceptingstate);
-           if(~(found==1))
+        
+        %disp('STEP 4: computing the product');
+        tStart = tic;
+        [P, sys, spec, acceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 0);
+        tElapsed = toc(tStart);
+        planningtime=planningtime+tElapsed;
+        found=0;
+        if(~(acceptingstate==-1))
+            %disp('STEP 5: searcing for a definitive path to be performed');
+            [ DefinitivePath, found]=checkPlanPresence(oldPlans,sys.curr,acceptingstate);
+            if(~(found==1))
                 [DefinitivePath ] = searchActions(P, acceptingstate);
-           end
-       end
-
-       if(possiblepathenabled==1)
-           %disp('STEP 6: computing the possible product');
-           tStart = tic;
-           [P, sys, spec, pacceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 1);
-           tElapsed = toc(tStart);
-           planningtime=planningtime+tElapsed;
-<<<<<<< HEAD
-           if(~(pacceptingstate==-1))
-               %disp('STEP 6: searcing for a path to be performed');
+            end
+        end
+        
+        if(possiblepathenabled==1)
+            %disp('STEP 6: computing the possible product');
+            tStart = tic;
+            [P, sys, spec, pacceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 1);
+            tElapsed = toc(tStart);
+            planningtime=planningtime+tElapsed;
+            if(~(pacceptingstate==-1))
+                %disp('STEP 6: searcing for a path to be performed');
                 [ PossiblePath, found]=checkPlanPresence(oldPlans,sys.curr,acceptingstate);
                 if(~(found==1))
                     [PossiblePath ] = searchActions(P, pacceptingstate);
                 end
-=======
-           if(~(acceptingstate==-1))
-               disp('STEP 5: searching for a definitive path to be performed');
-               [DefinitivePath ] = searchActions(P, acceptingstate);
-           end
-           
-           if(possiblepathenabled==1)
-               disp('STEP 6: computing the possible product');
-               tStart = tic;
-               [P, sys, spec, pacceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 1);
-               tElapsed = toc(tStart);
-               planningtime=planningtime+tElapsed;
-               if(~(pacceptingstate==-1))
-                   disp('STEP 6: searching for a path to be performed');
-                   [PossiblePath ] = searchActions(P, pacceptingstate);
-               end
->>>>>>> 5ce8a93be022c33a5733319c28fac8ef31e0567b
-           end
-       end
-
-       if(possiblepathenabled==1)
-           if(pacceptingstate==-1) 
-               disp('no definitive or possible plan available');
-               return;
-           end   
-
-           if(acceptingstate==-1)
-               disp('no definitive plan available');
-               Path=PossiblePath;
-           else
-               disp('the shortest between definitive and possible plan is chosen');
-               if(size(DefinitivePath,1)<size(PossiblePath,1))
-                   Path=DefinitivePath;
-               else
-                   Path=PossiblePath;
-               end
-           end
-       else
-            if(acceptingstate==-1)
-               disp('no definitive plan available');
-               return;
-            else
-                disp('definitive plan found');
-                Path=DefinitivePath;
-            end
-       end
-
-       if(found)
-           solutionfound=1;
-           return;
-       end
-       
-       oldPlans{oldPlanCounter+1}=Path;
-       oldPlanCounter=oldPlanCounter+1;
-      %disp('STEP 7: updating the state of the machine');
-
-
-      i=2; 
-      evidence=1;
-      while evidence && i<=size(Path,1)
-           if(plotenabled==1)
-            grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale);
-           end
-           machineindex=1;
-           while machineindex<=N && evidence
-                % simulates the discovering of new information
-                [sys, grid, environment, infdiscovered, evidence]=actionBasedInfDiscover(grid, sys, environment, machineindex, sys(machineindex).curr,Path(i,machineindex), plotenabled);
-
-                if(infdiscovered==0)
-                    sys(machineindex).curr=Path(i,machineindex);
-                    spec(machineindex).curr=EXPLICIT_STATES(Path(i,M+1),machineindex);
-                    planlength=planlength+1;
+                if(~(acceptingstate==-1))
+                    disp('STEP 5: searching for a definitive path to be performed');
+                    [DefinitivePath ] = searchActions(P, acceptingstate);
                 end
-                if(infdiscovered==1)
-                    if(evidence)
-                        sys(machineindex).curr=Path(i,machineindex);
-                        spec(machineindex).curr=EXPLICIT_STATES(Path(i,M+1),machineindex);
-                        trueEvidenceCounter=trueEvidenceCounter+1;
-                        planlength=planlength+1;
-                    else
-                        falseEvicenceCounter=falseEvicenceCounter+1;
+                
+                if(possiblepathenabled==1)
+                    disp('STEP 6: computing the possible product');
+                    tStart = tic;
+                    [P, sys, spec, pacceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 1);
+                    tElapsed = toc(tStart);
+                    planningtime=planningtime+tElapsed;
+                    if(~(pacceptingstate==-1))
+                        disp('STEP 6: searching for a path to be performed');
+                        [PossiblePath ] = searchActions(P, pacceptingstate);
                     end
                 end
-
-                machineindex=machineindex+1;
-           end           
-
-           i=i+1;
-           if(plotenabled==1)
-               grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
-%               pause(2);
-           end
-       end
-
+            end
+            
+            if(possiblepathenabled==1)
+                if(pacceptingstate==-1)
+                    disp('no definitive or possible plan available');
+                    return;
+                end
+                
+                if(acceptingstate==-1)
+                    disp('no definitive plan available');
+                    Path=PossiblePath;
+                else
+                    disp('the shortest between definitive and possible plan is chosen');
+                    if(size(DefinitivePath,1)<size(PossiblePath,1))
+                        Path=DefinitivePath;
+                    else
+                        Path=PossiblePath;
+                    end
+                end
+            else
+                if(acceptingstate==-1)
+                    disp('no definitive plan available');
+                    return;
+                else
+                    disp('definitive plan found');
+                    Path=DefinitivePath;
+                end
+            end
+            
+            if(found)
+                solutionfound=1;
+                return;
+            end
+            
+            oldPlans{oldPlanCounter+1}=Path;
+            oldPlanCounter=oldPlanCounter+1;
+            %disp('STEP 7: updating the state of the machine');
+            
+            
+            i=2;
+            evidence=1;
+            while evidence && i<=size(Path,1)
+                if(plotenabled==1)
+                    grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale);
+                end
+                machineindex=1;
+                while machineindex<=N && evidence
+                    % simulates the discovering of new information
+                    [sys, grid, environment, infdiscovered, evidence]=actionBasedInfDiscover(grid, sys, environment, machineindex, sys(machineindex).curr,Path(i,machineindex), plotenabled);
+                    
+                    if(infdiscovered==0)
+                        sys(machineindex).curr=Path(i,machineindex);
+                        spec(machineindex).curr=EXPLICIT_STATES(Path(i,M+1),machineindex);
+                        planlength=planlength+1;
+                    end
+                    if(infdiscovered==1)
+                        if(evidence)
+                            sys(machineindex).curr=Path(i,machineindex);
+                            spec(machineindex).curr=EXPLICIT_STATES(Path(i,M+1),machineindex);
+                            trueEvidenceCounter=trueEvidenceCounter+1;
+                            planlength=planlength+1;
+                        else
+                            falseEvicenceCounter=falseEvicenceCounter+1;
+                        end
+                    end
+                    
+                    machineindex=machineindex+1;
+                end
+                
+                i=i+1;
+                if(plotenabled==1)
+                    grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
+                    %               pause(2);
+                end
+            end
+            
+        end
     end
-    
 end

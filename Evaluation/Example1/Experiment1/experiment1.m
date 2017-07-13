@@ -12,8 +12,8 @@ configParams;
 setVisualizationConstants;
 
 %% preparing the input for the experiments
-numberOfInitialConfigurations=2;
-numberOfPartialInfoConfigurations=2;
+numberOfInitialConfigurations=3;
+numberOfPartialInfoConfigurations=3;
 
 environment=EnvironmentMap();
 for initNumber=1:numberOfInitialConfigurations
