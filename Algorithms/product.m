@@ -39,7 +39,7 @@ P.trans{1,1}=[];
 bottomstackhindex=1;
 topstackhindex=1;
 
-P.STATES(1,:)=[sys.curr; Buchi.curr];
+P.STATES(1,:)=[sys.curr Buchi.curr];
 
 acceptingstate=-1;
 acceptingFound=0;

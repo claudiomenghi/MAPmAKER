@@ -3,7 +3,7 @@
 % penvironmentMap: the possible map of the environment
 %% Output
 % the model of the robot
-function T = Robot2(environmentMap, penvironmentMap)
+function T = Robot2(environmentMap, penvironmentMap, initPosition)
 
 T.Q=1:224;   %states
 T.Pi=3:4; %all subsets of atomic propositions
@@ -12,24 +12,26 @@ T.Pi=3:4; %all subsets of atomic propositions
 %T.curr = 106;    %initial state
 
 %Random value for the initial position of the robot
-occupied=[4 9 11 12 18 21:23 41:43 46 55:57 60 63 64 69 70 74 81:84 ...
-    95:98 108:112 114 115 122:129 134:140 141:143 146 148:154 155:157 160 ...
-    162:168 169:171 176:182 183:185 191:196 197:199 105:210 211 212 219:224];
+T.curr=initPosition;
 
-while (1)
-    valid=1;
-    T.curr = round(1 + (length(T.Q) - 1).*rand);
-    for i=1:length(occupied)
-        if T.curr==occupied(i)
-            disp('The initial position ', T.curr, ' is not valid.')
-            valid=0;
-            break;
-        end
-    end
-    if valid==1
-        break;
-    end  
-end
+% occupied=[4 9 11 12 18 21:23 41:43 46 55:57 60 63 64 69 70 74 81:84 ...
+%     95:98 108:112 114 115 122:129 134:140 141:143 146 148:154 155:157 160 ...
+%     162:168 169:171 176:182 183:185 191:196 197:199 105:210 211 212 219:224];
+% 
+% while (1)
+%     valid=1;
+%     T.curr = round(1 + (length(T.Q) - 1).*rand);
+%     for i=1:length(occupied)
+%         if T.curr==occupied(i)
+%             disp('The initial position ', T.curr, ' is not valid.')
+%             valid=0;
+%             break;
+%         end
+%     end
+%     if valid==1
+%         break;
+%     end  
+% end
 T.init=T.curr;
 T.adj=environmentMap;
 T.padj=penvironmentMap;

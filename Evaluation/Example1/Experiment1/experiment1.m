@@ -44,6 +44,7 @@ for initNumber=1:numberOfInitialConfigurations
         %Save the input variables for future experiment replications
         environment=testenvironments(partialInfoNumber);
         initRobot1=initRobot1Positions(initNumber);
+        initRobot2=initRobot2Positions(initNumber);
         createExperiment1;
         
         save(strcat('ReplicationPackage/experiment1-test', num2str(experimentNumber) ,'.mat'), 'sys', 'spec');
