@@ -60,7 +60,7 @@ while currentiteration<maxIteration
     end
     
     while currentiteration<maxIteration
-        currentiteration=currentiteration+1;
+        currentiteration=currentiteration+1
     
          %% analysing the dependincies classes
         for i=1:ell
@@ -81,7 +81,7 @@ while currentiteration<maxIteration
            tElapsed = toc(tStart);
            planningtime=planningtime+tElapsed;
            if(~(acceptingstate==-1))
-               disp('STEP 5: searcing for a definitive path to be performed');
+               disp('STEP 5: searching for a definitive path to be performed');
                [DefinitivePath ] = searchActions(P, acceptingstate);
            end
            
@@ -92,7 +92,7 @@ while currentiteration<maxIteration
                tElapsed = toc(tStart);
                planningtime=planningtime+tElapsed;
                if(~(pacceptingstate==-1))
-                   disp('STEP 6: searcing for a path to be performed');
+                   disp('STEP 6: searching for a path to be performed');
                    [PossiblePath ] = searchActions(P, pacceptingstate);
                end
            end

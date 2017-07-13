@@ -27,7 +27,7 @@ function [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, 
             grid=[];
         end
         
-        maxIteration=50;
+        maxIteration=10;
       
         %% runs the step 1 of the evaluation
         possiblesearchenabled=1;
@@ -37,7 +37,7 @@ function [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, 
         [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale);
 
         %% runs the step 2 of the evaluation
-        possiblesearchenabled=1;
+        possiblesearchenabled=0;
         [falseEvicenceCounterstep2, trueEvidenceCounterstep2, planlengthstep2, planningtimestep2, solutionfoundstep2]=mapmaker(sys1, spec1, environment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale);
 
       
