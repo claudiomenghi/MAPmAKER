@@ -84,7 +84,7 @@ while currentiteration<maxIteration
         found=0;
         if(~(acceptingstate==-1))
             %disp('STEP 5: searcing for a definitive path to be performed');
-            [ DefinitivePath, found]=checkPlanPresence(oldPlans,sys.curr,acceptingstate);
+            [ DefinitivePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstate);
             if(~(found==1))
                 [DefinitivePath ] = searchActions(P, acceptingstate);
             end
@@ -98,7 +98,7 @@ while currentiteration<maxIteration
             planningtime=planningtime+tElapsed;
             if(~(pacceptingstate==-1))
                 %disp('STEP 6: searcing for a path to be performed');
-                [ PossiblePath, found]=checkPlanPresence(oldPlans,sys.curr,acceptingstate);
+                [ PossiblePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstate);
                 if(~(found==1))
                     [PossiblePath ] = searchActions(P, pacceptingstate);
                 end

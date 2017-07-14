@@ -1,5 +1,5 @@
 function [x,y] = transform_coordinates(a, maxX, maxY)
-
+%% transforms a cell into its
 x = maxX-(floor((a-1)/maxY));
 y = mod(a,maxY);
 
