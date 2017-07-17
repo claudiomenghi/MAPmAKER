@@ -31,8 +31,10 @@ perm = randperm(size(sys,2)); %permutation (i.e. ordering), meaning that agent 3
 %perm=[1,2,3];
 
 
-while currentiteration<maxIteration
+newInf=1;
+while newInf
     
+    spec.curr=1;
     possibleSolutionSearchTriggered=0;
     skip=0;
     iter=iter+1;
@@ -102,7 +104,7 @@ while currentiteration<maxIteration
                 if(~(found==1))
                     [PossiblePath ] = searchActions(P, pacceptingstate);
                 end
-                 solutionfound=1;
+                solutionfound=1;
             end
 
         end
@@ -135,6 +137,7 @@ while currentiteration<maxIteration
         end
 
 
+
         oldPlans{oldPlanCounter+1}=Path;
         oldPlanCounter=oldPlanCounter+1;
         %disp('STEP 7: updating the state of the machine');
@@ -142,6 +145,7 @@ while currentiteration<maxIteration
 
         i=2;
         evidence=1;
+        newInf=0;
         while evidence && i<=size(Path,1)
             if(plotenabled==1)
                 grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale);
@@ -164,6 +168,9 @@ while currentiteration<maxIteration
                         planlength=planlength+1;
                     else
                         falseEvicenceCounter=falseEvicenceCounter+1;
+                        evidence=0;
+                        solutionfound=0;
+                        newInf=1;
                     end
                 end
 
