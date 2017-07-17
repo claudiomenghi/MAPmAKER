@@ -81,13 +81,13 @@ while currentiteration<maxIteration
         [P, sys, spec, acceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 0);
         tElapsed = toc(tStart);
         planningtime=planningtime+tElapsed;
-        found=0;
         if(~(acceptingstate==-1))
             disp('searcing for a definitive path to be performed');
             [ DefinitivePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstate);
             if(~(found==1))
                 [DefinitivePath ] = searchActions(P, acceptingstate);
             end
+            solutionfound=1;
         end
         
         if(possiblepathenabled==1)
@@ -102,24 +102,9 @@ while currentiteration<maxIteration
                 if(~(found==1))
                     [PossiblePath ] = searchActions(P, pacceptingstate);
                 end
-                if(~(acceptingstate==-1))
-                    disp('searching for a definitive path to be performed');
-                    [DefinitivePath ] = searchActions(P, acceptingstate);
-                end
-                
-                if(possiblepathenabled==1)
-                    %disp('STEP 6: computing the possible product');
-                    tStart = tic;
-                    [P, sys, spec, pacceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 1);
-                    tElapsed = toc(tStart);
-                    planningtime=planningtime+tElapsed;
-                    if(~(pacceptingstate==-1))
-                        %disp('STEP 6: searching for a path to be performed');
-                        [PossiblePath ] = searchActions(P, pacceptingstate);
-                    end
-                end
+                 solutionfound=1;
             end
-            
+
         end
             
         if(possiblepathenabled==1)
@@ -149,10 +134,6 @@ while currentiteration<maxIteration
             end
         end
 
-        if(found)
-            solutionfound=1;
-            return;
-        end
 
         oldPlans{oldPlanCounter+1}=Path;
         oldPlanCounter=oldPlanCounter+1;
