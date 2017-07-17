@@ -20,7 +20,7 @@ sys(2)=Robot2(environment.map, environment.pmap, initRobot2);
 %sys(3)=Robot3(environment.map, environment.pmap, initRobot3);
 
 spec(1)=MissionRobot1(1, 2, 3,  1, 1, 1);
-spec(2)=MissionRobot1(4, 5,  2, 2);
+spec(2)=MissionRobot2(4, 5,  2, 2);
 
 %spec(1)=ExistenceGoal(1, 2, 1, [1,2]);
 %spec(2)=Mission2(4, 5, 2, 2);
