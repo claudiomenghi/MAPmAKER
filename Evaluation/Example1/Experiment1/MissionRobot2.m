@@ -2,7 +2,7 @@
 % action1: the first action to be considered
 % action2: the second action to be considered
 %% Output
-% return an automaton corresponding to the formula
+% return an automaton corresponding to the formulatry 
 % GLOBALLY(FINALLY(action1|| action2))
 function A = MissionRobot2(action1, action2, robotsNecessaryForAction1, robotsNecessaryForAction2)
 
