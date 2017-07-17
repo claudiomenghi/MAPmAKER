@@ -36,6 +36,7 @@ for t = 1:act_no
         if P.Sigma(t,k)~=0
             P.lab{t} = unique([P.lab{t} spec(k).lab{P.Sigma(t,k)}]);
         end
+        P.trans{1,t}=[];
     end
 end
 
@@ -58,64 +59,64 @@ iter=1;
 acceptingFound=0;
 
 
-while ~acceptingFound
-    
-    while (topstackhindex-bottomstackhindex>=0) %explore -- using the cut already
+while (topstackhindex-bottomstackhindex>=0)
+   %explore -- using the cut already
 
-        %fprintf('Level %d \n', iter);
+    %fprintf('Level %d \n', iter);
 
-        iter = iter+1;
-        addedelements=0;
-        analizedElements=0;
+    iter = iter+1;
+    addedelements=0;
+    analizedElements=0;
 
-        for j=bottomstackhindex:topstackhindex %do it from possible current states
-            currenststateindex=j;
-            CURRENT_STATE=STATES(currenststateindex,:);
-            analizedElements=analizedElements+1;
+    for j=bottomstackhindex:topstackhindex %do it from possible current states
+        currenststateindex=j;
+        CURRENT_STATE=STATES(currenststateindex,:);
+        analizedElements=analizedElements+1;
 
-            for t=1:act_no
-                
-                % computes the successors of the now state
-                % succ{i} contains for each machine the successor for the
-                % given label
-                succ=CURRENT_STATE;
-                
-                acceptingValue=CURRENT_STATE(1,M+1);
+        for t=1:act_no
 
-                if acceptingValue==M
-                   acceptingValue=0;
-                end
-                found=1;
-                
-                for m = 1:M
-                    currentSpec=m;
-                    localEvents=P.Sigma(t,currentSpec);
+            % computes the successors of the now state
+            % succ{i} contains for each machine the successor for the
+            % given label
+            succ=CURRENT_STATE;
 
-                     if ~isempty(spec(currentSpec).trans{CURRENT_STATE(1,currentSpec),localEvents})
+            acceptingValue=CURRENT_STATE(1,M+1);
 
-                         succ(currentSpec) = spec(currentSpec).trans{CURRENT_STATE(1,currentSpec),localEvents};
+            if acceptingValue==M
+               acceptingValue=0;
+            end
+            found=1;
 
-                        % computing the value of the next k
-                        % check whether the next state is of the machine M is an
-                        % accepting state
+            for m = 1:M
+                currentSpec=m;
+                localEvents=P.Sigma(t,currentSpec);
 
-                         addedAccepting=0;
+                 if ~isempty(spec(currentSpec).trans{CURRENT_STATE(1,currentSpec),localEvents})
 
-                        if(~isempty(intersect(spec(acceptingValue+1).F,succ(acceptingValue+1))))
+                     succ(currentSpec) = spec(currentSpec).trans{CURRENT_STATE(1,currentSpec),localEvents};
 
-                            if(acceptingValue+1==currentSpec)
-                                acceptingValue=acceptingValue+1;
-                                if acceptingValue==M
-                                    acceptingFound=1;
-                                    addedAccepting=1;
-                                end
+
+                    % computing the value of the next k
+                    % check whether the next state is of the machine M is an
+                    % accepting state
+
+                     addedAccepting=0;
+
+                    if(~isempty(intersect(spec(acceptingValue+1).F,succ(acceptingValue+1))))
+
+                        if(acceptingValue+1==currentSpec)
+                            acceptingValue=acceptingValue+1;
+                            if acceptingValue==M
+                                acceptingFound=1;
+                                addedAccepting=1;
                             end
                         end
-                        succ(M+1)= acceptingValue; 
-                     else
-                         found=0;
                     end
-                end
+                    succ(M+1)= acceptingValue; 
+                 else
+                     found=0;
+                 end
+                 
                 if found
                     state=succ;
 
@@ -132,24 +133,25 @@ while ~acceptingFound
                     end
 
                     indexOfConfiguration=find(ismember(STATES,state,'rows'));
-
                     % add a transition to the automaton
                     P.trans{j,t}=indexOfConfiguration;
                 end
             end
+            
         end
-        bottomstackhindex=bottomstackhindex+analizedElements;
-        topstackhindex=topstackhindex+addedelements;
     end
+    bottomstackhindex=bottomstackhindex+analizedElements;
+    topstackhindex=topstackhindex+addedelements;
+    
 end
 
 % add the transition for the non visitable states after an accepting state has
 % been found
-for j=size(P.trans,1):size(P.Q,2)
-    for t=1:act_no
-        P.trans{j,t}=[];
-    end
-end
+%for j=bottomstackhindex:topstackhindex
+%    for t=1:size(P.Sigma,1)
+%        P.trans{j,t}=[];
+ %   end
+%end
 
 
 

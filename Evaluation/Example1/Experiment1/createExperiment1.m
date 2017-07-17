@@ -16,12 +16,13 @@ actions={'recharge', 'r1loadbox1', 'r2loadbox1', 'r2unloadbox1', 'detectunloadin
 % xlabel('x'); ylabel('y');
 
 sys(1)=Robot1(environment.map, environment.pmap, initRobot1);
-sys(2)=Robot2(environment.map, environment.pmap, initRobot2);
+%sys(2)=Robot2(environment.map, environment.pmap, initRobot2);
 %sys(3)=Robot3(environment.map, environment.pmap, initRobot3);
 
-spec(1)=ExistenceGoal(1, 2, 1, 1);
+spec(1)=MissionRobot1(1, 2, 3,  1, 1, 1);
+
 %spec(1)=ExistenceGoal(1, 2, 1, [1,2]);
-spec(2)=ExistenceGoal(3, 4, 2, 2);
+%spec(2)=Mission2(4, 5, 2, 2);
 %spec(2)=ResponseGoal(3, 4, 2, 2);
 %spec(3)=ResponseGoal(5, 6, [2,3], 3);
 
@@ -29,8 +30,9 @@ fileID = fopen('data_record.txt','w');
 fprintf(fileID,'-------------------------------\n');
 fprintf(fileID,'Initial position of the robots:\n');
 fprintf(fileID,'-------------------------------\n');
-fprintf(fileID, 'Robot 1: %d \n', sys(1).init);
-fprintf(fileID, 'Robot 2: %d \n', sys(2).init);
+for i=1:size(sys,2)
+    fprintf(fileID, 'Robot %d: %d \n', i, sys(1).init);
+end
 fprintf(fileID,'\n');
 fprintf(fileID,'-------------------------------\n');
 fprintf(fileID,'State of the doors:\n');

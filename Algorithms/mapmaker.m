@@ -73,17 +73,17 @@ while currentiteration<maxIteration
         M = length(dep);
         
         %% compute the intersection automaton
-        %disp('STEP 3: computing the intersection');
+        disp('computing the intersection');
         [Buchi, kmap, EXPLICIT_STATES] = intersection(spec);
         
-        %disp('STEP 4: computing the product');
+        disp('Computing the product');
         tStart = tic;
         [P, sys, spec, acceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 0);
         tElapsed = toc(tStart);
         planningtime=planningtime+tElapsed;
         found=0;
         if(~(acceptingstate==-1))
-            %disp('STEP 5: searcing for a definitive path to be performed');
+            disp('searcing for a definitive path to be performed');
             [ DefinitivePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstate);
             if(~(found==1))
                 [DefinitivePath ] = searchActions(P, acceptingstate);
@@ -91,7 +91,7 @@ while currentiteration<maxIteration
         end
         
         if(possiblepathenabled==1)
-            %disp('STEP 6: computing the possible product');
+            disp('Computing the possible product');
             tStart = tic;
             [P, sys, spec, pacceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 1);
             tElapsed = toc(tStart);
@@ -103,7 +103,7 @@ while currentiteration<maxIteration
                     [PossiblePath ] = searchActions(P, pacceptingstate);
                 end
                 if(~(acceptingstate==-1))
-                    %disp('STEP 5: searching for a definitive path to be performed');
+                    disp('searching for a definitive path to be performed');
                     [DefinitivePath ] = searchActions(P, acceptingstate);
                 end
                 

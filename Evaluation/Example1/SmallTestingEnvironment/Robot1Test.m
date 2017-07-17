@@ -3,7 +3,7 @@
 % penvironmentMap: the possible map of the environment
 %% Output
 % the model of the robot
-function T = Robot1(environmentMap, penvironmentMap, initPosition)
+function T = Robot1Test(environmentMap, penvironmentMap, initPosition)
 
 T.Q=1:224;   %states
 T.Pi=1:2; %all subsets of atomic propositions
@@ -30,7 +30,7 @@ end
 T.ser{1} = 2;
 
 T.ser{2} = 1;
-
+T.ser{5} = 3;
 
 % adding the possible transition relation
 T.pser=T.ser;

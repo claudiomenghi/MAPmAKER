@@ -4,9 +4,9 @@
 %% Output
 % return an automaton corresponding to the formula
 % GLOBALLY(FINALLY(action1|| action2))
-function A = Mission2(action1, action2, robotsNecessaryForAction1, robotsNecessaryForAction2)
+function A = MissionRobot2(action1, action2, robotsNecessaryForAction1, robotsNecessaryForAction2)
 
-A.name='Mission2';
+A.name='MissionRobot2';
 %% states
 A.Q = 1:2; 
 
@@ -14,7 +14,7 @@ A.Q = 1:2;
 A.curr = 1;
 
 %% final states
-A.F = 1; 
+A.F = 2; 
 
 A.Sigma = 1:4; %actions -- over 2^Pi
 % [{}, {action1}, {action2}, {action1, action2}]
