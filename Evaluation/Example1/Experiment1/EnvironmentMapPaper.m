@@ -226,7 +226,7 @@ for i=1:length(E.doors)
     E.doors(i,1)=round(rand);
     switch i
         case 1
-            if E.doors(i,1) == 0
+            if E.doors(i,1) == 0 
                 E.map(2+5*y,2+4*y)=0;
                 E.map(2+4*y,2+5*y)=0;
                 E.pmap(2+5*y,2+4*y)=1;
