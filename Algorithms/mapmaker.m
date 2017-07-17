@@ -29,12 +29,11 @@ iter=0;
 
 perm = randperm(size(sys,2)); %permutation (i.e. ordering), meaning that agent 3 < agent 1 < agent 2
 %perm=[1,2,3];
-
+M=size(sys,2);
 
 newInf=1;
 while newInf
     
-    spec.curr=1;
     possibleSolutionSearchTriggered=0;
     skip=0;
     iter=iter+1;
@@ -54,25 +53,25 @@ while newInf
     %% computing the dependencies classes
     %dependency partition
     %disp('STEP 1: computing the depencencies');
-    [Dep,ell] = computeDependencies(spec,perm,N,h);
-    for i=1:N
-        cut(spec(i),h);
-    end
-    
-    for i=1:N
-        sys(i).previouscurr = sys(i).curr;
-    end
+%     [Dep,ell] = computeDependencies(spec,perm,N,h);
+%     for i=1:N
+%         cut(spec(i),h);
+%     end
+%     
+%     for i=1:N
+%         sys(i).previouscurr = sys(i).curr;
+%     end
     
     currentiteration=currentiteration+1;
     
     %% analysing the dependincies classes
-    for i=1:ell
+    %for i=1:ell
         clear Buchi;
         clear B;
         clear P;
         
-        dep = Dep{i};
-        M = length(dep);
+        %dep = Dep{i};
+        %M = length(dep);
         
         %% compute the intersection automaton
         disp('computing the intersection');
@@ -182,7 +181,7 @@ while newInf
                 grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
                 %               pause(2);
             end
-        end
+        %end
             
        
     end
