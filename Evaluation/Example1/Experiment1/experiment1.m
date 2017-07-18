@@ -15,7 +15,8 @@ setVisualizationConstants;
 numberOfInitialConfigurations=3;
 numberOfPartialInfoConfigurations=3;
 
-environment=EnvironmentMapPaper();
+%environment=EnvironmentMapPaper();
+environment=EnvironmentMapRoboCup();
 
 for initNumber=1:numberOfInitialConfigurations
     initRobot1Positions(initNumber)=getRandomInitPosition(environment);
@@ -25,7 +26,8 @@ end
 
 
 for partialInfoNumber=1:numberOfPartialInfoConfigurations
-    testenvironments(partialInfoNumber)=EnvironmentMapPaper();
+    %testenvironments(partialInfoNumber)=EnvironmentMapPaper();
+    testenvironments(partialInfoNumber)=EnvironmentMapRoboCup();
 end
 
 

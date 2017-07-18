@@ -28,7 +28,7 @@ function [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, 
         end
         
         maxIteration=10;
-      
+        
         %% runs the step 1 of the evaluation
         possiblesearchenabled=1;
         

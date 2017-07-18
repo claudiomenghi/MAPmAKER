@@ -6,7 +6,7 @@
 function T = Robot2(environmentMap, penvironmentMap, initPosition)
 
 T.Q=1:224;   %states
-T.Pi=3:4; %all subsets of atomic propositions
+T.Pi=4:5; %all subsets of atomic propositions
 %T.curr= 76;
 
 %T.curr = 106;    %initial state
@@ -42,14 +42,14 @@ for i=1:224
     T.ser{i}=[];
 end
 
-T.ser{216} = 5;
-T.ser{215} = 5;
+T.ser{216} = 4;
+T.ser{215} = 4;
 
-T.ser{106} = 4; %t1
-T.ser{107}= 4; %t2
+T.ser{106} = 5; %t1
+T.ser{107}= 5; %t2
 
-T.ser{94} = 5;
-T.ser{130} = 4;
+T.ser{94} = 4;
+T.ser{130} = 5;
 
 % adding the possible transition relation
 T.pser=T.ser;
