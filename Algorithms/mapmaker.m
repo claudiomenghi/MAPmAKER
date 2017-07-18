@@ -77,6 +77,7 @@ while newInf
         disp('computing the intersection');
         [Buchi, kmap, EXPLICIT_STATES] = intersection(spec);
         
+   %     visualizeBuchi(Buchi);
         disp('Computing the product');
         tStart = tic;
         [P, sys, spec, acceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 0);

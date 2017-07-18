@@ -42,13 +42,13 @@ for i=1:224
     T.ser{i}=[];
 end
 
-T.ser{216} = 3;
-T.ser{215} = 3;
+T.ser{216} = 5;
+T.ser{215} = 5;
 
 T.ser{106} = 4; %t1
 T.ser{107}= 4; %t2
 
-T.ser{94} = 3;
+T.ser{94} = 5;
 T.ser{130} = 4;
 
 % adding the possible transition relation
