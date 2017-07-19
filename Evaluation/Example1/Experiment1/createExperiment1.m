@@ -15,8 +15,8 @@ actions={'recharge', 'r1loadbox1', 'r2loadbox1', 'r2unloadbox1', 'detectunloadin
 % figure(); imshow(grid, c);
 % xlabel('x'); ylabel('y');
 
-sys(1)=Robot1(environment.map, environment.pmap, initRobot1);
-sys(2)=Robot2(environment.map, environment.pmap, initRobot2);
+sys(1)=Robot1Test(environment.map, environment.pmap, initRobot1);
+sys(2)=Robot2Test(environment.map, environment.pmap, initRobot2);
 %sys(3)=Robot3(environment.map, environment.pmap, initRobot3);
 
 spec(1)=MissionRobot1(1, 2, 3,  1, 1, 1);

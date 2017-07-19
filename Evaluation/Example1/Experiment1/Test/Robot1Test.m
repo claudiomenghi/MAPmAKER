@@ -3,12 +3,13 @@
 % penvironmentMap: the possible map of the environment
 %% Output
 % the model of the robot
-function T = Robot1(environmentMap, penvironmentMap, initPosition)
+function T = Robot1Test(environmentMap, penvironmentMap, initPosition)
 
 T.name='Robot1';
 T.id=1; % the identifiers of the robot
 
-T.Q=1:224;   %states
+
+T.Q=1:9;   %states
 T.Pi=1:3; %all subsets of atomic propositions
 
 T.curr=initPosition;
@@ -24,32 +25,20 @@ T.lastaction=0; % the last action executed by the robot
 % [{}, {action1}, {action2}, {action1, action2}]
 
 %% services
-for i=1:224
+for i=1:size(T.Q,2)
     T.ser{i}=[];
     T.sync{i}=[];
 end
 
-T.ser{45} = 3;
-T.ser{47} = 3;
+T.ser{1} = 2;
 
+T.ser{9} = 1;
 
-T.ser{53} = 2;
-T.ser{54} = 2;
-T.ser{55} = 2;
-
-T.ser{99} = 1;
-T.ser{100} = 1;
-T.ser{130} = 1;
-
-
-T.sync{99} = 2;  % must sync with the robot with identifiers 2
-T.sync{100} =2;
-T.sync{130} =2;
-
+T.ser{3} = 3;
 
 % adding the possible transition relation
 T.pser=T.ser;
-
+T.sync{9} = 2;
 
 T.index = 3;
 

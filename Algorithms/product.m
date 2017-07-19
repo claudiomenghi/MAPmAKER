@@ -60,25 +60,33 @@ while  ~acceptingFound && (topstackhindex-bottomstackhindex>=0)
         analizedElements=analizedElements+1;
         for t=1:act_no
             P.trans{currenststateindex,t}=[];
-        end                    
+        end          
+        comb=[];
         %explore all components of sys(1)...sys(M)
         for m=1:numberOfprocess
             currentProcessIndex=m;
 
             if(possible)
-                nextstatesM=[CURRENT_STATE(currentProcessIndex) getNextStates(sys(currentProcessIndex).padj, maxX, maxY,CURRENT_STATE(currentProcessIndex))];
+                nextstatesM{m}=[CURRENT_STATE(currentProcessIndex) getNextStates(sys(currentProcessIndex).padj, maxX, maxY,CURRENT_STATE(currentProcessIndex))];
             else
-                nextstatesM=[CURRENT_STATE(currentProcessIndex) getNextStates(sys(currentProcessIndex).adj, maxX, maxY,CURRENT_STATE(currentProcessIndex))];
+                nextstatesM{m}=[CURRENT_STATE(currentProcessIndex) getNextStates(sys(currentProcessIndex).adj, maxX, maxY,CURRENT_STATE(currentProcessIndex))];
             end
-
-            clear succ;
-            for nextstateAutMpos = 1:numel(nextstatesM)
-
-                nextstate=CURRENT_STATE;
-                nextstateM=nextstatesM(nextstateAutMpos);
-                nextstate(m)=nextstateM;
-
-                found=0;
+            if(isempty(comb))
+                comb=nextstatesM{m};
+            else
+                comb=combvec(comb,nextstatesM{m});
+            end
+            clear currentProcessIndex;
+        end
+        
+        for conf=1:size(comb,2)
+            nextstatesystem=comb(:,conf)';
+            nextstate=[nextstatesystem CURRENT_STATE(1,numberOfprocess+1) ];
+           
+            
+            found=0;
+            %% check whether the next state is consistent with the sync
+            if checkSync(sys,nextstate)
                 %% check the next state of the automaton of the property
                 for t=1:act_no           
                     if ~isempty(Buchi.trans{CURRENT_STATE(numberOfprocess+1),t})
@@ -86,9 +94,9 @@ while  ~acceptingFound && (topstackhindex-bottomstackhindex>=0)
                         propertyservices=Buchi.lab{t};
                         %%
                         if(possible)
-                            nextstateOfMServices=sys(currentProcessIndex).pser{nextstateM};
+                            nextstateOfMServices=getPossibleServices(sys,CURRENT_STATE(1,1:size(CURRENT_STATE,2)-1));
                         else
-                            nextstateOfMServices=sys(currentProcessIndex).ser{nextstateM};
+                            nextstateOfMServices=getServices(sys, CURRENT_STATE(1,1:size(CURRENT_STATE,2)-1));
                         end
                         %% adds the state that is the successor of the "Buchi automaton"
                         if isequal(propertyservices,nextstateOfMServices)
