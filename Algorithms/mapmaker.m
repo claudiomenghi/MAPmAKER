@@ -1,4 +1,4 @@
-function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound] = mapmaker(sys, spec,   environment, possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale)
+function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound] = mapmaker(sys, spec,   environment, realenvironment,  possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale)
 % it computes the plans for the robots
 % sys: the model of the robot application, i.e., the robots
 % spec: the specification of each robot
@@ -80,14 +80,14 @@ while newInf
    %     visualizeBuchi(Buchi);
         disp('Computing the product');
         tStart = tic;
-        [P, sys, spec, acceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 0);
+        [P, sys, spec, acceptingstates, acceptingFound] = product(sys,spec, Buchi, environment.x, environment.y, 0);
         tElapsed = toc(tStart);
         planningtime=planningtime+tElapsed;
-        if(~(acceptingstate==-1))
+        if((acceptingFound==1))
             disp('searcing for a definitive path to be performed');
-            [ DefinitivePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstate);
+            [ DefinitivePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstates);
             if(~(found==1))
-                [DefinitivePath ] = searchActions(P, acceptingstate);
+                [DefinitivePath ] = searchActions(P, acceptingstates);
             end
             solutionfound=1;
         end
@@ -95,14 +95,14 @@ while newInf
         if(possiblepathenabled==1)
             disp('Computing the possible product');
             tStart = tic;
-            [P, sys, spec, pacceptingstate] = product(sys,spec, Buchi, environment.x, environment.y, 1);
+            [P, sys, spec, acceptingstates, pacceptingFound] = product(sys,spec, Buchi, environment.x, environment.y, 1);
             tElapsed = toc(tStart);
             planningtime=planningtime+tElapsed;
-            if(~(pacceptingstate==-1))
+            if((acceptingFound==1))
                 %disp('STEP 6: searcing for a path to be performed');
-                [ PossiblePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstate);
+                [ PossiblePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstates);
                 if(~(found==1))
-                    [PossiblePath ] = searchActions(P, pacceptingstate);
+                    [PossiblePath ] = searchActions(P, acceptingstates);
                 end
                 solutionfound=1;
             end
@@ -110,12 +110,12 @@ while newInf
         end
             
         if(possiblepathenabled==1)
-            if(pacceptingstate==-1)
+            if(pacceptingFound==0)
                 disp('no definitive or possible plan available');
                 return;
             end
 
-            if(acceptingstate==-1)
+            if(acceptingFound==0)
                 disp('no definitive plan available');
                 Path=PossiblePath;
             else
@@ -127,7 +127,7 @@ while newInf
                 end
             end
         else
-            if(acceptingstate==-1)
+            if(acceptingFound==0)
                 disp('no definitive plan available');
                 return;
             else
@@ -153,7 +153,7 @@ while newInf
             machineindex=1;
             while machineindex<=N && evidence
                 % simulates the discovering of new information
-                [sys, grid, environment, infdiscovered, evidence]=actionBasedInfDiscover(grid, sys, environment, machineindex, sys(machineindex).curr,Path(i,machineindex), plotenabled);
+                [sys, grid, environment, infdiscovered, evidence]=actionBasedInfDiscover(grid, sys, environment, realenvironment, machineindex, sys(machineindex).curr,Path(i,machineindex), plotenabled);
 
                 if(infdiscovered==0)
                     sys(machineindex).curr=Path(i,machineindex);

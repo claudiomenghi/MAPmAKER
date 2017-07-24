@@ -3,7 +3,7 @@
 % H: the value of H to be used
 % M: the number of robots in the dependency class
 % B:
-function [P, sys, spec, acceptingstate] = product(sys,spec,Buchi, maxX, maxY, possible)
+function [P, sys, spec, acceptingstates, acceptingFound] = product(sys,spec,Buchi, maxX, maxY, possible)
 
 
 
@@ -41,7 +41,7 @@ topstackhindex=1;
 
 P.STATES(1,:)=[sys.curr Buchi.curr];
 
-acceptingstate=-1;
+acceptingstates=[];
 acceptingFound=0;
 
 %% inspecting the state space of the automata
@@ -82,11 +82,9 @@ while  ~acceptingFound && (topstackhindex-bottomstackhindex>=0)
         for conf=1:size(comb,2)
             nextstatesystem=comb(:,conf)';
             nextstate=[nextstatesystem CURRENT_STATE(1,numberOfprocess+1) ];
-           
-            
             found=0;
             %% check whether the next state is consistent with the sync
-            if checkSync(sys,nextstate)
+            if checkSync(sys, CURRENT_STATE, nextstate)
                 %% check the next state of the automaton of the property
                 for t=1:act_no           
                     if ~isempty(Buchi.trans{CURRENT_STATE(numberOfprocess+1),t})
@@ -94,25 +92,26 @@ while  ~acceptingFound && (topstackhindex-bottomstackhindex>=0)
                         propertyservices=Buchi.lab{t};
                         %%
                         if(possible)
-                            nextstateOfMServices=getPossibleServices(sys,CURRENT_STATE(1,1:size(CURRENT_STATE,2)-1));
+                            nextstateOfMServices=getPossibleServices(sys,nextstatesystem);
                         else
-                            nextstateOfMServices=getServices(sys, CURRENT_STATE(1,1:size(CURRENT_STATE,2)-1));
+                            nextstateOfMServices=getServices(sys, nextstatesystem);
                         end
                         %% adds the state that is the successor of the "Buchi automaton"
                         if isequal(propertyservices,nextstateOfMServices)
 
 
-                            found=1; 
                             %% specifies how the creation of the product works when also the BA is moving
                             nextstate(numberOfprocess+1)=nextstateproperty;
                             nextstate(1,numberOfprocess+2:size(CURRENT_STATE(1,:),2))=CURRENT_STATE(1,numberOfprocess+2:size(CURRENT_STATE(1,:),2));
 
                             if(ismember(nextstateproperty,Buchi.F))
-                                % an accepting state that can be
-                                % entered infinitely many often has
-                                % been found
-                                acceptingFound=1;
-                                acceptingstate=nextstate;
+                                if(~ismember(nextstate,acceptingstates))
+                                    % an accepting state that can be
+                                    % entered infinitely many often has
+                                    % been found
+                                    acceptingFound=1;
+                                    acceptingstates=[acceptingstates; nextstate];
+                                end
                             end
                             if(~ismember(nextstate, P.STATES, 'rows'))
                                 P.STATES=[P.STATES; nextstate];
@@ -121,32 +120,26 @@ while  ~acceptingFound && (topstackhindex-bottomstackhindex>=0)
                             end
 
                            indexOfConfiguration=find(ismember(P.STATES,nextstate,'rows'));
-
-                           P.trans{currenststateindex,t}=[ P.trans{currenststateindex,t} indexOfConfiguration];
-                            if(acceptingFound)
-                                return;
-                            end
+                           if ~(ismember(indexOfConfiguration, P.trans{currenststateindex,t}))
+                                P.trans{currenststateindex,t}=[ P.trans{currenststateindex,t} indexOfConfiguration];
+                           end
                         end
                     end
-
                 end 
-                if(found==0)
+               
+                %% specifies how the creation of the intersection works when the ba does not move
+                if(~ismember(nextstate, P.STATES, 'rows'))
+                    P.STATES=[P.STATES; nextstate];
+                    addedelements=addedelements+1;
+                    P.Q=[P.Q topstackhindex+addedelements];
+                end
 
-                    %% specifies how the creation of the intersection works when the ba does not move
-                    if(~ismember(nextstate, P.STATES, 'rows'))
-                        P.STATES=[P.STATES; nextstate];
-                        addedelements=addedelements+1;
-                        P.Q=[P.Q topstackhindex+addedelements];
-                    end
+                indexOfConfiguration=find(ismember(P.STATES,nextstate,'rows'));
 
-                    indexOfConfiguration=find(ismember(P.STATES,nextstate,'rows'));
-
-
-                    % add a transition to the automaton
+                % add a transition to the automaton
+                if ~(ismember(indexOfConfiguration, P.trans{currenststateindex,t}))
                     P.trans{currenststateindex,t}=[ P.trans{currenststateindex,t} indexOfConfiguration];
-
-
-                end 
+                end
             end
         end
     end

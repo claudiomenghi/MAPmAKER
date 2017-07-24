@@ -1,11 +1,11 @@
 % updates the system with new information about the environment
-function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDiscover(grid, sys, environment, robotindex, source, destination, plotenabled)
+function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDiscover(grid, sys, environment, realenvironment, robotindex, source, destination, plotenabled)
 %%  discovers information regarding the transition between source and destination
     xmax=environment.x;
     ymax=environment.y;
     discovered=ones(environment.x*environment.y,environment.x*environment.y)*3;
     infdiscovered=0;
-    [; N]=size(sys);
+    N=size(sys,2);
         % check whether there exists a possible transition close to the
         % current location
         %if 
@@ -15,7 +15,7 @@ function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDisco
              fprintf('checking for new knowledge observed from one of the robots\n');
        
               % simulates the discovering of info
-              evidence=randsrc(1,1,[0 1; 0.5 0.5]);
+              evidence=full(realenvironment.map(source,destination));
               
               environment.map(source,destination)=evidence;
               environment.map(destination, source)=environment.map(source,destination);
@@ -29,17 +29,24 @@ function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDisco
               fprintf('knowledge %d about the transition between [x,y]=[%d, %d] and [x+1,y+1]=[%d, %d] added', evidence, x, y, xdest,ydest);
               infdiscovered=1;
         end
+        if ~isequal(sys(robotindex).pser(destination),sys(robotindex).ser(destination))
+            if ~isempty(sys(robotindex).compser(destination))
+                infdiscovered=1;
+            end 
+            sys(robotindex).pser(destination)=sys(robotindex).compser(destination);
+            sys(robotindex).ser(destination)=sys(robotindex).compser(destination);
+        end
         
     % notifies the other robots with the new information
         
-         for r2=1:N
-             sys(r2).adj=environment.map;
-             sys(r2).padj=environment.pmap;
-         end
+     for r2=1:N
+         sys(r2).adj=environment.map;
+         sys(r2).padj=environment.pmap;
+     end
 
-         if(plotenabled==1)
-             grid=visualizeDiscoveredGrid(grid, environment, sys, discovered);
-         end
+     if(plotenabled==1)
+         grid=visualizeDiscoveredGrid(grid, environment, sys, discovered);
+     end
   
  
 end
