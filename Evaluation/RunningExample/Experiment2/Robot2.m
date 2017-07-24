@@ -47,7 +47,6 @@ T.compser{19}=3;
 
 T.sync{7} = 1;  % must sync with the robot with identifiers 2
 T.psync=T.sync;
-T.psync{9}=1;
 
 T.index = 3;
 

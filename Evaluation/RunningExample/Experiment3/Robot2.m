@@ -31,18 +31,23 @@ T.lastaction=0; % the last action executed by the robot
 for i=1:size(T.Q,2)
     T.ser{i}=[];
     T.sync{i}=[];
+    T.compser{i}=[];
 end
 
-%T.ser{25} = 4;
+
 T.ser{22} = 3;
 T.ser{7} = 2;
-%T.ser{9} = 2;
+T.ser{9} = 2;
 
 % adding the possible transition relation
 T.pser=T.ser;
+T.compser=T.ser;
+T.pser{19} = 3;
+T.compser{19}=3;
 
 T.sync{7} = 1;  % must sync with the robot with identifiers 2
 T.psync=T.sync;
+T.psync{9}=1;
 
 T.index = 3;
 

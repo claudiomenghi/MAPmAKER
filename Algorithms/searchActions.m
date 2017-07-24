@@ -1,4 +1,4 @@
-function [Path ] = searchActions(Product, acceptingstates)
+function [Path ] = searchActions(Product, acceptingstates, numrobots)
 % Given the product automaton and a progressing functions searches for a path to be followed by the robots
 
 numberOfRobots=size(Product.STATES,2);
@@ -26,7 +26,7 @@ for source=1:size(Product.trans,1)
         destinations=Product.trans{source,columnIndex};
         for destinationIndex=1:size(destinations,2)
             destination=destinations(destinationIndex);
-            numstatechange=numberStateChanges(Product.STATES(source,:),Product.STATES(destination,:))+1;
+            numstatechange=numberStateChanges(Product.STATES(source,:),Product.STATES(destination,:),numrobots)+1;
             if(StatesReachability(source, destination)==0)
                 StatesReachability(source, destination)=numstatechange;
             else

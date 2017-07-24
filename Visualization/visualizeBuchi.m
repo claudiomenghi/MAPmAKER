@@ -15,11 +15,15 @@ for rowIndex=1:size(Buchi.trans,1)
                 destination=destinations{destIndex};
                 if ~isempty(destination)
                     StatesReachability(rowIndex,destination)=1;
-                    lab=Buchi.lab(columnIndex)
-                    if isempty(labels{index})
+                    lab=Buchi.lab(columnIndex);
+                    if isempty(lab{1})
                          labels{index}=mat2str(lab{1});
                     else
-                         labels{index}=strcat(labels{index}, ' OR ', mat2str(lab{1}));
+                        if size(labels,2)<index
+                            labels{index}=mat2str(lab{1});
+                        else
+                            labels{index}=strcat(labels{index}, ' OR ', mat2str(lab{1}));
+                        end
                     end
                     sources=[sources rowIndex];
                     destList=[destList destination];

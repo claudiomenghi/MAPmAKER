@@ -3,10 +3,10 @@
 % penvironmentMap: the possible map of the environment
 %% Output
 % the model of the robot
-function T = Robot2(environmentMap, penvironmentMap, initPosition)
+function T = Robot3(environmentMap, penvironmentMap, initPosition)
 
-T.name='Robot2';
-T.id=2; % the identifiers of the robot
+T.name='Robot3';
+T.id=3; % the identifiers of the robot
 
 
 T.Q=1:30;   %states
@@ -31,17 +31,20 @@ T.lastaction=0; % the last action executed by the robot
 for i=1:size(T.Q,2)
     T.ser{i}=[];
     T.sync{i}=[];
+    T.compser{i}=[];
 end
 
 %T.ser{25} = 4;
-T.ser{22} = 3;
-T.ser{7} = 2;
+T.ser{2} = 4;
+T.ser{30} = 5;
+
 %T.ser{9} = 2;
 
 % adding the possible transition relation
 T.pser=T.ser;
+T.compser=T.ser;
+T.pser{18} = 5;
 
-T.sync{7} = 1;  % must sync with the robot with identifiers 2
 T.psync=T.sync;
 
 T.index = 3;

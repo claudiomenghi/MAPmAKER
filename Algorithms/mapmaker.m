@@ -87,7 +87,7 @@ while newInf
             disp('searcing for a definitive path to be performed');
             [ DefinitivePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstates);
             if(~(found==1))
-                [DefinitivePath ] = searchActions(P, acceptingstates);
+                [DefinitivePath ] = searchActions(P, acceptingstates, N);
             end
             solutionfound=1;
         end
@@ -102,7 +102,7 @@ while newInf
                 %disp('STEP 6: searcing for a path to be performed');
                 [ PossiblePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstates);
                 if(~(found==1))
-                    [PossiblePath ] = searchActions(P, acceptingstates);
+                    [PossiblePath ] = searchActions(P, acceptingstates, N);
                 end
                 solutionfound=1;
             end

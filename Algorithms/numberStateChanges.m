@@ -1,6 +1,6 @@
-function num = numberStateChanges(source, destination)
+function num = numberStateChanges(source, destination, numrobots)
     num=0;
-    for i=1:size(source,2)-1
+    for i=1:numrobots
         if (~isequal(source(i),destination(i)))
             num=num+1;
         end

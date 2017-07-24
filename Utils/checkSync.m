@@ -1,4 +1,4 @@
-function [result] = checkSync(sys,currentstatesystem, nextstatesystem)
+function [result] = checkSync(sys, nextstatesystem, possible)
 %% check whether the sync occurs correctly in the state
     result=1;
     numberOfprocess=size(sys,2);
@@ -15,6 +15,21 @@ function [result] = checkSync(sys,currentstatesystem, nextstatesystem)
                 end
             end
         %end
+    end
+    if(possible)
+        for m=1:numberOfprocess
+            %if ~(currentstatesystem(m)==nextstatesystem(m))
+                if ~isempty(sys(m).psync{nextstatesystem(m)})
+                    values=sys(m).psync{nextstatesystem(m)};
+                    for i=1:size(values,2)
+                        if ~(nextstatesystem(values(i))==nextstatesystem(m))
+                            result=0;
+                            return;
+                        end
+                    end
+                end
+            %end
+        end
     end
  
 end
