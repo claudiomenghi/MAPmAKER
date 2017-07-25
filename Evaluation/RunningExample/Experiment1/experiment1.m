@@ -33,12 +33,12 @@ actions={'recharge', 'r1loadbox1', 'r2loadbox1', 'r2unloadbox1', 'detectunloadin
 
 sys(1)=Robot1(environment.map, environment.pmap, initRobot1);
 sys(2)=Robot2(environment.map, environment.pmap, initRobot2);
-%sys(3)=Robot3(environment.map, environment.pmap, initRobot3);
+sys(3)=Robot3(environment.map, environment.pmap, initRobot3);
 
 
 spec(1)=MissionRobot1(1, 1);
 spec(2)=MissionRobot2(2, 3,  1, []);
-%spec(3)=MissionRobot3(4, 5,  1, []);
+spec(3)=MissionRobot3(4, 5,  1, []);
 
 
 global offset;

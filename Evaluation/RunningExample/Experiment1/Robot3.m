@@ -16,6 +16,11 @@ T.Pi=1:4; %all subsets of atomic propositions
 % {action2},
 % {action1}, {action2}
 %]
+% contains all the services provided by the robot
+T.services=[];
+% contains all the robots that must synch with this robot
+T.syncrobotset=[T.id];
+
 
 %Random value for the initial position of the robot
 T.curr=initPosition;
@@ -37,13 +42,38 @@ end
 T.ser{2} = 4;
 T.ser{30} = 5;
 
+
 %T.ser{9} = 2;
 
 % adding the possible transition relation
 T.pser=T.ser;
 T.pser{18} = 5;
+T.compser=T.pser;
+
 
 T.psync=T.sync;
+
+
+
+%% updates the services provided by the robot
+for i=1:size(T.Q,2)
+    if ~isempty(T.ser{i})
+        T.services=[T.services T.ser{i}];
+    end
+    if ~isempty(T.pser{i})
+        T.services=[T.services T.ser{i}];
+    end
+end
+
+%% updates the robots that must synch with this robot
+for i=1:size(T.Q,2)
+    if ~isempty(T.sync{i})
+        T.syncrobotset=[T.syncrobotset T.sync{i}];
+    end
+    if ~isempty(T.psync{i})
+        T.syncrobotset=[T.syncrobotset T.psync{i}];
+    end
+end
 
 T.index = 3;
 

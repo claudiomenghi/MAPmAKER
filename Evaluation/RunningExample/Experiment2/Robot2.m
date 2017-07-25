@@ -19,6 +19,10 @@ T.Pi=1:4; %all subsets of atomic propositions
 
 %Random value for the initial position of the robot
 T.curr=initPosition;
+% contains all the services provided by the robot
+T.services=[];
+% contains all the robots that must synch with this robot
+T.syncrobotset=[T.id];
 
 T.init=T.curr;
 
@@ -47,6 +51,26 @@ T.compser{19}=3;
 
 T.sync{7} = 1;  % must sync with the robot with identifiers 2
 T.psync=T.sync;
+
+%% updates the services provided by the robot
+for i=1:size(T.Q,2)
+    if ~isempty(T.ser{i})
+        T.services=[T.services T.ser{i}];
+    end
+    if ~isempty(T.pser{i})
+        T.services=[T.services T.ser{i}];
+    end
+end
+
+%% updates the robots that must synch with this robot
+for i=1:size(T.Q,2)
+    if ~isempty(T.sync{i})
+        T.syncrobotset=[T.syncrobotset T.sync{i}];
+    end
+    if ~isempty(T.psync{i})
+        T.syncrobotset=[T.syncrobotset T.psync{i}];
+    end
+end
 
 T.index = 3;
 

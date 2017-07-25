@@ -1,9 +1,10 @@
-function [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1, planlengthstep2, planningtimestep2, solutionfoundstep2]= experimentRunner(sys, spec, environment)
+function [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1, planlengthstep2, planningtimestep2, solutionfoundstep2]= experimentRunner(sys, spec, environment, realenvironment)
 
         global offset;
         global scale;
-                global whitevalue;
-                global c;
+        global whitevalue;
+        global c;
+        
         plotenabled=1;
 
         %figure;
@@ -34,11 +35,11 @@ function [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, 
         
         sys1=sys;
         spec1=spec;
-        [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale);
+        [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale);
 
         %% runs the step 2 of the evaluation
         possiblesearchenabled=0;
-        [falseEvicenceCounterstep2, trueEvidenceCounterstep2, planlengthstep2, planningtimestep2, solutionfoundstep2]=mapmaker(sys1, spec1, environment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale);
+        [falseEvicenceCounterstep2, trueEvidenceCounterstep2, planlengthstep2, planningtimestep2, solutionfoundstep2]=mapmaker(sys1, spec1, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale);
 
       
 

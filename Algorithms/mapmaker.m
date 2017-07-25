@@ -1,4 +1,5 @@
 function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound] = mapmaker(sys, spec,   environment, realenvironment,  possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale)
+
 % it computes the plans for the robots
 % sys: the model of the robot application, i.e., the robots
 % spec: the specification of each robot
@@ -9,6 +10,45 @@ function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, s
 % grid, environment, offset, scale, possiblepathenabled
 %
 %
+
+N=size(sys,2);
+%% creates a dependency class for each element
+for i=1:N
+    dependencyclassmap{i}=[i];
+end
+
+%% updates the dependency classes of the robots
+for i=1:N
+    for robotIndexIterator=1:size(sys(i).syncrobotset,2)
+        robotIndex=sys(i).syncrobotset(robotIndexIterator);
+        dependencyclassmap{robotIndex}=i;
+    end
+end
+
+%% updates the dependency classes
+dependencyclass{1}=[];
+index=1;
+analyzed=[];
+for i=1:N 
+    class=dependencyclassmap{i};
+    if ~ismember(class, analyzed)
+        analyzed=[analyzed class];
+        for j=1:N 
+            if (dependencyclassmap{j}==class)
+                if(index>size(dependencyclass,1))
+                    dependencyclass{index}=j;
+                else
+                    dependencyclass{index}=[dependencyclass{index} j];
+                end
+            end
+        end
+        index=index+1;
+    end
+end
+
+disp(dependencyclass)
+
+
 solutionfound=0;
 falseEvicenceCounter=0;
 trueEvidenceCounter=0;
@@ -43,147 +83,77 @@ while newInf
     h=3;
     % fprintf('value of h %d ',h);
     % end
-    clear Dep;
-    clear ell;
     clear Buchi;
     clear B;
     clear P;
     
     
-    %% computing the dependencies classes
-    %dependency partition
-    %disp('STEP 1: computing the depencencies');
-%     [Dep,ell] = computeDependencies(spec,perm,N,h);
-%     for i=1:N
-%         cut(spec(i),h);
-%     end
-%     
-%     for i=1:N
-%         sys(i).previouscurr = sys(i).curr;
-%     end
-    
     currentiteration=currentiteration+1;
     
-    %% analysing the dependincies classes
-    %for i=1:ell
-        clear Buchi;
-        clear B;
-        clear P;
-        
-        %dep = Dep{i};
-        %M = length(dep);
-        
-        %% compute the intersection automaton
-        disp('computing the intersection');
-        [Buchi, kmap, EXPLICIT_STATES] = intersection(spec);
-        
-   %     visualizeBuchi(Buchi);
-        disp('Computing the product');
-        tStart = tic;
-        [P, sys, spec, acceptingstates, acceptingFound] = product(sys,spec, Buchi, environment.x, environment.y, 0);
-        tElapsed = toc(tStart);
-        planningtime=planningtime+tElapsed;
-        if((acceptingFound==1))
-            disp('searcing for a definitive path to be performed');
-            [ DefinitivePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstates);
-            if(~(found==1))
-                [DefinitivePath ] = searchActions(P, acceptingstates, N);
-            end
-            solutionfound=1;
+    for i=1:size(dependencyclass,2)
+        clear newsys;
+        clear newspec;
+        disp('Analyzing the dependency class');
+        disp(class);
+        class=dependencyclass{i};
+        for index=1:size(class,2)
+            newsys(index)=sys(class(index));
+            newspec(index)=spec(class(index));
         end
-        
-        if(possiblepathenabled==1)
-            disp('Computing the possible product');
-            tStart = tic;
-            [P, sys, spec, acceptingstates, pacceptingFound] = product(sys,spec, Buchi, environment.x, environment.y, 1);
-            tElapsed = toc(tStart);
-            planningtime=planningtime+tElapsed;
-            if((acceptingFound==1))
-                %disp('STEP 6: searcing for a path to be performed');
-                [ PossiblePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstates);
-                if(~(found==1))
-                    [PossiblePath ] = searchActions(P, acceptingstates, N);
+        [Path{i} EXPLICIT_STATES{i} plantime]=computePlan(newsys,newspec, environment, possiblepathenabled);
+        planningtime=planningtime+plantime;
+    end
+    
+    disp('Performing the plan');
+    maxlength=0;
+    for i=1:size(Path,2)
+        maxlength=max(maxlength,size(Path{i},1));
+    end
+    i=2;
+    evidence=1;
+    newInf=0;
+    while evidence && i<=maxlength
+        for classIndex=1:size(dependencyclass,2)
+            if i<=size(Path{classIndex},1)
+                class=dependencyclass{classIndex};
+
+                if(plotenabled==1)
+                    grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale, class);
                 end
-                solutionfound=1;
-            end
+                M=length(class);
+                m=1;
+                while m<=length(class) && evidence
+                    machineindex=class(m);
+                    locationInPath=find(class==machineindex);
+                    % simulates the discovering of new information
+                    [sys, grid, environment, infdiscovered, evidence]=actionBasedInfDiscover(grid, sys, machineindex, environment, realenvironment,  sys(machineindex).curr,Path{classIndex}(i,locationInPath), plotenabled);
 
-        end
-            
-        if(possiblepathenabled==1)
-            if(pacceptingFound==0)
-                disp('no definitive or possible plan available');
-                return;
-            end
-
-            if(acceptingFound==0)
-                disp('no definitive plan available');
-                Path=PossiblePath;
-            else
-                disp('the shortest between definitive and possible plan is chosen');
-                if(size(DefinitivePath,1)<size(PossiblePath,1))
-                    Path=DefinitivePath;
-                else
-                    Path=PossiblePath;
-                end
-            end
-        else
-            if(acceptingFound==0)
-                disp('no definitive plan available');
-                return;
-            else
-                disp('definitive plan found');
-                Path=DefinitivePath;
-            end
-        end
-
-
-
-        oldPlans{oldPlanCounter+1}=Path;
-        oldPlanCounter=oldPlanCounter+1;
-        %disp('STEP 7: updating the state of the machine');
-
-
-        i=2;
-        evidence=1;
-        newInf=0;
-        while evidence && i<=size(Path,1)
-            if(plotenabled==1)
-                grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale);
-            end
-            machineindex=1;
-            while machineindex<=N && evidence
-                % simulates the discovering of new information
-                [sys, grid, environment, infdiscovered, evidence]=actionBasedInfDiscover(grid, sys, environment, realenvironment, machineindex, sys(machineindex).curr,Path(i,machineindex), plotenabled);
-
-                if(infdiscovered==0)
-                    sys(machineindex).curr=Path(i,machineindex);
-                    spec(machineindex).curr=EXPLICIT_STATES(Path(i,M+1),machineindex);
-                    planlength=planlength+1;
-                end
-                if(infdiscovered==1)
-                    if(evidence)
-                        sys(machineindex).curr=Path(i,machineindex);
-                        spec(machineindex).curr=EXPLICIT_STATES(Path(i,M+1),machineindex);
-                        trueEvidenceCounter=trueEvidenceCounter+1;
+                    if(infdiscovered==0)
+                        sys(machineindex).curr=Path{classIndex}(i,locationInPath);
+                        spec(machineindex).curr=EXPLICIT_STATES{classIndex}(Path{classIndex}(i,M+1),locationInPath);
                         planlength=planlength+1;
-                    else
-                        falseEvicenceCounter=falseEvicenceCounter+1;
-                        evidence=0;
-                        solutionfound=0;
-                        newInf=1;
                     end
+                    if(infdiscovered==1)
+                        if(evidence)
+                            sys(machineindex).curr=Path{classIndex}(i,locationInPath);
+                            spec(machineindex).curr=EXPLICIT_STATES{classIndex}(Path{classIndex}(i,M+1),locationInPath);
+                            trueEvidenceCounter=trueEvidenceCounter+1;
+                            planlength=planlength+1;
+                        else
+                            falseEvicenceCounter=falseEvicenceCounter+1;
+                            evidence=0;
+                            solutionfound=0;
+                            newInf=1;
+                        end
+                    end
+
+                    m=m+1;
                 end
-
-                machineindex=machineindex+1;
             end
-
-            i=i+1;
-            if(plotenabled==1)
+        end
+        if(plotenabled==1)
                 grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
-                %               pause(2);
-            end
-        %end
-            
-       
+        end
+        i=i+1;
     end
 end

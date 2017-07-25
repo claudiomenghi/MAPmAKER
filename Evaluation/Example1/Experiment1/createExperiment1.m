@@ -15,8 +15,8 @@ actions={'recharge', 'r1loadbox1', 'r2loadbox1', 'r2unloadbox1', 'detectunloadin
 % figure(); imshow(grid, c);
 % xlabel('x'); ylabel('y');
 
-sys(1)=Robot1(environment.map, environment.pmap, initRobot1);
-sys(2)=Robot2(environment.map, environment.pmap, initRobot2);
+sys(1)=Robot1(partialenvironment.map, partialenvironment.pmap, initRobot1);
+sys(2)=Robot2(partialenvironment.map, partialenvironment.pmap, initRobot2);
 %sys(3)=Robot3(environment.map, environment.pmap, initRobot3);
 
 spec(1)=MissionRobot1(1, 2, 3,  1, 1, 1);
@@ -39,8 +39,8 @@ fprintf(fileID,'-------------------------------\n');
 fprintf(fileID,'State of the doors:\n');
 fprintf(fileID,'(1 means that the door is open for sure and 0 that exists an uncertainty)\n');
 fprintf(fileID,'-------------------------------\n');
-for i=1:length(environment.doors)
-    fprintf(fileID,'Door from cell %d to cell %d: %d\n', environment.doors_pos(i,1), environment.doors_pos(i,2), environment.doors(i)); %'environment.doors(num2str(i))');
+for i=1:length(partialenvironment.doors)
+    fprintf(fileID,'Door from cell %d to cell %d: %d\n', partialenvironment.doors_pos(i,1), partialenvironment.doors_pos(i,2), partialenvironment.doors(i)); %'environment.doors(num2str(i))');
 end
 fclose(fileID);
 

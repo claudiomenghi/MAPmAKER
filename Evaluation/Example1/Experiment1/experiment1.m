@@ -15,19 +15,19 @@ setVisualizationConstants;
 numberOfInitialConfigurations=3;
 numberOfPartialInfoConfigurations=3;
 
-environment=EnvironmentMapRoboCup();
-%environment=EnvironmentMapTest();
+partialenvironment=PartialEnvironmentRoboCup();
+realenvironment=EnvironmentRoboCup();
 
 for initNumber=1:numberOfInitialConfigurations
-    initRobot1Positions(initNumber)=getRandomInitPosition(environment);
+    initRobot1Positions(initNumber)=getRandomInitPosition(partialenvironment);
     %initRobot1Positions(initNumber)=1;
-    initRobot2Positions(initNumber)=getRandomInitPosition(environment);
+    initRobot2Positions(initNumber)=getRandomInitPosition(partialenvironment);
 end
 
 
 for partialInfoNumber=1:numberOfPartialInfoConfigurations
     %testenvironments(partialInfoNumber)=EnvironmentMapPaper();
-    testenvironments(partialInfoNumber)=EnvironmentMapRoboCup();
+    testenvironments(partialInfoNumber)=partialenvironment;
 end
 
 
@@ -41,13 +41,13 @@ for initNumber=1:numberOfInitialConfigurations
     for partialInfoNumber=1:numberOfPartialInfoConfigurations
         %% saving the input
         %Save the input variables for future experiment replications
-        environment=testenvironments(partialInfoNumber);
+        partialenvironment=testenvironments(partialInfoNumber);
         initRobot1=initRobot1Positions(initNumber);
         initRobot2=initRobot2Positions(initNumber);
         createExperiment1;
         
         save(strcat('ReplicationPackage/experiment1-test', num2str(experimentNumber) ,'.mat'), 'sys', 'spec');
-        [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1,  planlengthstep2, planningtimestep2, solutionfoundstep2]=experimentRunner(sys, spec, environment);
+        [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1,  planlengthstep2, planningtimestep2, solutionfoundstep2]=experimentRunner(sys, spec, partialenvironment, realenvironment);
         
         if((solutionfoundstep1==1) && (solutionfoundstep2==1))
             Tr=(planningtimestep1/planningtimestep2);

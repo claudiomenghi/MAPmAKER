@@ -1,5 +1,5 @@
 % updates the system with new information about the environment
-function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDiscover(grid, sys, environment, realenvironment, robotindex, source, destination, plotenabled)
+function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDiscover(grid, sys, robotindex, environment, realenvironment,  source, destination, plotenabled)
 %%  discovers information regarding the transition between source and destination
     xmax=environment.x;
     ymax=environment.y;

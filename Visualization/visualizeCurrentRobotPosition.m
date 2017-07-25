@@ -8,7 +8,8 @@ global c;
 
 %% displays the initial robot position
 N=length(sys);
-for i=1:N
+for m=1:N
+    i=m;
     [x,y]= transform_coordinates(sys(i).curr, environment.x, environment.y);
     grid((x-1)*scale+scale/2+offset(i):(x-1)*scale+scale/2+8+offset(i),(y-1)*scale+scale/2+offset(i):(y-1)*scale+scale/2+8+offset(i)) = blackvalue;
 end

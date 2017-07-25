@@ -1,4 +1,4 @@
-function E = EnvironmentMapRoboCup()
+function E = PartialEnvironmentRoboCup()
 
 E.occupied=[9:13 27 36 40 44 49 76 77 79 81:83 89 90 112 125 132 135 136 ...
     138 140 141 153 154 160:163 166 167];
