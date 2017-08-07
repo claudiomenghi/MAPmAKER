@@ -51,8 +51,8 @@ function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDisco
         destinations=sys(robotindex).psync(destination);
         
         infdiscovered=1;
-        if ~isempty(sys(robotindex).compsync(destination))
-           if isequal(sys(robotindex).sync(destination),sys(robotindex).compsync(destination))
+        if ~isempty(sys(robotindex).compsync(destination)) && ~isempty(sys(robotindex).psync(destination))
+           if isequal(sys(robotindex).psync(destination),sys(robotindex).compsync(destination))
               evidence=1;
            else
               evidence=0;
@@ -62,18 +62,23 @@ function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDisco
            sys(robotindex).psync(destination)=sys(robotindex).compsync(destination);
            sys(robotindex).sync(destination)=sys(robotindex).compsync(destination);
         else
-           evidence=0;
-           sys(robotindex).ser(destination)=[];
-           sys(robotindex).pser(destination)=[];
-           sys(robotindex).psync(destination)=[];
-           sys(robotindex).sync(destination)=[];
+           if isempty(sys(robotindex).compsync(destination)) && isempty(sys(robotindex).psync(destination))
+                evidence=1;
+           else
+               evidence=0;
+               sys(robotindex).ser(destination)=[];
+               sys(robotindex).pser(destination)=[];
+               sys(robotindex).psync(destination)=[];
+               sys(robotindex).sync(destination)=[];
+           end
         end 
 
-        destinations=sys(robotindex).compsync(destination);
+        destinations=sys(robotindex).psync(destination);
+        value=sys(robotindex).compsync(destination);
         dest=destinations{1};
         for i=1:length(dest)
-           sys(dest(i)).psync(destination)=sys(dest(i)).compsync(destination);
-           sys(dest(i)).sync(destination)=sys(dest(i)).compsync(destination);
+           sys(dest(i)).psync(destination)=value;
+           sys(dest(i)).sync(destination)=value;
         end
     end
         

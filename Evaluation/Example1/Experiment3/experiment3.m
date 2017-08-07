@@ -14,7 +14,7 @@ configParams;
 setVisualizationConstants;
 
 
-curr=2;
+curr=1;
 init=1;
 
 %% running the experiment
