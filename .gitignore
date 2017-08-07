@@ -1,10 +1,7 @@
 movie.*
 *.avi
 *.dat
-*.mat
 data_record.txt
 *.m~
 *.m~
-ReplicationPackage/*
 resultsex1.txt
-ReplicationPackage/*
