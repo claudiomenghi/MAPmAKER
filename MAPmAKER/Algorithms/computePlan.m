@@ -24,7 +24,7 @@ function [ Path EXPLICIT_STATES planningtime, solutionfound] = computePlan(sys,s
     tElapsed = toc(tStart);
     planningtime=planningtime+tElapsed;
     if((acceptingFound==1))
-        disp('searcing for a definitive path to be performed');
+        disp('searching for a definitive path to be performed');
         %[ DefinitivePath, found]=checkPlanPresence(oldPlans,[sys.curr],acceptingstates);
         %if(~(found==1))
             [DefinitivePath ] = searchActions(P, acceptingstates, N);
