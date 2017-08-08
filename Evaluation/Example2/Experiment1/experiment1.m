@@ -52,21 +52,11 @@ for initNumber=1:ModelsExperiment1.numberOfInitialConfigurations
                 Lr='-';
                 fprintf(fid, '%d %d %d %d %d %c %c %d %d\n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
             end
-
+            fclose(fid);
+            
             X=sprintf('%d %d %d %d %d %f %f %d %d \n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
             disp(X);
-            %fid=fopen('resultsex1.txt','a');
-            %fprintf(fid, '%d %d %d %d %d %f %f %d %d\n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
-            fclose(fid);
             disp('||||||||experiment number||||||||')
-            solutionfoundstep1
-            solutionfoundstep2
-            planningtimestep1
-            planningtimestep2
-            Tr
-            planlengthstep1
-            planlengthstep2
-            Lr
             experimentNumber=experimentNumber+1
         else
             init=init+1;
