@@ -23,9 +23,9 @@ if(curr==init)
     fprintf(fid, 'experimentNumber initConf partConf #F \t #T \t Tr \t Lr \t STEP1_solution_found \t STEP2_solution_found \n');
 end
 experimentNumber=1;
-for initNumber=1:3%ModelsExperiment1.numberOfInitialConfigurations
+for initNumber=1:ModelsExperiment1.numberOfInitialConfigurations
     
-    for partialInfoNumber=1:3%ModelsExperiment1.numberOfPartialInfoConfigurations
+    for partialInfoNumber=1:ModelsExperiment1.numberOfPartialInfoConfigurations
        
         if(init==curr)
             %% saving the input
@@ -42,20 +42,31 @@ for initNumber=1:3%ModelsExperiment1.numberOfInitialConfigurations
             pathsStep1{initNumber,partialInfoNumber}=performedpathstep1;
             pathsStep2{initNumber,partialInfoNumber}=performedpathstep2;
 
+            fid=fopen('resultsex1.txt','a');
             if((solutionfoundstep1==1) && (solutionfoundstep2==1))
                 Tr=(planningtimestep1/planningtimestep2);
                 Lr=(planlengthstep1/planlengthstep2);
+                fprintf(fid, '%d %d %d %d %d %f %f %d %d\n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
             else
                 Tr='-';
                 Lr='-';
+                fprintf(fid, '%d %d %d %d %d %c %c %d %d\n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
             end
 
             X=sprintf('%d %d %d %d %d %f %f %d %d \n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
             disp(X);
-            fid=fopen('resultsex1.txt','a');
-            fprintf(fid, '%d %d %d %d %d %f %f %d %d\n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
+            %fid=fopen('resultsex1.txt','a');
+            %fprintf(fid, '%d %d %d %d %d %f %f %d %d\n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
             fclose(fid);
             disp('||||||||experiment number||||||||')
+            solutionfoundstep1
+            solutionfoundstep2
+            planningtimestep1
+            planningtimestep2
+            Tr
+            planlengthstep1
+            planlengthstep2
+            Lr
             experimentNumber=experimentNumber+1
         else
             init=init+1;
