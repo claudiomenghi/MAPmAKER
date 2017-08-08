@@ -45,7 +45,7 @@ T.ser{204} = 2;
 
 T.ser{99} = 1;
 T.ser{3} = 1;
-T.ser{131} = 1;
+T.ser{93} = 1;
 
 
 T.sync{99} = 2;  % must sync with the robot with identifiers 2
