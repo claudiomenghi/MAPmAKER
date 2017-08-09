@@ -38,19 +38,19 @@ T.ser{47} = 3;
 T.ser{213} = 3;
 T.ser{199} = 3;
 
-T.ser{53} = 2;
-T.ser{54} = 2;
+T.ser{37} = 2;
+T.ser{38} = 2;
 T.ser{218} = 2;
 T.ser{204} = 2;
 
 T.ser{99} = 1;
 T.ser{3} = 1;
-T.ser{93} = 1;
+T.ser{80} = 1;
 
 
 T.sync{99} = 2;  % must sync with the robot with identifiers 2
 T.sync{3} =2;
-T.sync{131} =2;
+T.sync{80} =2;
 
 
 % adding the possible transition relation

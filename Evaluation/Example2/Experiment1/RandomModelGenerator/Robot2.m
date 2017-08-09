@@ -39,13 +39,13 @@ T.ser{215} = 4;
 
 T.ser{106} = 5; %t1
 
-T.ser{94} = 4;
-T.ser{131} = 5;
+T.ser{90} = 4;
+T.ser{1} = 5;
 
 
 T.sync{99} = 1;  % must sync with the robot with identifiers 2
 T.sync{3} =1;
-T.sync{93} =1;
+T.sync{80} =1;
 
 % adding the possible transition relation
 T.pser=T.ser;

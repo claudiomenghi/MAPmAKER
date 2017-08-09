@@ -18,8 +18,8 @@ for i=1:6
             end
         case 2
             if doors(1,i) == 0
-                E=addDoor(E, 3, 3, 3, 4); 
-                E=addDoor(E, 3, 4, 3, 5);
+                E=addDoor(E, 1, 3, 1, 4); 
+                E=addDoor(E, 1, 4, 1, 5);
             end
         case 3
             if doors(1,i) == 0
