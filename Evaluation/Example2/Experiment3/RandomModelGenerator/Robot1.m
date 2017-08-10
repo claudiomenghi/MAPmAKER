@@ -41,16 +41,16 @@ T.ser{54} = 2;
 T.ser{55} = 2;
 T.ser{99} = 1;
 T.ser{3} = 1;
-T.ser{131} = 1;
+T.ser{80} = 1;
 
 
 % adding the possible transition relation
 
-T.sync{3}=2;
 T.pser=T.ser;
 T.compser=T.ser;
 T.psync=T.sync;
 T.compsync=T.psync;
+
 
 %% updates the services provided by the robot
 for i=1:size(T.Q,2)
@@ -71,6 +71,7 @@ for i=1:size(T.Q,2)
         T.syncrobotset=[T.syncrobotset T.psync{i}];
     end
 end
+T.syncrobotset=[T.syncrobotset 2];
 
 T.index = 3;
 

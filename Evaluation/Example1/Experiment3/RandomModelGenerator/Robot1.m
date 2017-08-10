@@ -43,10 +43,9 @@ T.ser{99} = 1;
 T.ser{3} = 1;
 T.ser{131} = 1;
 
-
+T.sync{3}=2;
 % adding the possible transition relation
 
-T.sync{3}=2;
 T.pser=T.ser;
 T.compser=T.ser;
 T.psync=T.sync;
