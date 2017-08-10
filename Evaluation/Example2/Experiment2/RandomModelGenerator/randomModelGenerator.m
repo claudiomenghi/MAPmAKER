@@ -6,7 +6,7 @@ function [Models] =randomModelGenerator(numberOfInitialConfigurations, numberOfP
     Models.numberOfPartialInfoConfigurations=numberOfPartialInfoConfigurations;
     
     %% preparing the input for the experiments
-    realenvironment=EnvironmentRoboCup();
+    realenvironment=EnvironmentPaper();
     
     initRobot1=getRandomInitPosition(realenvironment);
     initRobot2=getRandomInitPosition(realenvironment);
@@ -23,7 +23,7 @@ function [Models] =randomModelGenerator(numberOfInitialConfigurations, numberOfP
     end
 
     for partialInfoNumber=1:numberOfPartialInfoConfigurations
-        m.partialenvironment{partialInfoNumber}=PartialEnvironmentRoboCup();
+        m.partialenvironment{partialInfoNumber}=PartialEnvironmentPaper();
     end        
     for initNumber=1:numberOfInitialConfigurations
         initRobot1Position=getRandomInitPosition(realenvironment);

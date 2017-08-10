@@ -36,21 +36,29 @@ end
 
 T.ser{45} = 3;
 T.ser{47} = 3;
+T.ser{213} = 3;
+T.ser{199} = 3;
+
+T.ser{37} = 2;
+T.ser{38} = 2;
+T.ser{218} = 2;
+T.ser{204} = 2;
+
+T.compser=T.ser;
+%T.ser{99} = 1;
+%T.ser{3} = 1;
+%T.ser{80} = 1;
 
 
-T.ser{53} = 2;
-T.ser{54} = 2;
-T.ser{55} = 2;
+T.sync{99} = 2;  % must sync with the robot with identifiers 2
+T.sync{3} =2;
+T.sync{80} =2;
 
-T.ser{3} = 1;
 
 % adding the possible transition relation
-
 T.pser=T.ser;
-T.compser=T.ser;
+T.psync=T.sync;
 
-
-serviceLocations=[1, 99, 131];
 
 doors=ones(1,1);
 
@@ -63,29 +71,22 @@ for i=1:length(doors)
     x=round(xmin+rand(1,n)*(xmax-xmin));
     switch x
         case 1
-               T=addUnknownService(T,1,99,131);
+               T=addUnknownService(T,99,3,80);
         case 2
-               T=addUnknownService(T,1,131,99);
+               T=addUnknownService(T,99,80,3);
         case 3
-               T=addUnknownService(T,99,1,131);
+               T=addUnknownService(T,3,80,99);
         case 4
-               T=addUnknownService(T,99,131,1);
+               T=addUnknownService(T,3,99,80);
         case 5
-               T=addUnknownService(T,131,1,99);
+               T=addUnknownService(T,80,99,3);
         case 6
-               T=addUnknownService(T,131,99,1);
+               T=addUnknownService(T,80,3,99);
     end
 end
     
 
 
-T.sync{99} = 2;  % must sync with the robot with identifiers 2
-T.sync{3} =2;
-T.sync{131} =2;
-
-
-
-T.psync=T.sync;
 
 %% updates the services provided by the robot
 for i=1:size(T.Q,2)
