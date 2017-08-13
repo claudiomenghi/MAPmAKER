@@ -1,5 +1,2 @@
 experimentNumber initConf partConf #F 	 #T 	 Tr 	 Lr 	 STEP1_solution_found 	 STEP2_solution_found 
 1 dec found solution, no dec timeout 
-2 dec found solution, no dec timeout 
-3 dec found solution, no dec timeout 
-4 dec found solution, no dec timeout 
