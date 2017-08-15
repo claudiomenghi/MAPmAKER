@@ -64,8 +64,8 @@ for initNumber=1:ModelsExperiment1.numberOfInitialConfigurations
         else
             init=init+1;
         end
-        planningtimestep1_array(experimentNumber)=planningtimestep1_array;
-        planningtimestep2_array(experimentNumber)=planningtimestep2_array;
+        planningtimestep1_array(experimentNumber)=planningtimestep1;
+        planningtimestep2_array(experimentNumber)=planningtimestep2;
     end
 end
 
