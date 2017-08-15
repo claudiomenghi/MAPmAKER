@@ -10,6 +10,11 @@ warning('off','all')
 % addpath('/Users/gsergio/Documents/MATLAB/MAPmAKER/ReplicationPackage/Example1/Experiment1/');
 % experiment1;
 
-addpath('/Users/gsergio/Documents/MATLAB/MAPmAKER/Evaluation/Example2/Experiment1');
-addpath('/Users/gsergio/Documents/MATLAB/MAPmAKER/ReplicationPackage/Example2/Experiment1/');
+addpath('/Users/gsergio/Documents/MATLAB/MAPmAKER/RunningExample/Experiment1/');
+%addpath('/Users/gsergio/Documents/MATLAB/MAPmAKER/ReplicationPackage/Example2/Experiment1/');
 experiment1;
+% 
+% addpath('/Users/gsergio/Documents/MATLAB/MAPmAKER/Evaluation/RQ2/Example1/Experiment3');
+% addpath('/Users/gsergio/Documents/MATLAB/MAPmAKER/Evaluation/RQ2/Example1/Algorithms/');
+% addpath('/Users/gsergio/Documents/MATLAB/MAPmAKER/ReplicationPackage/RQ2/Example1/Experiment3/');
+% experiment3;

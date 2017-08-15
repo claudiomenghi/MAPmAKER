@@ -72,6 +72,15 @@ perm = randperm(size(sys,2)); %permutation (i.e. ordering), meaning that agent 3
 %perm=[1,2,3];
 M=size(sys,2);
 
+%% Video
+F=getframe();
+movie(F);
+v=VideoWriter('movie.avi');
+v.FrameRate = 1;
+open(v);
+%%
+
+
 newInf=1;
 while newInf
     
@@ -174,6 +183,10 @@ while newInf
         newInf=0;
     end
     
+    %% Video
+    currFrame = getframe(gcf);
+    writeVideo(v,currFrame);
+    %%
     
     disp('MAPmAKER end');
 end
