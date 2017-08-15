@@ -63,7 +63,7 @@ if(plotenabled==1)
     grid=visualizeGrid(grid, environment);
     imshow(grid, c);
     grid = visualizeInit(sys, offset, scale, grid, environment);
-    visualizeServices;
+    grid = visualizeServices(sys, offset, scale, grid, environment);
 else
     grid=[];
 end
@@ -75,9 +75,5 @@ maxIteration=10;
 
 possiblesearchenabled=1;
 [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale);
-
-%% Video
-close(v);
-%% 
 
 fclose(fid);

@@ -190,3 +190,8 @@ while newInf
     
     disp('MAPmAKER end');
 end
+
+%% Video
+close(v);
+%% 
+
