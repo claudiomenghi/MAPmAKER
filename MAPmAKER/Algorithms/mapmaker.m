@@ -30,11 +30,11 @@ end
 dependencyclass{1}=[];
 index=1;
 analyzed=[];
-for i=1:N 
+for i=1:N
     class=dependencyclassmap{i};
     if ~ismember(class, analyzed)
         analyzed=[analyzed class];
-        for j=1:N 
+        for j=1:N
             if (dependencyclassmap{j}==class)
                 if(index>size(dependencyclass,1))
                     dependencyclass{index}=j;
@@ -73,8 +73,8 @@ perm = randperm(size(sys,2)); %permutation (i.e. ordering), meaning that agent 3
 M=size(sys,2);
 
 %% Video
-F=getframe();
-movie(F);
+%F=getframe();
+%movie(F);
 v=VideoWriter('movie.avi');
 v.FrameRate = 1;
 open(v);
@@ -126,11 +126,11 @@ while newInf
         newInf=0;
         performedpath=[];
         while evidence && i<=maxlength
-
+            
             for classIndex=1:size(dependencyclass,2)
                 if i<=size(Path{classIndex},1)
                     class=dependencyclass{classIndex};
-
+                    
                     if(plotenabled==1)
                         grid=blankCurrentRobotPosition(sys, environment, grid, offset, scale, class);
                     end
@@ -140,15 +140,15 @@ while newInf
                         machineindex=class(m);
                         locationInPath=find(class==machineindex);
                         performedpath(locationInPath,i)=Path{classIndex}(i,locationInPath);
-
+                        
                         % simulates the discovering of new information
                         [sys, grid, environment, infdiscovered, evidence]=actionBasedInfDiscover(grid, sys, machineindex, environment, realenvironment,  sys(machineindex).curr,Path{classIndex}(i,locationInPath), plotenabled);
-
+                        
                         if(infdiscovered==0)
                             sys(machineindex).curr=Path{classIndex}(i,locationInPath);
                             spec(machineindex).curr=EXPLICIT_STATES{classIndex}(Path{classIndex}(i,M+1),locationInPath);
                             planlength=planlength+1;
-
+                            
                         end
                         if(infdiscovered==1)
                             if(evidence)
@@ -163,18 +163,31 @@ while newInf
                                 newInf=1;
                             end
                         end
-
-
+                        
+                        
                         m=m+1;
                     end
                 end
+                
             end
-
+            
+            
             if(plotenabled==1)
-                    grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
+                grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
             end
             i=i+1;
+            
+            
+            %% Video
+            drawnow();
+            currFrame = getframe(gcf);
+            currFrame.cdata=currFrame.cdata(:,1:396,:);
+            writeVideo(v,currFrame);
+            %%
         end
+        
+        
+        
         if(evidence==0)
             disp('new info about the environment detected');
         end
@@ -183,15 +196,11 @@ while newInf
         newInf=0;
     end
     
-    %% Video
-    currFrame = getframe(gcf);
-    writeVideo(v,currFrame);
-    %%
-    
     disp('MAPmAKER end');
 end
 
 %% Video
+close(gcf);
 close(v);
-%% 
+%%
 

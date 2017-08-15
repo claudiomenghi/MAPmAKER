@@ -40,7 +40,7 @@ spec(1)=MissionRobot1(1, 1);
 spec(2)=MissionRobot2(2, 3,  1, []);
 spec(3)=MissionRobot3(4, 5,  1, []);
 
-
+global currFrame_i;
 global offset;
 global scale;
 global whitevalue;
