@@ -1,4 +1,4 @@
-function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound, performedpath] = mapmaker(sys, spec,   environment, realenvironment,  possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale)
+function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound, performedpath] = mapmaker(sys, spec,   environment, realenvironment,  possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale, experimentnumber)
 
 % it computes the plans for the robots
 % sys: the model of the robot application, i.e., the robots
@@ -75,7 +75,8 @@ M=size(sys,2);
 %% Video
 %F=getframe();
 %movie(F);
-v=VideoWriter('movie.avi');
+video_name=sprintf('movie_%d', experimentnumber);
+v=VideoWriter(video_name);
 v.FrameRate = 1;
 open(v);
 %%

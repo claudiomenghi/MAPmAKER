@@ -41,7 +41,7 @@ for initNumber=1:ModelsExperiment1.numberOfInitialConfigurations
             partialenvironment=ModelsExperiment1.partialenvironment{initNumber,partialInfoNumber};
             realenvironment=ModelsExperiment1.realenvironment{initNumber,partialInfoNumber};
             
-            [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1,  planlengthstep2, planningtimestep2, solutionfoundstep2, performedpathstep1, performedpathstep2]=experimentRunner(sys, spec, partialenvironment, realenvironment);
+            [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1,  planlengthstep2, planningtimestep2, solutionfoundstep2, performedpathstep1, performedpathstep2]=experimentRunner(sys, spec, partialenvironment, realenvironment, experimentNumber);
             
             pathsStep1{initNumber,partialInfoNumber}=performedpathstep1;
             pathsStep2{initNumber,partialInfoNumber}=performedpathstep2;
@@ -49,9 +49,13 @@ for initNumber=1:ModelsExperiment1.numberOfInitialConfigurations
             if((solutionfoundstep1==1) && (solutionfoundstep2==1))
                 Tr=(planningtimestep1/planningtimestep2);
                 Lr=(planlengthstep1/planlengthstep2);
+                planningtimestep1_array(experimentNumber)=planningtimestep1;
+                planningtimestep2_array(experimentNumber)=planningtimestep2;
             else
                 Tr='-';
                 Lr='-';
+                planningtimestep1_array(experimentNumber)='-';
+                planningtimestep2_array(experimentNumber)='-';
             end
             
             X=sprintf('%d %d %d %d %d %f %f %d %d \n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
@@ -64,8 +68,7 @@ for initNumber=1:ModelsExperiment1.numberOfInitialConfigurations
         else
             init=init+1;
         end
-        planningtimestep1_array(experimentNumber)=planningtimestep1;
-        planningtimestep2_array(experimentNumber)=planningtimestep2;
+        
     end
 end
 
