@@ -80,7 +80,13 @@ v=VideoWriter(video_name);
 v.FrameRate = 1;
 open(v);
 %%
-
+drawnow();
+currFrame = getframe(gcf);
+currFrame.cdata=currFrame.cdata(1:280,1:396,:);
+%currFrame.cdata=currFrame.cdata(280,1:606,:);
+writeVideo(v,currFrame);
+writeVideo(v,currFrame);
+writeVideo(v,currFrame);
 
 newInf=1;
 while newInf
@@ -178,10 +184,9 @@ while newInf
             pause(2)
             %% Video
             drawnow();
-            %   pause(2)
             currFrame = getframe(gcf);
-            %size(currFrame.cdata)
             currFrame.cdata=currFrame.cdata(:,1:396,:);
+            %currFrame.cdata=currFrame.cdata(:,1:606,:);
             writeVideo(v,currFrame);
             %%
             i=i+1;
