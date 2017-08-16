@@ -191,8 +191,7 @@ while newInf
             if(plotenabled==1)
                 grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
             end
-            i=i+1;
-            
+            pause(2)
             %% Video
             width = 800;
             height = 600;
@@ -201,7 +200,10 @@ while newInf
             %size(currFrame.cdata)   
            % currFrame.cdata=currFrame.cdata(:,1:size(currFrame.cdata,2),:);
             writeVideo(v,currFrame);
+            
             %%
+            i=i+1;
+            
         end
         
         if(evidence==0)
