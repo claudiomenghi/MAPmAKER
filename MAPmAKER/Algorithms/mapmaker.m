@@ -182,7 +182,8 @@ while newInf
             %% Video
             drawnow();
             currFrame = getframe(gcf);
-            currFrame.cdata=currFrame.cdata(:,1:396,:);
+            %size(currFrame.cdata)
+            currFrame.cdata=currFrame.cdata(:,1:606,:);
             writeVideo(v,currFrame);
             %%
         end

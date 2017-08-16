@@ -72,14 +72,29 @@ for initNumber=1:ModelsExperiment1.numberOfInitialConfigurations
     end
 end
 
-planningtimestep1_avg=mean(planningtimestep1_array);
-planningtimestep2_avg=mean(planningtimestep2_array);
-planningtimestep1_median=median(planningtimestep1_array);
-planningtimestep2_median=median(planningtimestep2_array);
-planningtimestep1_min=min(planningtimestep1_array);
-planningtimestep2_min=min(planningtimestep2_array);
-planningtimestep1_max=max(planningtimestep1_array);
-planningtimestep2_max=max(planningtimestep2_array);
+j=1;
+n=1;
+m=1;
+while j <= length(planningtimestep1_array)
+    if planningtimestep1_array(j) ~= 45
+        planningtimestep1_array_corrected(n)=planningtimestep1_array(j);
+        n=n+1;
+    end
+    if planningtimestep2_array(j) ~= 45
+        planningtimestep2_array_corrected(m)=planningtimestep2_array(j);
+        m=m+1;
+    end
+    j=j+1;
+end
+
+planningtimestep1_avg=mean(planningtimestep1_array_corrected);
+planningtimestep2_avg=mean(planningtimestep2_array_corrected);
+planningtimestep1_median=median(planningtimestep1_array_corrected);
+planningtimestep2_median=median(planningtimestep2_array_corrected);
+planningtimestep1_min=min(planningtimestep1_array_corrected);
+planningtimestep2_min=min(planningtimestep2_array_corrected);
+planningtimestep1_max=max(planningtimestep1_array_corrected);
+planningtimestep2_max=max(planningtimestep2_array_corrected);
 
 save ResultsExperiment1.mat pathsStep1 pathsStep2 planningtimestep1_avg planningtimestep2_avg planningtimestep1_median planningtimestep2_median planningtimestep1_min planningtimestep2_min ...
     planningtimestep1_max planningtimestep2_max
