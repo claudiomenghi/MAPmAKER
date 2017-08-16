@@ -7,7 +7,7 @@ global scale;
 global linewidth;
 
 figure(87);
-imshow(grid, c);
+imshow(grid, c,'InitialMagnification','fit');
 tam=size(grid)
 
 xv=0;

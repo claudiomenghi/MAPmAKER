@@ -48,7 +48,7 @@ for i=1:dim2(2)
    legendText{i}=sprintf([legendText{i}, char(9), char(9), char(9), char(9), char(9), char(9), char(9), char(9)]);
 end
 
-imshow(grid, c);
+imshow(grid, c,'InitialMagnification','fit');
 visualizeServices(sys, offset, scale, grid, environment);
 xlabel(legendText)
 

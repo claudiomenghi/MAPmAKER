@@ -19,7 +19,7 @@ for j=0:environment.x
     end
 end
 
-imshow(grid, c);
+imshow(grid, c,'InitialMagnification','fit');
 
 
 %% obstacle visualization
@@ -69,7 +69,7 @@ end
 
 
 
-imshow(grid, c);
+imshow(grid, c,'InitialMagnification','fit');
 end
 
 

@@ -80,6 +80,22 @@ v=VideoWriter(video_name);
 v.FrameRate = 1;
 open(v);
 %%
+drawnow();
+global f;
+width = 800;
+height = 600;
+set(f,'Position',[15 15 width height])
+
+
+currFrame = getframe(f);
+set(f,'Position',[15 15 width height])
+
+
+%currFrame.cdata=currFrame.cdata(:,1:size(currFrame.cdata,2),:);
+writeVideo(v,currFrame);
+writeVideo(v,currFrame);
+writeVideo(v,currFrame);
+
 
 
 newInf=1;
@@ -178,13 +194,14 @@ while newInf
             i=i+1;
             
             %% Video
-            drawnow();
-            currFrame = getframe(gcf);
-            %size(currFrame.cdata)
-            currFrame.cdata=currFrame.cdata(:,1:396,:);
+            width = 800;
+            height = 600;
+            set(f,'Position',[15 15 width height])
+            currFrame = getframe(f);
+            %size(currFrame.cdata)   
+           % currFrame.cdata=currFrame.cdata(:,1:size(currFrame.cdata,2),:);
             writeVideo(v,currFrame);
             %%
-            
         end
         
         if(evidence==0)

@@ -45,7 +45,7 @@ for j=1:environmentsize
 end
 
 
-imshow(grid, c);
+imshow(grid, c,'InitialMagnification','fit');
 visualizeServices(sys, offset, scale, grid, environment)    ;
 xlabel(legendText);
 

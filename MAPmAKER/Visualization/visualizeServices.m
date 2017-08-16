@@ -18,8 +18,12 @@ function grid = visualizeServices(sys, offset, scale, grid, environment)
         end
         
     end
-    imshow(grid, c);
-
+    global f;
+%   width = 800;
+%height = 600;
+%    ha = axes('Parent',f,'Units','pixels','Position',[15 15 width height]);
+    imshow(grid, c,'InitialMagnification','fit');
+   
     for i=1:N
     %% printing services
         servicelocation=find(~cellfun(@isempty, sys(i).ser));

@@ -14,7 +14,7 @@ for r=1:N
     grid((x-1)*scale+scale/2+offset(i):(x-1)*scale+scale/2+8+offset(i),(y-1)*scale+scale/2+offset(i):(y-1)*scale+scale/2+8+offset(i)) = whitevalue;
 end
 
-imshow(grid, c);
+imshow(grid, c,'InitialMagnification','fit');
 %xlabel(legendText)
 
 
