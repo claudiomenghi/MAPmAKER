@@ -2,6 +2,7 @@ function grid = visualizeInit(sys, offset, scale, grid, environment)
 global blackvalue;
 global c;
 global legendText;
+global robotcolors2;
 
 
 colors = zeros(environment.x*scale+1,environment.y*scale+1);
@@ -21,7 +22,7 @@ end
 %% displays the initial robot position
 for i=1:N
     [x,y]= transform_coordinates(sys(i).curr, environment.x, environment.y);
-    grid((x-1)*scale+scale/2+offset(i):(x-1)*scale+scale/2+8+offset(i),(y-1)*scale+scale/2+offset(i):(y-1)*scale+scale/2+8+offset(i)) = blackvalue;
+    grid((x-1)*scale+scale/2+offset(i):(x-1)*scale+scale/2+8+offset(i),(y-1)*scale+scale/2+offset(i):(y-1)*scale+scale/2+8+offset(i)) = robotcolors2(i);
 end
 
 

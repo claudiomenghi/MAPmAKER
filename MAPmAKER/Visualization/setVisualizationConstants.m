@@ -10,6 +10,7 @@ global linewidth;
 global customfontsize;
 global legentactionperrow;
 global robotcolors;
+global robotcolors2;
 
 customfontsize=10;
 
@@ -35,3 +36,4 @@ robotcolors=[
     [0 0 1] % blue
     [1 0 0] % purple
     ];
+robotcolors2=[36 55 43];
