@@ -175,15 +175,17 @@ while newInf
             if(plotenabled==1)
                 grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
             end
-            i=i+1;
-            
+            pause(2)
             %% Video
             drawnow();
+            %   pause(2)
             currFrame = getframe(gcf);
             %size(currFrame.cdata)
             currFrame.cdata=currFrame.cdata(:,1:396,:);
             writeVideo(v,currFrame);
             %%
+            i=i+1;
+            
             
         end
         
