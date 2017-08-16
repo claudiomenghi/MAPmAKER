@@ -72,8 +72,12 @@ maxIteration=10;
 
 %% runs the step 1 of the evaluation
 
-
 possiblesearchenabled=1;
-[falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale);
+[falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale, 'movie_RunningExample_Step1');
+
+%% runs the step 2 of the evaluation
+
+possiblesearchenabled=0;
+[falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale, 'movie_RunningExample_Step2');
 
 fclose(fid);

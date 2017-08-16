@@ -1,4 +1,4 @@
-function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound, performedpath] = mapmaker(sys, spec,   environment, realenvironment,  possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale, experimentnumber)
+function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound, performedpath] = mapmaker(sys, spec,   environment, realenvironment,  possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale, video_name)
 
 % it computes the plans for the robots
 % sys: the model of the robot application, i.e., the robots
@@ -75,7 +75,7 @@ M=size(sys,2);
 %% Video
 %F=getframe();
 %movie(F);
-video_name=sprintf('movie_%d', experimentnumber);
+%video_name=sprintf('movie_%d', experimentnumber);
 v=VideoWriter(video_name);
 v.FrameRate = 1;
 open(v);
@@ -172,23 +172,20 @@ while newInf
                 
             end
             
-            
             if(plotenabled==1)
                 grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
             end
             i=i+1;
             
-            
             %% Video
             drawnow();
             currFrame = getframe(gcf);
             %size(currFrame.cdata)
-            currFrame.cdata=currFrame.cdata(:,1:606,:);
+            currFrame.cdata=currFrame.cdata(:,1:396,:);
             writeVideo(v,currFrame);
             %%
+            
         end
-        
-        
         
         if(evidence==0)
             disp('new info about the environment detected');
