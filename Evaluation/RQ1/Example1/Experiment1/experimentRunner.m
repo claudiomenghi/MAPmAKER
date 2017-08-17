@@ -7,10 +7,6 @@ global c;
 
 plotenabled=1;
 
-%figure;
-% Create a new figure
-f = figure;
-
 % Set a size if desired
 width = 800;
 height = 600;
