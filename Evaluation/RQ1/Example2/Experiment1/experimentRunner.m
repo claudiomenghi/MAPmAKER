@@ -23,3 +23,4 @@ function [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, 
         possiblesearchenabled=0;
         [falseEvicenceCounterstep2, trueEvidenceCounterstep2, planlengthstep2, planningtimestep2, solutionfoundstep2, performedpathstep2]=mapmaker(sys1, spec1, environment1, realenvironment1, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale);
 end
+
