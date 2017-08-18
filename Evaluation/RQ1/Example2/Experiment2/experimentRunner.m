@@ -7,27 +7,6 @@ function [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, 
         
         plotenabled=1;
 
-        %figure;
-        % Create a new figure
-        f = figure;
-
-        % Set a size if desired
-        width = 800;
-        height = 600;
-        set(f,'Position',[15 15 width height])
-        % Change the renderer to avoid bugs due to OpenGL
-        set(f,'Renderer','ZBuffer')
-
-        if(plotenabled==1)
-            grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
-            grid=visualizeGrid(grid, environment);
-            imshow(grid, c);
-            grid = visualizeInit(sys, offset, scale, grid, environment);
-            visualizeServices(sys, offset, scale, grid, environment);
-        else
-            grid=[];
-        end
-        
         maxIteration=10;
         
         %% runs the step 1 of the evaluation

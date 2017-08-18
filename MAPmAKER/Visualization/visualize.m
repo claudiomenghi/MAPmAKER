@@ -18,6 +18,6 @@ end
 
 imshow(grid, c);
 visualizeServices;
-xlabel(legendText);
+%xlabel(legendText);
 pause(3);
         

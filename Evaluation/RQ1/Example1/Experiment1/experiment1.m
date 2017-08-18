@@ -46,23 +46,8 @@ for initNumber=1:ModelsExperiment1.numberOfInitialConfigurations
             pathsStep1{initNumber,partialInfoNumber}=performedpathstep1;
             pathsStep2{initNumber,partialInfoNumber}=performedpathstep2;
             
-            if((solutionfoundstep1==1) && (solutionfoundstep2==1))
-                Tr=(planningtimestep1/planningtimestep2);
-                Lr=(planlengthstep1/planlengthstep2);
-                planningtimestep1_array(experimentNumber)=planningtimestep1;
-                planningtimestep2_array(experimentNumber)=planningtimestep2;
-            else
-                Tr='-';
-                Lr='-';
-                planningtimestep1_array(experimentNumber)='-';
-                planningtimestep2_array(experimentNumber)='-';
-            end
-            
-            X=sprintf('%d %d %d %d %d %f %f %d %d \n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
-            disp(X);
-            fid=fopen('resultsex1.txt','a');
-            fprintf(fid, '%d %d %d %d %d %f %f %d %d\n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
-            fclose(fid);
+            writeExperimentResults('resultsex1.txt', experimentNumber, initNumber, partialInfoNumber, falseEvicenceCounterstep1, trueEvidenceCounterstep1, Tr, Lr, solutionfoundstep1, solutionfoundstep2)
+
             disp('||||||||experiment number||||||||')
             experimentNumber=experimentNumber+1
         else
