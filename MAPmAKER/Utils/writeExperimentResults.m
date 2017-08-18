@@ -1,4 +1,4 @@
-function [  ] = writeExperimentResults(file, experimentNumber, initNumber, partialInfoNumber, falseEvicenceCounterstep1, trueEvidenceCounterstep1, solutionfoundstep1, solutionfoundstep2)
+function [  ] = writeExperimentResults(file, experimentNumber, initNumber, partialInfoNumber, falseEvicenceCounterstep1, trueEvidenceCounterstep1, solutionfoundstep1, solutionfoundstep2, planningtimestep1, planningtimestep2, planlengthstep1, planlengthstep2)
 
             fid=fopen(file,'a');
             if((solutionfoundstep1==1) && (solutionfoundstep2==1))
