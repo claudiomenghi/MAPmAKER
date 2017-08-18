@@ -43,37 +43,22 @@ spec(3)=MissionRobot3(4, 5,  1, []);
 
 global offset;
 global scale;
-global whitevalue;
-global c;
 plotenabled=1;
-
-%figure;
-% Create a new figure
-f = figure;
-
-% Set a size if desired
-width = 800;
-height = 600;
-set(f,'Position',[15 15 width height])
-% Change the renderer to avoid bugs due to OpenGL
-set(f,'Renderer','ZBuffer')
-
-if(plotenabled==1)
-    grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
-    grid=visualizeGrid(grid, environment);
-    imshow(grid, c);
-    grid = visualizeInit(sys, offset, scale, grid, environment);
-    visualizeServices;
-else
-    grid=[];
-end
-
 maxIteration=10;
 
 %% runs the step 1 of the evaluation
 possiblesearchenabled=1;
-[falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale);
-
+videoName='Experiment2_RunningExample_Step1';
         
+
+possiblesearchenabled=1;
+[falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled,  offset, scale, videoName);
+
+%% runs the step 2 of the evaluation
+
+videoName='Experiment2_RunningExample_Step2';
+possiblesearchenabled=0;
+[falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled, offset, scale, videoName);
+
 
 fclose(fid);

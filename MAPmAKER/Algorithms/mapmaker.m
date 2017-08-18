@@ -1,4 +1,4 @@
-function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound, performedpath] = mapmaker(sys, spec,   environment, realenvironment,  possiblepathenabled, maxIteration, plotenabled, grid,  offset, scale, video_name)
+function [falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound, performedpath] = mapmaker(sys, spec,   environment, realenvironment,  possiblepathenabled, maxIteration, plotenabled,  offset, scale, video_name)
 
 % it computes the plans for the robots
 % sys: the model of the robot application, i.e., the robots
@@ -80,21 +80,34 @@ v=VideoWriter(video_name);
 v.FrameRate = 1;
 open(v);
 %%
-drawnow();
-global f;
-width = 800;
-height = 600;
-set(f,'Position',[15 15 width height])
+drawnow
 
 
-currFrame = getframe(f);
-set(f,'Position',[15 15 width height])
+global whitevalue;
+if(plotenabled==1)
+    close all
+    global c;
+    width = 800;
+    height = 600;
+    f = figure('Position',[15 15 width height]);
+    set(f,'Position',[15 15 width height]);
+    grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
+    grid=visualizeGrid(grid, environment);
+    
+    grid = visualizeInit(sys, offset, scale, grid, environment);
+    grid = visualizeServices(sys, offset, scale, grid, environment);
+   % imshow(grid, c,'InitialMagnification','fit');
+    
+    currFrame = getframe(f);
+    %currFrame.cdata=currFrame.cdata(:,1:size(currFrame.cdata,2),:);
+    writeVideo(v,currFrame);
+    writeVideo(v,currFrame);
+    writeVideo(v,currFrame);
 
+else
+    grid=[];
+end
 
-%currFrame.cdata=currFrame.cdata(:,1:size(currFrame.cdata,2),:);
-writeVideo(v,currFrame);
-writeVideo(v,currFrame);
-writeVideo(v,currFrame);
 
 
 

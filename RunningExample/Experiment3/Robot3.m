@@ -50,7 +50,7 @@ T.pser{18} = 5;
 T.compser=T.pser;
 
 T.psync=T.sync;
-T.compsync=psync;
+T.compsync=T.psync;
 
 %% updates the services provided by the robot
 for i=1:size(T.Q,2)

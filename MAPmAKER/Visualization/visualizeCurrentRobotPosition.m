@@ -18,7 +18,7 @@ end
 imshow(grid, c,'InitialMagnification','fit');
 %xlabel(legendText)
 visualizeServices(sys, offset, scale, grid, environment);
-xlabel(legendText);
+%xlabel(legendText);
 
 pause(0.5)
 

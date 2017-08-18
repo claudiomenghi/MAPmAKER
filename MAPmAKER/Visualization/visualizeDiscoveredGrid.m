@@ -47,6 +47,6 @@ end
 
 imshow(grid, c,'InitialMagnification','fit');
 visualizeServices(sys, offset, scale, grid, environment)    ;
-xlabel(legendText);
+%xlabel(legendText);
 
 end

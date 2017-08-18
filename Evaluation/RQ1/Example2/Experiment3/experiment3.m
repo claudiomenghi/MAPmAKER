@@ -42,19 +42,9 @@ for initNumber=1:ModelsExperiment3.numberOfInitialConfigurations
             pathsStep1{initNumber,partialInfoNumber}=performedpathstep1;
             pathsStep2{initNumber,partialInfoNumber}=performedpathstep2;
 
-            if((solutionfoundstep1==1) && (solutionfoundstep2==1))
-                Tr=(planningtimestep1/planningtimestep2);
-                Lr=(planlengthstep1/planlengthstep2);
-            else
-                Tr='-';
-                Lr='-';
-            end
+             writeExperimentResults('resultsex3.txt', experimentNumber, initNumber, partialInfoNumber, falseEvicenceCounterstep1, trueEvidenceCounterstep1, Tr, Lr, solutionfoundstep1, solutionfoundstep2)
 
-            X=sprintf('%d %d %d %d %d %f %f %d %d \n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
-            disp(X);
-            fid=fopen('resultsex3.txt','a');
-            fprintf(fid, '%d %d %d %d %d %f %f %d %d\n', [experimentNumber initNumber partialInfoNumber falseEvicenceCounterstep1 trueEvidenceCounterstep1 Tr Lr solutionfoundstep1 solutionfoundstep2]');
-            fclose(fid);
+            
             disp('||||||||experiment number||||||||')
             experimentNumber=experimentNumber+1
         else

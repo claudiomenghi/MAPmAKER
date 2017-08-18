@@ -52,24 +52,7 @@ plotenabled=1;
 % Set a size if desired
 width = 800;
 height = 600;
-global f;
-f = figure('Position',[15 15 width height]);
-set(f,'Position',[15 15 width height]);
 
-
-
-if(plotenabled==1)
-    grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
-    grid=visualizeGrid(grid, environment);
-    imshow(grid, c,'InitialMagnification','fit');
-    grid = visualizeInit(sys, offset, scale, grid, environment);
-    grid = visualizeServices(sys, offset, scale, grid, environment);
-else
-    grid=[];
-end
-set(f,'Position',[15 15 width height]);
-% Change the renderer to avoid bugs due to OpenGL
-set(f,'Renderer','ZBuffer')
 
 
 maxIteration=10;
@@ -77,21 +60,12 @@ maxIteration=10;
 %% runs the step 1 of the evaluation
 
 possiblesearchenabled=1;
-[falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale, 'movie_RunningExample_Step1');
+[falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled,  offset, scale, 'movie_RunningExample_Step1');
 
 %% runs the step 2 of the evaluation
 
-f = figure('Position',[15 15 width height]);
-if(plotenabled==1)
-    grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
-    grid=visualizeGrid(grid, environment);
-    imshow(grid, c);
-    grid = visualizeInit(sys, offset, scale, grid, environment);
-    grid = visualizeServices(sys, offset, scale, grid, environment);
-else
-    grid=[];
-end
+
 possiblesearchenabled=0;
-[falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled, grid,  offset, scale, 'movie_RunningExample_Step2');
+[falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1]=mapmaker(sys, spec, environment, realenvironment, possiblesearchenabled, maxIteration, plotenabled, offset, scale, 'movie_RunningExample_Step2');
 
 fclose(fid);

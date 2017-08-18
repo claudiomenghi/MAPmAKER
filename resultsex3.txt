@@ -1,2 +1,0 @@
-experimentNumber initConf partConf #F 	 #T 	 Tr 	 Lr 	 STEP1_solution_found 	 STEP2_solution_found 
-1 dec found solution, no dec timeout 
