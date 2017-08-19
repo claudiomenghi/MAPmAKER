@@ -1,6 +1,8 @@
 % updates the system with new information about the environment
 function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDiscover(grid, sys, robotindex, environment, realenvironment,  source, destination, plotenabled)
 %%  discovers information regarding the transition between source and destination
+    
+
     xmax=environment.x;
     ymax=environment.y;
     discovered=ones(environment.x*environment.y,environment.x*environment.y)*3;
@@ -48,16 +50,18 @@ function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDisco
     %% sync discovering
     if ~isequal(sys(robotindex).psync(destination),sys(robotindex).sync(destination))
         
-        destinations=sys(robotindex).psync(destination);
         
         infdiscovered=1;
+        destinations=sys(robotindex).psync(destination);
+        value=sys(robotindex).compsync(destination);
+
         if ~isempty(sys(robotindex).compsync(destination)) && ~isempty(sys(robotindex).psync(destination))
            if isequal(sys(robotindex).psync(destination),sys(robotindex).compsync(destination))
               evidence=1;
            else
               evidence=0;
-              sys(robotindex).ser(destination)=[];
-              sys(robotindex).pser(destination)=[];
+              sys(robotindex).ser{destination}=[];
+              sys(robotindex).pser{destination}=[];
            end
            sys(robotindex).psync(destination)=sys(robotindex).compsync(destination);
            sys(robotindex).sync(destination)=sys(robotindex).compsync(destination);
@@ -66,19 +70,19 @@ function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDisco
                 evidence=1;
            else
                evidence=0;
-               sys(robotindex).ser(destination)=[];
-               sys(robotindex).pser(destination)=[];
-               sys(robotindex).psync(destination)=[];
-               sys(robotindex).sync(destination)=[];
+               sys(robotindex).ser{destination}=[];
+               sys(robotindex).pser{destination}=[];
+               sys(robotindex).psync{destination}=[];
+               sys(robotindex).sync{destination}=[];
            end
         end 
 
-        destinations=sys(robotindex).psync(destination);
-        value=sys(robotindex).compsync(destination);
         dest=destinations{1};
         for i=1:length(dest)
            sys(dest(i)).psync(destination)=value;
            sys(dest(i)).sync(destination)=value;
+           sys(dest(i)).ser{destination}=[];
+           sys(dest(i)).pser{destination}=[];
         end
     end
         
@@ -92,6 +96,4 @@ function [sys, grid, environment, infdiscovered, evidence] = actionBasedInfDisco
      if(plotenabled==1)
          grid=visualizeDiscoveredGrid(grid, environment, sys, discovered);
      end
-  
- 
 end

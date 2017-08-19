@@ -3,8 +3,8 @@ function [ services ] = getPossibleServices( sys, states )
 %   Detailed explanation goes here
 
     services=[];
-     for i=1:size(states,2)
-        services=[services sys(i).pser{states(i)}];
+    for i=1:size(states,2)
+        services=[services sys(i).ser{states(i)}];
     end
     
 end

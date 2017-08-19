@@ -206,12 +206,7 @@ while newInf
             end
             pause(2)
             %% Video
-            width = 800;
-            height = 600;
-            set(f,'Position',[15 15 width height])
             currFrame = getframe(f);
-            %size(currFrame.cdata)   
-           % currFrame.cdata=currFrame.cdata(:,1:size(currFrame.cdata,2),:);
             writeVideo(v,currFrame);
             
             %%
