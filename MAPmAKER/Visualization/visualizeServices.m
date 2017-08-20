@@ -4,6 +4,7 @@ function grid = visualizeServices(sys, offset, scale, grid, environment)
     global customfontsize;
     global green;
     global whitevalue;
+    global blackvalue;
     global c;
 
     tmp=size(sys);
@@ -54,6 +55,40 @@ function grid = visualizeServices(sys, offset, scale, grid, environment)
                 endy=(y-1)*scale+scale/2+offset(i)+num2*3;
                 grid(startx:endx,starty:endy) = B;
             end
+        end
+        
+    end
+    
+    %% displays the sync
+    tmpsync=zeros(size(sys(1).Q,2));
+    for i=1:N
+        for j=1:length(sys(i).Q)
+            if ~isempty(sys(i).sync{j})
+                tmpsync(j)=1;
+            end
+        end
+    end
+    for i=1:N
+        for j=1:length(sys(i).Q)
+            if tmpsync(j)==1
+                [x,y]= transform_coordinates(j, environment.x, environment.y);
+                num=18;
+                num2=round(num/3);
+                
+                A=repmat(blackvalue-whitevalue,1,num2);
+                
+                WHITE=repmat(whitevalue, num2, num2);
+                M=diag(A);
+                C=flipdim(M ,1);   
+               
+                B=M+C+WHITE;
+%                grid(1:num2,1:num2)=B;
+                startx=(x-1)*scale+scale/2+offset(i)+num2*2+1;
+                endx=(x-1)*scale+scale/2+offset(i)+num2*3;
+                starty=(y-1)*scale+scale/2+offset(i)+num2*2+1;
+                endy=(y-1)*scale+scale/2+offset(i)+num2*3;
+                grid(startx:endx,starty:endy) = B;
+            end  
         end
         
     end
