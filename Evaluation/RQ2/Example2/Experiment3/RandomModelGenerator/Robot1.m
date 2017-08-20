@@ -8,7 +8,7 @@ function T = Robot1(environmentMap, penvironmentMap, initPosition)
 T.name='Robot1';
 T.id=1; % the identifiers of the robot
 
-T.Q=1:169;   %states
+T.Q=1:224;   %states
 T.Pi=1:3; %all subsets of atomic propositions
 
 T.curr=initPosition;
@@ -41,15 +41,16 @@ T.ser{54} = 2;
 T.ser{55} = 2;
 T.ser{99} = 1;
 T.ser{3} = 1;
-T.ser{131} = 1;
+T.ser{80} = 1;
 
-T.sync{3}=2;
+
 % adding the possible transition relation
 
 T.pser=T.ser;
 T.compser=T.ser;
 T.psync=T.sync;
 T.compsync=T.psync;
+
 
 %% updates the services provided by the robot
 for i=1:size(T.Q,2)
@@ -70,6 +71,7 @@ for i=1:size(T.Q,2)
         T.syncrobotset=[T.syncrobotset T.psync{i}];
     end
 end
+T.syncrobotset=[T.syncrobotset 2];
 
 T.index = 3;
 

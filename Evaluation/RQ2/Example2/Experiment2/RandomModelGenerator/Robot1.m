@@ -8,7 +8,7 @@ function T = Robot1(environmentMap, penvironmentMap, initPosition)
 T.name='Robot1';
 T.id=1; % the identifiers of the robot
 
-T.Q=1:169;   %states
+T.Q=1:224;   %states
 T.Pi=1:3; %all subsets of atomic propositions
 
 T.curr=initPosition;
@@ -36,20 +36,57 @@ end
 
 T.ser{45} = 3;
 T.ser{47} = 3;
-T.ser{53} = 2;
-T.ser{54} = 2;
-T.ser{55} = 2;
-T.ser{99} = 1;
-T.ser{3} = 1;
-T.ser{131} = 1;
+T.ser{213} = 3;
+T.ser{199} = 3;
 
-T.sync{3}=2;
-% adding the possible transition relation
+T.ser{37} = 2;
+T.ser{38} = 2;
+T.ser{218} = 2;
+T.ser{204} = 2;
 
-T.pser=T.ser;
 T.compser=T.ser;
+%T.ser{99} = 1;
+%T.ser{3} = 1;
+%T.ser{80} = 1;
+
+
+T.sync{99} = 2;  % must sync with the robot with identifiers 2
+T.sync{3} =2;
+T.sync{80} =2;
+
+
+% adding the possible transition relation
+T.pser=T.ser;
 T.psync=T.sync;
-T.compsync=T.psync;
+
+
+doors=ones(1,1);
+
+xmin=1;
+xmax=6;
+n=1;
+
+for i=1:length(doors)
+    
+    x=round(xmin+rand(1,n)*(xmax-xmin));
+    switch x
+        case 1
+               T=addUnknownService(T,99,3,80);
+        case 2
+               T=addUnknownService(T,99,80,3);
+        case 3
+               T=addUnknownService(T,3,80,99);
+        case 4
+               T=addUnknownService(T,3,99,80);
+        case 5
+               T=addUnknownService(T,80,99,3);
+        case 6
+               T=addUnknownService(T,80,3,99);
+    end
+end
+    
+
+
 
 %% updates the services provided by the robot
 for i=1:size(T.Q,2)
@@ -63,10 +100,10 @@ end
 
 %% updates the robots that must synch with this robot
 for i=1:size(T.Q,2)
-    if ~isempty(T.sync{i}) && ~find(T.sync{i}, T.syncrobotset)
+    if ~isempty(T.sync{i})
         T.syncrobotset=[T.syncrobotset T.sync{i}];
     end
-    if ~isempty(T.psync{i}) && ~find(T.psync{i}, T.syncrobotset)
+    if ~isempty(T.psync{i})
         T.syncrobotset=[T.syncrobotset T.psync{i}];
     end
 end

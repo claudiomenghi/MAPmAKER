@@ -49,10 +49,12 @@ function grid = visualizeServices(sys, offset, scale, grid, environment)
                
                 B=WHITE;
 %                grid(1:num2,1:num2)=B;
+               
                 startx=(x-1)*scale+scale/2+offset(i)+num2*2+1;
                 endx=(x-1)*scale+scale/2+offset(i)+num2*3;
                 starty=(y-1)*scale+scale/2+offset(i)+num2*2+1;
                 endy=(y-1)*scale+scale/2+offset(i)+num2*3;
+                
                 grid(startx:endx,starty:endy) = B;
             end
         end

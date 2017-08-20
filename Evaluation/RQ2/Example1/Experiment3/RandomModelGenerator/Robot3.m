@@ -9,7 +9,7 @@ T.name='Robot3';
 T.id=3; % the identifiers of the robot
 
 
-T.Q=1:224;   %states
+T.Q=1:169;   %states
 T.Pi=6:7; %all subsets of atomic propositions
 %T.curr= 76;
 
