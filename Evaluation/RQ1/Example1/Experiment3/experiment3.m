@@ -19,7 +19,7 @@ init=1;
 
 %% running the experiment
 if(curr==init)
-    fid=fopen('resultsex1.txt','w');
+    fid=fopen('resultsex3.txt','w');
     fprintf(fid, 'experimentNumber initConf partConf #F \t #T \t Tr \t Lr \t STEP1_solution_found \t STEP2_solution_found \n');
 end
 experimentNumber=1;

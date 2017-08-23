@@ -19,7 +19,7 @@ init=1;
 
 %% running the experiment
 if(curr==init)
-    fid=fopen('resultsex1.txt','w');
+    fid=fopen('resultsex2.txt','w');
     fprintf(fid, 'experimentNumber initConf partConf #F \t #T \t Tr \t Lr \t STEP1_solution_found \t STEP2_solution_found \n');
 end
 experimentNumber=1;
@@ -82,6 +82,5 @@ planningtimestep2_min=min(planningtimestep2_array_corrected);
 planningtimestep1_max=max(planningtimestep1_array_corrected);
 planningtimestep2_max=max(planningtimestep2_array_corrected);
 
-save ResultsExperiment1.mat pathsStep1 pathsStep2 planningtimestep1_avg planningtimestep2_avg planningtimestep1_median planningtimestep2_median planningtimestep1_min planningtimestep2_min ...
-    planningtimestep1_max planningtimestep2_max
+save ResultsExperiment2.mat 
 
