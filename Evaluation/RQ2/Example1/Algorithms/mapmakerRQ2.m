@@ -1,4 +1,4 @@
-function [timeout, falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound, performedpath] = mapmakerRQ2(sys, spec,   environment, realenvironment,  possiblepathenabled,  plotenabled, grid,  offset, scale, depEnabled, timeoutval)
+function [timeout, falseEvicenceCounter, trueEvidenceCounter, planlength, planningtime, solutionfound, performedpath] = mapmakerRQ2(sys, spec,   environment, realenvironment,  possiblepathenabled,  plotenabled, grid,  offset, scale, depEnabled, timeoutval, video_name)
 
 % it computes the plans for the robots
 % sys: the model of the robot application, i.e., the robots
@@ -77,9 +77,45 @@ perm = randperm(size(sys,2)); %permutation (i.e. ordering), meaning that agent 3
 %perm=[1,2,3];
 M=size(sys,2);
 
+%% Video
+%F=getframe();
+%movie(F);
+%video_name=sprintf('movie_%d', experimentnumber);
+v=VideoWriter(video_name);
+v.FrameRate = 1;
+open(v);
+%%
+drawnow
+
+
+global whitevalue;
+if(plotenabled==1)
+close all
+global c;
+width = 800;
+height = 600;
+f = figure('Position',[15 15 width height]);
+set(f,'Position',[15 15 width height]);
+grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
+grid=visualizeGrid(grid, environment);
+
+grid = visualizeInit(sys, offset, scale, grid, environment);
+grid = visualizeServices(sys, offset, scale, grid, environment);
+% imshow(grid, c,'InitialMagnification','fit');
+
+currFrame = getframe(f);
+%currFrame.cdata=currFrame.cdata(:,1:size(currFrame.cdata,2),:);
+writeVideo(v,currFrame);
+writeVideo(v,currFrame);
+writeVideo(v,currFrame);
+
+else
+grid=[];
+end
+
 disp('Dependency classes');
 disp(dependencyclass);
-        
+
 newInf=1;
 while newInf
     
@@ -175,6 +211,11 @@ while newInf
             if(plotenabled==1)
                     grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
             end
+            %% Video
+            pause(2)
+            currFrame = getframe(f);
+            writeVideo(v,currFrame);
+            %%
             i=i+1;
         end
         if(evidence==0)
@@ -188,3 +229,8 @@ while newInf
     
     disp('MAPmAKER end');
 end
+
+%% Video
+close(gcf);
+close(v);
+%%

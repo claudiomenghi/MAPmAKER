@@ -204,11 +204,10 @@ while newInf
             if(plotenabled==1)
                 grid=visualizeCurrentRobotPosition(sys, environment, grid, offset, scale);
             end
-            pause(2)
             %% Video
+            pause(2)
             currFrame = getframe(f);
             writeVideo(v,currFrame);
-            
             %%
             i=i+1;
             
