@@ -4,6 +4,5 @@ movie.*
 data_record.txt
 *.m~
 *.m~
-resultsex1.txt
 */.DS_Store
 ReplicationPackage/.DS_Store
