@@ -82,6 +82,5 @@ planningtimestep2_min=min(planningtimestep2_array_corrected);
 planningtimestep1_max=max(planningtimestep1_array_corrected);
 planningtimestep2_max=max(planningtimestep2_array_corrected);
 
-save ResultsExperiment1.mat pathsStep1 pathsStep2 planningtimestep1_avg planningtimestep2_avg planningtimestep1_median planningtimestep2_median planningtimestep1_min planningtimestep2_min ...
-    planningtimestep1_max planningtimestep2_max
+save ResultsExperiment1.mat
 
