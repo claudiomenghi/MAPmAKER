@@ -46,7 +46,7 @@ function [Models] =randomModelGenerator(numberOfInitialConfigurations, numberOfP
                 grid=visualizeGrid(grid, partialenvironment);
                 imshow(grid, c);
                 grid = visualizeInit(sys, offset, scale, grid, partialenvironment);
-                grid =visualizeServices(sys, offset, scale, grid, partialenvironment);
+                visualizeServices(sys, offset, scale, grid, partialenvironment);
                 input('type enter to see the next map');
             end
         end

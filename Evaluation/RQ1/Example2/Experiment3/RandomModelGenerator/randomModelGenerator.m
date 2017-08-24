@@ -24,30 +24,15 @@ function [Models] =randomModelGenerator(numberOfInitialConfigurations, numberOfP
 
     for partialInfoNumber=1:numberOfPartialInfoConfigurations
         m.partialenvironment{partialInfoNumber}=PartialEnvironmentPaper();
-        partialenvironment=m.partialenvironment{partialInfoNumber};
-   
-        R1=Robot1(partialenvironment.map, partialenvironment.pmap, 1);
-        R2=Robot2(partialenvironment.map, partialenvironment.pmap, 1);
-         
-        [R1, R2]=addSync(R1,R2, 3,99,80);
-        m.partialrobot1{partialInfoNumber}=R1;
-        m.partialrobot2{partialInfoNumber}=R2;
     end        
     for initNumber=1:numberOfInitialConfigurations
         initRobot1Position=getRandomInitPosition(realenvironment);
         initRobot2Position=getRandomInitPosition(realenvironment);
         for partialInfoNumber=1:numberOfPartialInfoConfigurations
             partialenvironment=m.partialenvironment{partialInfoNumber};
-            R1=m.partialrobot1{partialInfoNumber};
-            R2=m.partialrobot2{partialInfoNumber};
-            R1.init=initRobot1Position;
-            R1.curr=initRobot1Position;
-            
-            R2.init=initRobot2Position;
-            R2.curr=initRobot2Position;
-            sys(1)=R1;
-            sys(2)=R2;
-            
+   
+            sys(1)=Robot1(partialenvironment.map, partialenvironment.pmap, initRobot1Position);
+            sys(2)=Robot2(partialenvironment.map, partialenvironment.pmap, initRobot2Position);
             spec(1)=MissionRobot1(1, 2, 3,  1, 1, 1);
             spec(2)=MissionRobot2(4, 5,  2, 2);
             
@@ -61,7 +46,7 @@ function [Models] =randomModelGenerator(numberOfInitialConfigurations, numberOfP
                 grid=visualizeGrid(grid, partialenvironment);
                 imshow(grid, c);
                 grid = visualizeInit(sys, offset, scale, grid, partialenvironment);
-                grid =visualizeServices(sys, offset, scale, grid, partialenvironment);
+                visualizeServices(sys, offset, scale, grid, partialenvironment);
                 input('type enter to see the next map');
             end
         end

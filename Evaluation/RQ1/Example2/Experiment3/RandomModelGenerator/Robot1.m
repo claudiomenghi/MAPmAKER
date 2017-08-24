@@ -31,26 +31,31 @@ T.lastaction=0; % the last action executed by the robot
 for i=1:224
     T.ser{i}=[];
     T.sync{i}=[];
-    T.compser{i}=[];
 end
 
 T.ser{45} = 3;
 T.ser{47} = 3;
-T.ser{53} = 2;
-T.ser{54} = 2;
-T.ser{55} = 2;
+T.ser{213} = 3;
+T.ser{199} = 3;
+
+T.ser{37} = 2;
+T.ser{38} = 2;
+T.ser{218} = 2;
+T.ser{204} = 2;
+
 T.ser{99} = 1;
 T.ser{3} = 1;
 T.ser{80} = 1;
 
 
+T.sync{99} = 2;  % must sync with the robot with identifiers 2
+T.sync{3} =2;
+T.sync{80} =2;
+
+
 % adding the possible transition relation
-
 T.pser=T.ser;
-T.compser=T.ser;
 T.psync=T.sync;
-T.compsync=T.psync;
-
 
 %% updates the services provided by the robot
 for i=1:size(T.Q,2)
@@ -64,14 +69,13 @@ end
 
 %% updates the robots that must synch with this robot
 for i=1:size(T.Q,2)
-    if ~isempty(T.sync{i}) && ~find(T.sync{i}, T.syncrobotset)
+    if ~isempty(T.sync{i})
         T.syncrobotset=[T.syncrobotset T.sync{i}];
     end
-    if ~isempty(T.psync{i}) && ~find(T.psync{i}, T.syncrobotset)
+    if ~isempty(T.psync{i})
         T.syncrobotset=[T.syncrobotset T.psync{i}];
     end
 end
-T.syncrobotset=[T.syncrobotset 2];
 
 T.index = 3;
 

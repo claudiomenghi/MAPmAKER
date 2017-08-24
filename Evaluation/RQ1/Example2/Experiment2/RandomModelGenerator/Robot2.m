@@ -32,7 +32,6 @@ T.lastaction=0; % the last action executed by the robot
 for i=1:224
     T.ser{i}=[];
     T.sync{i}=[];
-    T.compser{i}=[];
 end
 
 T.ser{216} = 4;
@@ -50,7 +49,6 @@ T.sync{80} =1;
 
 % adding the possible transition relation
 T.pser=T.ser;
-T.compser=T.pser;
 T.psync=T.sync;
 
 %% updates the services provided by the robot

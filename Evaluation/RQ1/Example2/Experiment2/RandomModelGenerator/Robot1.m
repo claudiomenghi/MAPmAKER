@@ -31,7 +31,6 @@ T.lastaction=0; % the last action executed by the robot
 for i=1:224
     T.ser{i}=[];
     T.sync{i}=[];
-    T.compser{i}=[];
 end
 
 T.ser{45} = 3;
@@ -44,10 +43,9 @@ T.ser{38} = 2;
 T.ser{218} = 2;
 T.ser{204} = 2;
 
-T.compser=T.ser;
-%T.ser{99} = 1;
-%T.ser{3} = 1;
-%T.ser{80} = 1;
+T.ser{99} = 1;
+T.ser{3} = 1;
+T.ser{80} = 1;
 
 
 T.sync{99} = 2;  % must sync with the robot with identifiers 2
@@ -58,35 +56,6 @@ T.sync{80} =2;
 % adding the possible transition relation
 T.pser=T.ser;
 T.psync=T.sync;
-
-
-doors=ones(1,1);
-
-xmin=1;
-xmax=6;
-n=1;
-
-for i=1:length(doors)
-    
-    x=round(xmin+rand(1,n)*(xmax-xmin));
-    switch x
-        case 1
-               T=addUnknownService(T,99,3,80);
-        case 2
-               T=addUnknownService(T,99,80,3);
-        case 3
-               T=addUnknownService(T,3,80,99);
-        case 4
-               T=addUnknownService(T,3,99,80);
-        case 5
-               T=addUnknownService(T,80,99,3);
-        case 6
-               T=addUnknownService(T,80,3,99);
-    end
-end
-    
-
-
 
 %% updates the services provided by the robot
 for i=1:size(T.Q,2)
