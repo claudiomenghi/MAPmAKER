@@ -27,10 +27,11 @@ experimentNumber=1;
 planningtimestep1_array=zeros(9,1);
 planningtimestep2_array=zeros(9,1);
 
-for initNumber=1:ModelsExperiment3.numberOfInitialConfigurations
+%for initNumber=1:ModelsExperiment3.numberOfInitialConfigurations
     
-    for partialInfoNumber=1:ModelsExperiment3.numberOfPartialInfoConfigurations
-        
+%    for partialInfoNumber=1:ModelsExperiment3.numberOfPartialInfoConfigurations
+     initNumber=3;   
+    partialInfoNumber=3;       
         if(init==curr)
             %% saving the input
             %Save the input variables for future experiment replications
@@ -55,8 +56,8 @@ for initNumber=1:ModelsExperiment3.numberOfInitialConfigurations
             init=init+1;
         end
         
-    end
-end
+%    end
+%end
 
 j=1;
 n=1;
