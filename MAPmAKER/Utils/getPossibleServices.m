@@ -4,7 +4,7 @@ function [ services ] = getPossibleServices( sys, states )
 
     services=[];
     for i=1:size(states,2)
-        services=[services sys(i).ser{states(i)}];
+        services=[services sys(i).pser{states(i)}];
     end
     
 end
