@@ -82,6 +82,7 @@ end
 T.sync{99} = 2;  % must sync with the robot with identifiers 2
 T.sync{3} =2;
 T.sync{131} =2;
+T.sync{1} =2;
 
 
 
