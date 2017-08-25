@@ -1,17 +1,25 @@
-We created the folder containing this document in order to make easier to understand our work. It also allows a reviewer to replicate the experiments that we performed for this paper.
 
-In the folder ./ResultsPaper some videos that represents our algorithm working are stored. These videos are split in two other folders, one for the experiments regarding the first Research Question and one for the Running Example. For example, there two videos named “movie_RunningExample_Step1” and “movie_RunningExample_Step2” stored in the latter folder. They display both steps of the running example described in the paper. It is just an experiment that serves as an example for a better understanding of MAPmAKER. 
+This folder contains the following material
 
-On the other hand, the folder RQ1 contains the data corresponding with both examples (the two presented scenarios) and the 3 different experiments (each one testing a type of uncertainty). These folders contain a certain number of videos named “movie_i_Step1” or “movie_i_Step2”. They represent the number of experiments performed in order to obtain the data that is presented in the Table 1 of the paper. In this case, we recreated 9 experiments (3 robot models and 3 environment models).
+- The extended verion of the paper in the file ICSE_extended.pdf .
+- Videos of the performed experiments. Folder ./ResultsPaper contains all the videos related with our evaluation and specifically with RQ1. 
+These videos are grouped in two folder containing the two examples.
+Each of these folder contains a video for each ID for each step. For example, there two videos named ‚Äúmovie_1_Step1‚Äù and ‚Äúmovie_1_Step2‚Äù refer to the configuration marked with ID 1.
+- Videos of the running example
+- The source code of the tool in the folder MAPMAKER
+- A replication package that allows to replicate the experiment
 
--How to launch an experiment
+************************************************************
+How to replicate an experiment
+************************************************************
+enter the folder MAPMAKER
 
-The experimentLauncher.m file allows us to launch he experiments in an easy way. The only thing that we must do is to specify and add the paths to the folder that contain the experiment that we want to run. For example, if we just want to launch a short example that does not take much time to compute we could launch the RunningExample. In that case, the specified paths should be:
+The experimentLauncher.m file allows us to launch he experiments in an easy way. The only thing that we must do is to specify and add the paths to the folder that contain the experiment that we want to run. For example, if we to launch the RunningExample the added paths should be:
 
 addpath('./MAPmAKER/RunningExample/Experiment1/');
 experiment1;
 
-On the other hand, if we want to replicate the data presented in the Table 1 we should add the following paths:
+To replicate the data presented in the Table 1 we should add the following paths:
 
 addpath('./MAPmAKER/Evaluation/RQ1/Example1/Experiment1');
 addpath('./MAPmAKER/Evaluation/RQ1/Example1/Algorithms/');
