@@ -1,4 +1,0 @@
-experimentNumber initConf partConf #F 	 #T 	 Tr 	 Lr 	 STEP1_solution_found 	 STEP2_solution_found 
-1 1 1 0 1 1.341937 0.636364 1 1
-2 1 2 0 0 2.070546 1.000000 1 1
-3 1 3 1 1 3.006699 1.045455 1 1
