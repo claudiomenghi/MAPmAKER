@@ -1,8 +1,17 @@
 
+# MAPmAKER: A Tool for Performing Multi-Robot LTL Planning Under Uncertainty
+MAPmAKER is a planning solution that 
+- it is based on a decentralized algorithm  
+- considers complex high-level missions given in temporal logic
+- works when only partial knowledge of the environment is available. 
+
+
+
+[![IMAGE ALT TEXT HERE](https://www.youtube.com/watch?v=TJzC_u2yfzQ&feature=youtu.be/0.jpg)](https://www.youtube.com/watch?v=TJzC_u2yfzQ&feature=youtu.be)
 
 # Authors
 - Claudio Menghi - claudio.menghi@gu.se
-- Sergio Garcia - sergio.garcia@gu.se
+- Sergio García - sergio.garcia@gu.se
 - Patrizio Pelliccione - patrizio.pelliccione@cse.gu.se
 
 # MAPmAKER organization
