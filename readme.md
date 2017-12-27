@@ -29,8 +29,8 @@ Each of these folder contains a video for each ID for each step. For example, th
 
 - The `experimentLauncher.m`  allows  launching the experiments. To launch an experiment, it is necessary to  add the paths of the folder that contain the experiment that must be executed. For example, to launch the RunningExample the added paths should be:
 The following commands must be executed in MATLAB
- - `addpath('./MAPmAKER/RunningExample/Experiment1/')`;
- - `experiment1`;
+.- `addpath('./MAPmAKER/RunningExample/Experiment1/')`;
+.- `experiment1`;
 
 - To replicate the data presented in the Table 1 we should add the following paths:
 
