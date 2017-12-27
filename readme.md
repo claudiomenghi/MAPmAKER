@@ -7,7 +7,7 @@ MAPmAKER is a planning solution that
 
 
 
-[![IMAGE ALT TEXT HERE](https://www.youtube.com/watch?v=TJzC_u2yfzQ&feature=youtu.be/0.jpg)](https://www.youtube.com/watch?v=TJzC_u2yfzQ&feature=youtu.be)
+[![IMAGE ALT TEXT HERE](Image/videoimage.png)](https://www.youtube.com/watch?v=TJzC_u2yfzQ&feature=youtu.be)
 
 # Authors
 - Claudio Menghi - claudio.menghi@gu.se
