@@ -1,5 +1,5 @@
 
-This folder contains the following material
+# MAPmAKER organization
 
 - The extended verion of the paper in the file ICSE_extended.pdf .
 - Videos of the performed experiments. Folder ./ResultsPaper contains all the videos related with our evaluation and specifically with RQ1. 
@@ -9,9 +9,7 @@ Each of these folder contains a video for each ID for each step. For example, th
 - The source code of the tool in the folder MAPMAKER
 - A replication package that allows to replicate the experiment
 
-************************************************************
-How to replicate an experiment
-************************************************************
+# Replicate an experiment
 enter the folder MAPMAKER
 
 The experimentLauncher.m file allows us to launch he experiments in an easy way. The only thing that we must do is to specify and add the paths to the folder that contain the experiment that we want to run. For example, if we to launch the RunningExample the added paths should be:
