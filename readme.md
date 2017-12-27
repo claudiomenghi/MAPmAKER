@@ -27,10 +27,10 @@ Each of these folder contains a video for each ID for each step. For example, th
 # Replicate an experiment
 - enter the folder MAPMAKER
 
-- The experimentLauncher.m file allows us to launch he experiments in an easy way. The only thing that we must do is to specify and add the paths to the folder that contain the experiment that we want to run. For example, if we to launch the RunningExample the added paths should be:
-
-- addpath('./MAPmAKER/RunningExample/Experiment1/');
-- experiment1;
+- The `experimentLauncher.m`  allows  launching the experiments. To launch an experiment, it is necessary to  add the paths of the folder that contain the experiment that must be executed. For example, to launch the RunningExample the added paths should be:
+The following commands must be executed in MATLAB
+ - `addpath('./MAPmAKER/RunningExample/Experiment1/')`;
+ - `experiment1`;
 
 - To replicate the data presented in the Table 1 we should add the following paths:
 
@@ -54,3 +54,4 @@ Each of these folder contains a video for each ID for each step. For example, th
 
 - Here we can specify the number of initial configurations for the robot and the number of different partial configurations of the environment. If we want the experiment to be displayed, the variable displayEnabled must be set to 1.
 
+# Publications
