@@ -3,6 +3,5 @@ movie.*
 *.dat
 data_record.txt
 *.m~
-*.m~
 */.DS_Store
 ReplicationPackage/.DS_Store

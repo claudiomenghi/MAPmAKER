@@ -40,7 +40,7 @@ for initNumber=1:ModelsExperiment2.numberOfInitialConfigurations
             partialenvironment=ModelsExperiment2.partialenvironment{initNumber,partialInfoNumber};
             realenvironment=ModelsExperiment2.realenvironment{initNumber,partialInfoNumber};
 
-            [timeout1, timeout2, falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1,  planlengthstep2, planningtimestep2, solutionfoundstep2, performedpathstep1, performedpathstep2]=experimentRunner(sys, spec, partialenvironment, realenvironment, timeoutval);
+            [timeout1, timeout2, falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1,  planlengthstep2, planningtimestep2, solutionfoundstep2, performedpathstep1, performedpathstep2]=experimentRunner(sys, spec, partialenvironment, realenvironment, timeoutval, experimentNumber);
 
             pathsStep1{initNumber,partialInfoNumber}=performedpathstep1;
             pathsStep2{initNumber,partialInfoNumber}=performedpathstep2;

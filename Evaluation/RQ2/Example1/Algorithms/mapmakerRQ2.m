@@ -90,27 +90,27 @@ drawnow
 
 global whitevalue;
 if(plotenabled==1)
-close all
-global c;
-width = 800;
-height = 600;
-f = figure('Position',[15 15 width height]);
-set(f,'Position',[15 15 width height]);
-grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
-grid=visualizeGrid(grid, environment);
+    close all
+    global c;
+    width = 800;
+    height = 600;
+    f = figure('Position',[15 15 width height]);
+    set(f,'Position',[15 15 width height]);
+    grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
+    grid=visualizeGrid(grid, environment);
 
-grid = visualizeInit(sys, offset, scale, grid, environment);
-grid = visualizeServices(sys, offset, scale, grid, environment);
-% imshow(grid, c,'InitialMagnification','fit');
+    grid = visualizeInit(sys, offset, scale, grid, environment);
+    grid = visualizeServices(sys, offset, scale, grid, environment);
+    % imshow(grid, c,'InitialMagnification','fit');
 
-currFrame = getframe(f);
-%currFrame.cdata=currFrame.cdata(:,1:size(currFrame.cdata,2),:);
-writeVideo(v,currFrame);
-writeVideo(v,currFrame);
-writeVideo(v,currFrame);
+    currFrame = getframe(f);
+    %currFrame.cdata=currFrame.cdata(:,1:size(currFrame.cdata,2),:);
+    writeVideo(v,currFrame);
+    writeVideo(v,currFrame);
+    writeVideo(v,currFrame);
 
 else
-grid=[];
+    grid=[];
 end
 
 disp('Dependency classes');

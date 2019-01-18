@@ -40,8 +40,8 @@ for initNumber=1:ModelsExperiment1.numberOfInitialConfigurations
             partialenvironment=ModelsExperiment1.partialenvironment{initNumber,partialInfoNumber};
             realenvironment=ModelsExperiment1.realenvironment{initNumber,partialInfoNumber};
 
-            [timeout1, timeout2, falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1,  planlengthstep2, planningtimestep2, solutionfoundstep2, performedpathstep1, performedpathstep2]=experimentRunner(sys, spec, partialenvironment, realenvironment, timeoutval);
-
+            [timeout1, timeout2, falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1,  planlengthstep2, planningtimestep2, solutionfoundstep2, performedpathstep1, performedpathstep2]=experimentRunner(sys, spec, partialenvironment, realenvironment, timeoutval, experimentNumber);
+                                                                                                                                                                                                                                                                
             pathsStep1{initNumber,partialInfoNumber}=performedpathstep1;
             pathsStep2{initNumber,partialInfoNumber}=performedpathstep2;
 
@@ -52,7 +52,7 @@ for initNumber=1:ModelsExperiment1.numberOfInitialConfigurations
                 if ((timeout2==1))
                     fid=fopen('resultsex1.txt','a');
                     fprintf(fid,'%d %s \n' ,[experimentNumber 'dec found solution, no dec timeout']);
-                    else
+                else
                     if((solutionfoundstep1==1) && (solutionfoundstep2==1))
                         Tr=(planningtimestep1/planningtimestep2);
                         Lr=(planlengthstep1/planlengthstep2);

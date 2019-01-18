@@ -1,4 +1,4 @@
-function [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1, planlengthstep2, planningtimestep2, solutionfoundstep2, performedpathstep1, performedpathstep2]= experimentRunner(sys, spec, environment, realenvironment, experimentNumber)
+%function [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1, planlengthstep2, planningtimestep2, solutionfoundstep2, performedpathstep1, performedpathstep2]= experimentRunner(sys, spec, environment, realenvironment, experimentNumber)
 
 function [timeout1, timeout2, falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1, planlengthstep2, planningtimestep2, solutionfoundstep2, performedpathstep1, performedpathstep2]= experimentRunner(sys, spec, environment, realenvironment, timeoutval, experimentNumber)
 
@@ -19,13 +19,13 @@ set(f,'Position',[15 15 width height])
 %set(f,'Renderer','ZBuffer')
 
 if(plotenabled==1)
-grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
-grid=visualizeGrid(grid, environment);
-imshow(grid, c,'InitialMagnification','fit');
-grid = visualizeInit(sys, offset, scale, grid, environment);
-visualizeServices(sys, offset, scale, grid, environment);
+    grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
+    grid=visualizeGrid(grid, environment);
+    imshow(grid, c,'InitialMagnification','fit');
+    grid = visualizeInit(sys, offset, scale, grid, environment);
+    visualizeServices(sys, offset, scale, grid, environment);
 else
-grid=[];
+    grid=[];
 end
 
 set(f,'Position',[15 15 width height]);
@@ -43,19 +43,19 @@ environment1=environment;
 realenvironment1=realenvironment;
 
 video_name=sprintf('movie_%d_Step1', experimentNumber);
-        [timeout1, falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1, performedpathstep1]=mapmakerRQ2(sys, spec, environment, realenvironment, possiblesearchenabled, plotenabled, grid,  offset, scale, 1, timeoutval, video_name);
+[timeout1, falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, planningtimestep1, solutionfoundstep1, performedpathstep1]=mapmakerRQ2(sys, spec, environment, realenvironment, possiblesearchenabled, plotenabled, grid,  offset, scale, 1, timeoutval, video_name);
 
 %% runs the step 2 of the evaluation
 
 f = figure('Position',[15 15 width height]);
 if(plotenabled==1)
-grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
-grid=visualizeGrid(grid, environment);
-imshow(grid, c);
-grid = visualizeInit(sys, offset, scale, grid, environment);
-grid = visualizeServices(sys, offset, scale, grid, environment);
+    grid = ones(environment.x*scale+1,environment.y*scale+1)*whitevalue;
+    grid=visualizeGrid(grid, environment);
+    imshow(grid, c);
+    grid = visualizeInit(sys, offset, scale, grid, environment);
+    grid = visualizeServices(sys, offset, scale, grid, environment);
 else
-grid=[];
+    grid=[];
 end
 
 %possiblesearchenabled=0;

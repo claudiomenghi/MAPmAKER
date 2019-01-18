@@ -16,7 +16,6 @@ MAPmAKER is a planning solution that
 
 # MAPmAKER organization
 
-- The extended verion of the paper in the file ICSE_extended.pdf .
 - Videos of the performed experiments. Folder ./ResultsPaper contains all the videos related with our evaluation and specifically with RQ1. 
 These videos are grouped in two folder containing the two examples.
 Each of these folder contains a video for each ID for each step. For example, there two videos named “movie_1_Step1” and “movie_1_Step2” refer to the configuration marked with ID 1.
@@ -25,26 +24,17 @@ Each of these folder contains a video for each ID for each step. For example, th
 - A replication package that allows to replicate the experiment
 
 # Replicate an experiment
-- enter the folder MAPMAKER
+- Enter the folder MAPMAKER
 
-- The `experimentLauncher.m`  allows  launching the experiments. To launch an experiment, it is necessary to  add the paths of the folder that contain the experiment that must be executed. For example, to launch the RunningExample the added paths should be:
-The following commands must be executed in MATLAB
-.- `addpath('./MAPmAKER/RunningExample/Experiment1/')`;
-.- `experiment1`;
+- The `mapmaker_exp.m`  function allows launching the experiments. The function takes 3 arguments as input: `location`, `example`, and `experiment`. First of all, `location` indicates the directory that MAPmaKER needs to look for. For instance, we provide the directories RQ1, RQ2, and RunningExample used for the evaluation of our first publication.  `example` indicates the scenario to be reproduced. For instance, RQ1 and RQ2 where evaluated in two different scenarios. Finally, `experiment` indicate which experiment to be reproduced in a certain scenario (different experiments may consist on different initial positions of the robots, number of robots, different partial environment).
 
-- To replicate the data presented in the Table 1 we should add the following paths:
+- To replicate the data presented in the Table 1 we should execute the following command in the Matlab's command window:
 
-- addpath('./MAPmAKER/Evaluation/RQ1/Example1/Experiment1');
-- addpath('./MAPmAKER/Evaluation/RQ1/Example1/Algorithms/');
-- addpath('./MAPmAKER/ReplicationPackage/RQ1/Example1/Experiment1/');
-- experiment1;
+`mapmaker_exp('Example1', 'Experiment1', 'RQ1')`
 
-- Here we can change some parts of the paths in order to perform different experiments. For example, if we want to change the map of the environment the example must be changed. In that case, we can opt between Example1 or Example2. Then, the previous paths would be changed to:
+- Here we can change some parts of the command in order to perform different experiments. For example, if we want to change the map of the environment the example must be changed. In that case, we can opt between Example1 or Example2. Then, the previous command should be changed to:
 
-- addpath('./MAPmAKER/Evaluation/RQ1/Example2/Experiment1');
-- addpath('./MAPmAKER/Evaluation/RQ1/Example2/Algorithms/');
-- addpath('./MAPmAKER/ReplicationPackage/RQ1/Example2/Experiment1/');
-- experiment1;
+`mapmaker_exp('Example2', 'Experiment1', 'RQ1')`
 
 - Not only the map can be changed but also the research question experiment or the experiment to be performed (we have experiments from 1 to 3, but more experiments can be performed and stored in these paths). 
 
@@ -55,3 +45,6 @@ The following commands must be executed in MATLAB
 - Here we can specify the number of initial configurations for the robot and the number of different partial configurations of the environment. If we want the experiment to be displayed, the variable displayEnabled must be set to 1.
 
 # Publications
+
+Menghi, C., Garcia, S., Pelliccione, P., & Tumova, J. (2018, July). Multi-robot LTL planning under uncertainty. In International Symposium on Formal Methods (pp. 399-417). Springer, Cham.
+
