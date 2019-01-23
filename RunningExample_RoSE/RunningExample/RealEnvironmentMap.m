@@ -1,5 +1,5 @@
 function E = RealEnvironmentMap()
-E.occupied=[18 25 32];
+E.occupied=[];
 y=7;
 x=7;
 size=x*y;
@@ -79,11 +79,8 @@ E.map(32,39)=0;
 %Room left-top corner
 E.map(30,37)=0;
 E.map(37,30)=0;
-% E.map(37,38)=1;
-% E.map(38,37)=1;
-
-E.pmap=E.map;
-
+E.map(37,38)=1;
+E.map(38,37)=1;
 
 
 

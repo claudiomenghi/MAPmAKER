@@ -52,7 +52,7 @@ T.compser=T.pser;
 
 
 T.psync=T.sync;
-
+T.compsync=T.psync;
 
 
 %% updates the services provided by the robot

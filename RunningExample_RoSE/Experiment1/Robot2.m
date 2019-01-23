@@ -52,7 +52,7 @@ T.psync=T.sync;
 %T.psync{26} = 1;  % must sync with the robot with identifiers 1
 
 T.psync{43} = 1;
-
+T.compsync=T.psync;
 
 %% updates the services provided by the robot
 for i=1:size(T.Q,2)

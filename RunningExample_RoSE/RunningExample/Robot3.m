@@ -3,29 +3,34 @@
 % penvironmentMap: the possible map of the environment
 %% Output
 % the model of the robot
-function T = Robot1(environmentMap, penvironmentMap, initPosition)
+function T = Robot3(environmentMap, penvironmentMap, initPosition)
 
-T.name='Robot1';
-T.id=1; % the identifiers of the robot
+T.name='Robot3';
+T.id=3; % the identifiers of the robot
+
 
 T.Q=1:49;   %states
 T.Pi=1:2; %all subsets of atomic propositions
-
-T.curr=initPosition;
-
-T.init=T.curr;
+% [{}, 
+% {action1}, 
+% {action2},
+% {action1}, {action2}
+%]
 % contains all the services provided by the robot
 T.services=[];
 % contains all the robots that must synch with this robot
 T.syncrobotset=[T.id];
 
-%adjacency matrix
+
+%Random value for the initial position of the robot
+T.curr=initPosition;
+
+T.init=T.curr;
+
 T.adj=environmentMap;
 T.padj=penvironmentMap;
 
 T.lastaction=0; % the last action executed by the robot
-
-% [{}, {action1}]
 
 %% services
 for i=1:size(T.Q,2)
@@ -33,20 +38,22 @@ for i=1:size(T.Q,2)
     T.sync{i}=[];
 end
 
-T.ser{7} = 1;
+%T.ser{25} = 4;
+T.ser{39} = 4;
+T.ser{6} = 5;
+
+
+%T.ser{9} = 2;
+
 % adding the possible transition relation
 T.pser=T.ser;
-T.pser{43} = 1;
+T.pser{11} = 4;
 T.compser=T.pser;
-%T.sync{24} = 2;  % must sync with the robot with identifiers 2
-%T.sync{26} = 2;
 
-T.sync{7} = 2;
+
 T.psync=T.sync;
-%T.psync{26} = 2;  % must sync with the robot with identifiers 2
 
-T.psync{43} = 2;
-T.compsync=T.psync;
+
 
 %% updates the services provided by the robot
 for i=1:size(T.Q,2)
@@ -68,8 +75,7 @@ for i=1:size(T.Q,2)
     end
 end
 
-
-T.index = 1;
+T.index = 3;
 
 
 

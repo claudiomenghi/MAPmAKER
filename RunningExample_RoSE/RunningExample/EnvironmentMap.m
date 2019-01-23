@@ -1,5 +1,6 @@
-function E = RealEnvironmentMap()
+function E = EnvironmentMap()
 E.occupied=[18 25 32];
+
 y=7;
 x=7;
 size=x*y;
@@ -40,7 +41,6 @@ for k=1:x
     end
 end
 
-
 %Room right-bottom corner
 E.map(5,6)=0;
 E.map(6,5)=0;
@@ -71,22 +71,32 @@ E.map(18,11)=0;
 E.map(39,32)=0;
 E.map(32,39)=0;
 
+
 %Room right-bottom corner
-% E.map(12,13)=1;
-% E.map(13,12)=1;
-% E.map(13,20)=1;
-% E.map(20,13)=1;
+% E.map(12,13)=0;
+% E.map(13,12)=0;
+% E.map(13,20)=0;
+% E.map(20,13)=0;
 %Room left-top corner
 E.map(30,37)=0;
 E.map(37,30)=0;
-% E.map(37,38)=1;
-% E.map(38,37)=1;
+E.map(37,38)=0;
+E.map(38,37)=0;
 
+
+
+% possible map
 E.pmap=E.map;
-
-
-
-
+%Room right-bottom corner
+% E.pmap(12,13)=1;
+% E.pmap(13,12)=1;
+% E.pmap(13,20)=1;
+% E.pmap(20,13)=1;
+%Room left-top corner
+% E.pmap(30,37)=1;
+% E.pmap(37,30)=1;
+% E.pmap(37,38)=1;
+% E.pmap(38,37)=1;
 
 end
 
