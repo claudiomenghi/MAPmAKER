@@ -1,5 +1,5 @@
 function mapmaker_exp(scenario, experiment, location)
-    clc
+    %clc
     close all
 
     if ~exist('location','var')
@@ -22,9 +22,12 @@ function mapmaker_exp(scenario, experiment, location)
         addpath(sprintf(path, current_folder));
 
         % If only the running example for the paper is required
-        if strcmp(location, 'RunningExample')
+        if strcmp(location, 'fm')
             path='%s/RunningExample/%s';
-            addpath(sprintf(path, current_folder, experiment));        
+            addpath(sprintf(path, current_folder, experiment));    
+        elseif strcmp(location, 'rose')
+            path='%s/RunningExample_RoSE/%s';
+            addpath(sprintf(path, current_folder, experiment));  
         else
             % location specified, replicate experiment  
             path='%s/Evaluation/%s/%s/%s';
