@@ -5,7 +5,8 @@ function [falseEvicenceCounterstep1, trueEvidenceCounterstep1, planlengthstep1, 
         
         plotenabled=1;
 
-        
+        width = 800;
+        height = 600;
         maxIteration=10;
         
         %% runs the step 1 of the evaluation

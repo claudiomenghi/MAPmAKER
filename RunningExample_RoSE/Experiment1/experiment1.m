@@ -45,7 +45,7 @@ for initNumber=1:ModelsExperiment1.numberOfInitialConfigurations
             pathsStep1{initNumber,partialInfoNumber}=performedpathstep1;
             pathsStep2{initNumber,partialInfoNumber}=performedpathstep2;
             
-            writeExperimentResults('resultsex1.txt', experimentNumber, initNumber, partialInfoNumber, falseEvicenceCounterstep1, trueEvidenceCounterstep1, solutionfoundstep1, solutionfoundstep2, planningtimestep1, planningtimestep2, planlengthstep1, planlengthstep2)
+            writeExperimentResults('results_rose.txt', experimentNumber, initNumber, partialInfoNumber, falseEvicenceCounterstep1, trueEvidenceCounterstep1, solutionfoundstep1, solutionfoundstep2, planningtimestep1, planningtimestep2, planlengthstep1, planlengthstep2)
 
             disp('||||||||experiment number||||||||')
             experimentNumber=experimentNumber+1
