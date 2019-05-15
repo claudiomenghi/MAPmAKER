@@ -46,8 +46,10 @@ Each of these folder contains a video for each ID for each step. For example, th
 
 # Publications
 
-Menghi, C., Garcia, S., Pelliccione, P., & Tumova, J. (2018, July). Multi-robot LTL planning under uncertainty. In International Symposium on Formal Methods (pp. 399-417). Springer, Cham.
+Menghi, C., García, S., Pelliccione, P., & Tumova, J. Multi-robot LTL planning under uncertainty. In International Symposium on Formal Methods. 2018
 
-Menghi, C., García, S., Pelliccione, P., & Tumova, J. (2018, May). Towards multi-robot applications planning under uncertainty. In Proceedings of the 40th International Conference on Software Engineering: Companion Proceeedings (pp. 438-439). ACM.
+Menghi, C., García, S., Pelliccione, P., & Tumova, J. Towards multi-robot applications planning under uncertainty. In International Conference on Software Engineering: Companion Proceedings (2018).
+
+García, S., Menghi, C., Pelliccione, P. MAPmAKER: Performing Multi-Robot LTL Planning Under Uncertainty. In International Workshop on Robotics Software Engineering (RoSE). 2019
 
 
